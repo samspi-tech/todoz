@@ -1,12 +1,9 @@
-import PWABadge from '@/PWABadge.tsx';
+import { RouterProvider } from 'react-router/dom';
+
+import { router } from '@/react-router/router.ts';
 
 const App = () => {
-    return (
-        <>
-            <h1>Hello, World!</h1>
-            <PWABadge />
-        </>
-    );
+    return <RouterProvider router={router} />;
 };
 
 export default App;
