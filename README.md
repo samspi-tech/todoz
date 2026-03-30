@@ -1,3 +1,3 @@
 # ToDoz
 
-### Simple app that allow you to create personalized tasks.
+### React Progressive Web App that lets you create personalized tasks
