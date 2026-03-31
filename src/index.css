@@ -2,16 +2,16 @@
 
 :root {
     &, &.light-mode {
-        --background: #F8FAFC;
-        --text: #3B9FFF;
+        --background: #F8F8FF;
+        --text: #682860;
     }
 
     &.dark-mode {
-        --background: #103763;
-        --text: #F8FAFC;
+        --background: #682860;
+        --text: #F8F8FF;
     }
 
-    --primary: #3B9FFF;
+    --primary: #EFE576;
     --neutral-300: #B3B9BE;
     --neutral-700: #424950;
 }
