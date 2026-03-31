@@ -1,5 +1,7 @@
+import Welcome from '@/components/welcome/Welcome.tsx';
+
 const Home = () => {
-    return <div>Welcome</div>;
+    return <Welcome />;
 };
 
 export default Home;
