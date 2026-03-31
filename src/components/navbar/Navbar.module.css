@@ -1,0 +1,23 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1.2rem 2.4rem;
+    background-color: #682860;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+
+    & a {
+        color: #f8f8ff;
+        text-decoration: none;
+
+        &:global(.active) {
+            color: var(--primary);
+        }
+    }
+
+    & svg {
+        width: 3.2rem;
+        height: 3.2rem;
+    }
+}
