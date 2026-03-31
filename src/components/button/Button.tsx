@@ -1,4 +1,4 @@
-import type { ComponentProps, PropsWithChildren } from 'react';
+import { type ComponentProps, type PropsWithChildren, useState } from 'react';
 
 import styles from './Button.module.css';
 
@@ -12,9 +12,13 @@ const Button = ({
     size,
     ...rest
 }: PropsWithChildren<ButtonProps>) => {
+    const [isPressed, setIsPressed] = useState(false);
+
     return (
         <button
-            className={`${styles.button} ${styles[variant]} ${size && styles[size]}`}
+            onTouchStart={() => setIsPressed(true)}
+            onTouchEnd={() => setIsPressed(false)}
+            className={`${styles.button} ${styles[variant]} ${size && styles[size]} ${isPressed && styles.pressed}`}
             {...rest}
         />
     );
