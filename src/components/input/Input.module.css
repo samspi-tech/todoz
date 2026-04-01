@@ -1,0 +1,21 @@
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    & input {
+        width: 100%;
+        height: 5rem;
+        padding: 0 0.8rem;
+        font-size: 1.6rem;
+        border-radius: 0.8rem;
+        font-family: 'Poppins', sans-serif;
+        border: 1px solid var(--neutral-300);
+
+        &:focus-visible {
+            offset: 0;
+            border-color: var(--primary);
+            outline: 3px solid var(--primary);
+        }
+    }
+}
