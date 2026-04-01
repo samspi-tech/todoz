@@ -1,0 +1,11 @@
+.taskListsContainer {
+    height: 100%;
+    position: relative;
+
+    & button {
+        position: absolute;
+        bottom: 4.8rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
