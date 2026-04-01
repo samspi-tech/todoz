@@ -9,6 +9,7 @@ const Logo = () => {
             to="/tasks"
             viewTransition={true}
             className={styles.logoContainer}
+            aria-label="Navigate to tasks page"
         >
             <img src={logo} alt="todoz logo" />
             <p>

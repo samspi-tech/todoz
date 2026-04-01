@@ -10,7 +10,11 @@ const Navbar = () => {
         <nav className={styles.navbar}>
             <Logo />
 
-            <NavLink to="/settings" viewTransition={true}>
+            <NavLink
+                to="/settings"
+                viewTransition={true}
+                aria-label="Navigate to settings page"
+            >
                 <Settings />
             </NavLink>
         </nav>
