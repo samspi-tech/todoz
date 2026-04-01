@@ -2,7 +2,7 @@
     height: 100%;
     position: relative;
 
-    & button {
+    & > button {
         position: absolute;
         bottom: 4.8rem;
         left: 50%;
