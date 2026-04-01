@@ -9,13 +9,10 @@
     font-size: 1.6rem;
     letter-spacing: 0.02em;
     color: var(--neutral-900);
+    box-shadow: var(--shadow);
     text-transform: uppercase;
     background-color: var(--primary);
     font-family: 'Poppins', sans-serif;
-
-    box-shadow:
-        0 2px 2px rgba(0, 0, 0, 0.25),
-        0 4px 10px rgba(0, 0, 0, 0.25);
 
     & svg {
         width: 2rem;
