@@ -3,4 +3,8 @@
 
     display: grid;
     grid-template-rows: auto 1fr;
+
+    & main {
+        padding: 2.4rem 1.2rem;
+    }
 }
