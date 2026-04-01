@@ -5,6 +5,7 @@ import Modal from '@/components/modal/Modal.tsx';
 
 import styles from './TasksList.module.css';
 import { useModal } from '@/hooks/useModal.ts';
+import CreateTasksListForm from '@/components/createTasksListForm/CreateTasksListForm.tsx';
 
 const TasksList = () => {
     const { dialogRef, handleOpenModal, handleCloseModal } = useModal();
@@ -21,7 +22,9 @@ const TasksList = () => {
                 ref={dialogRef}
                 title="Create list"
                 onClose={handleCloseModal}
-            ></Modal>
+            >
+                <CreateTasksListForm onClose={handleCloseModal} />
+            </Modal>
         </section>
     );
 };
