@@ -1,0 +1,31 @@
+import { useRef } from 'react';
+
+export const useModal = () => {
+    const dialogRef = useRef<HTMLDialogElement>(null);
+
+    const handleOpenModal = () => {
+        const currDialog = dialogRef.current;
+
+        if (!currDialog) {
+            return;
+        }
+
+        currDialog.showModal();
+    };
+
+    const handleCloseModal = () => {
+        const currDialog = dialogRef.current;
+
+        if (!currDialog) {
+            return;
+        }
+
+        currDialog.close();
+    };
+
+    return {
+        dialogRef,
+        handleOpenModal,
+        handleCloseModal,
+    };
+};
