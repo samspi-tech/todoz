@@ -7,5 +7,10 @@
         bottom: 4.8rem;
         left: 50%;
         transform: translateX(-50%);
+
+        & svg {
+            width: 2.8rem;
+            height: 2.8rem;
+        }
     }
 }
