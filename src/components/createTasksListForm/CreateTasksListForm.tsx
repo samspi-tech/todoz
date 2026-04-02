@@ -16,7 +16,9 @@ const CreateTasksListForm = ({ onClose }: CreateTasksListFormProps) => {
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        if (!title.trim()) {
+        const titleInput = title.trim();
+
+        if (!titleInput) {
             return;
         }
 
@@ -28,6 +30,12 @@ const CreateTasksListForm = ({ onClose }: CreateTasksListFormProps) => {
         };
 
         const localStorageList = localStorage.getItem('tasksList');
+
+        const isTitleDuplicate = localStorageList?.includes(titleInput);
+
+        if (isTitleDuplicate) {
+            return;
+        }
 
         const parsedLocalStorageList: TasksListType[] = localStorageList
             ? JSON.parse(localStorageList)
