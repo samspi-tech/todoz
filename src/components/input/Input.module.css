@@ -12,15 +12,14 @@
         color: var(--neutral-700);
         font-family: 'Poppins', sans-serif;
         border: 1px solid var(--neutral-300);
-
-        &:focus-visible {
-            offset: 0;
-            border-color: var(--primary);
-            outline: 3px solid var(--primary);
-        }
     }
 }
 
 .errorMessage {
-    color: #dc143cff;
+    color: #ffffff;
+    line-height: 1.25;
+    margin-top: 0.4rem;
+    border-radius: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    background-color: #dc143cff;
 }

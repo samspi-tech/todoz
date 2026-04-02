@@ -37,3 +37,12 @@ body {
     color: var(--text);
     background-color: var(--background);
 }
+
+a,
+button,
+input {
+    &:focus-visible {
+        outline-offset: 1px;
+        outline: 4px solid hsl(from var(--primary) h s calc(l - 30));
+    }
+}
