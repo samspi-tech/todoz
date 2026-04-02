@@ -1,4 +1,9 @@
-import { type SubmitEventHandler, useState } from 'react';
+import {
+    type Dispatch,
+    type SetStateAction,
+    type SubmitEventHandler,
+    useState,
+} from 'react';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -8,9 +13,15 @@ import type { TasksListType } from '@/types/types.ts';
 
 interface CreateTasksListFormProps {
     onClose: () => void;
+    error: string | null;
+    setError: Dispatch<SetStateAction<string | null>>;
 }
 
-const CreateTasksListForm = ({ onClose }: CreateTasksListFormProps) => {
+const CreateTasksListForm = ({
+    onClose,
+    error,
+    setError,
+}: CreateTasksListFormProps) => {
     const [title, setTitle] = useState('');
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
@@ -19,10 +30,12 @@ const CreateTasksListForm = ({ onClose }: CreateTasksListFormProps) => {
         const titleInput = title.trim();
 
         if (!titleInput) {
+            setError('Title is required.');
+
             return;
         }
 
-        const id = title.toLowerCase().split(' ').join('-');
+        const id = title.split(' ').join('-');
 
         const newList = {
             id,
@@ -34,6 +47,9 @@ const CreateTasksListForm = ({ onClose }: CreateTasksListFormProps) => {
         const isTitleDuplicate = localStorageList?.includes(titleInput);
 
         if (isTitleDuplicate) {
+            setTitle('');
+            setError(`"${title}" is a duplicate. Title must be unique.`);
+
             return;
         }
 
@@ -47,6 +63,7 @@ const CreateTasksListForm = ({ onClose }: CreateTasksListFormProps) => {
         );
 
         setTitle('');
+        setError(null);
         onClose();
     };
 
@@ -57,6 +74,7 @@ const CreateTasksListForm = ({ onClose }: CreateTasksListFormProps) => {
                 type="text"
                 label="Title"
                 value={title}
+                error={error}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Your list title"
                 autoFocus

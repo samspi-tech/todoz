@@ -1,13 +1,16 @@
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
+import CreateTasksListForm from '@/components/createTasksListForm/CreateTasksListForm.tsx';
 
 import styles from './TasksList.module.css';
 import { useModal } from '@/hooks/useModal.ts';
-import CreateTasksListForm from '@/components/createTasksListForm/CreateTasksListForm.tsx';
 
 const TasksList = () => {
+    const [error, setError] = useState<string | null>(null);
+
     const { dialogRef, handleOpenModal, handleCloseModal } = useModal();
 
     return (
@@ -21,9 +24,16 @@ const TasksList = () => {
             <Modal
                 ref={dialogRef}
                 title="Create list"
-                onClose={handleCloseModal}
+                onClose={() => {
+                    setError(null);
+                    handleCloseModal();
+                }}
             >
-                <CreateTasksListForm onClose={handleCloseModal} />
+                <CreateTasksListForm
+                    error={error}
+                    setError={setError}
+                    onClose={handleCloseModal}
+                />
             </Modal>
         </section>
     );

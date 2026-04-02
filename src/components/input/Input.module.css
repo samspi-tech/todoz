@@ -9,6 +9,7 @@
         padding: 0 0.8rem;
         font-size: 1.6rem;
         border-radius: 0.8rem;
+        color: var(--neutral-700);
         font-family: 'Poppins', sans-serif;
         border: 1px solid var(--neutral-300);
 
@@ -18,4 +19,8 @@
             outline: 3px solid var(--primary);
         }
     }
+}
+
+.errorMessage {
+    color: #dc143cff;
 }
