@@ -27,24 +27,23 @@ const CreateTasksListForm = ({
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        const titleInput = title.trim();
+        const titleValue = title.trim();
 
-        if (!titleInput) {
+        if (!titleValue) {
             setError('Title is required.');
 
             return;
         }
 
-        const id = title.split(' ').join('-');
-
-        const newList = {
-            id,
-            title,
-        };
+        const id = titleValue
+            .toLowerCase()
+            .split(' ')
+            .filter((item) => item !== '')
+            .join('-');
 
         const localStorageList = localStorage.getItem('tasksList');
 
-        const isTitleDuplicate = localStorageList?.includes(titleInput);
+        const isTitleDuplicate = localStorageList?.includes(id);
 
         if (isTitleDuplicate) {
             setTitle('');
@@ -52,6 +51,16 @@ const CreateTasksListForm = ({
 
             return;
         }
+
+        const listTitle = titleValue
+            .split(' ')
+            .filter((item) => item !== '')
+            .join(' ');
+
+        const newList = {
+            id,
+            title: listTitle,
+        };
 
         const parsedLocalStorageList: TasksListType[] = localStorageList
             ? JSON.parse(localStorageList)
