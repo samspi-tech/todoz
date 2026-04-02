@@ -29,15 +29,14 @@ const CreateTasksListForm = ({ onClose }: CreateTasksListFormProps) => {
 
         const localStorageList = localStorage.getItem('tasksList');
 
-        if (!localStorageList) {
-            localStorage.setItem('tasksList', JSON.stringify([newList]));
-        } else {
-            const parsedList: TasksListType[] = JSON.parse(localStorageList);
+        const parsedLocalStorageList: TasksListType[] = localStorageList
+            ? JSON.parse(localStorageList)
+            : [];
 
-            const updatedList = [newList, ...parsedList];
-
-            localStorage.setItem('tasksList', JSON.stringify(updatedList));
-        }
+        localStorage.setItem(
+            'tasksList',
+            JSON.stringify([newList, ...parsedLocalStorageList])
+        );
 
         setTitle('');
         onClose();
