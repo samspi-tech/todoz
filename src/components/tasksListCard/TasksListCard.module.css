@@ -1,0 +1,29 @@
+.card {
+    border-radius: 1.6rem;
+    padding: 1.2rem 0.8rem;
+    corner-shape: squircle;
+    color: var(--neutral-900);
+    box-shadow: var(--shadow);
+    background-color: var(--primary);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.6rem;
+
+    & header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.cardBody {
+    padding: 0 0.4rem;
+
+    & h3 {
+        font-size: 2rem;
+        line-height: 1.1;
+        word-wrap: break-word;
+    }
+}
