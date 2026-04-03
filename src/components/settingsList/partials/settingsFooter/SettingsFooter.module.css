@@ -1,0 +1,38 @@
+.footer {
+    width: 100%;
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deleteBtn {
+    width: 100%;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: left;
+    font-size: 1.6rem;
+    max-width: 36.9rem;
+    border-radius: 0.8rem;
+    corner-shape: squircle;
+    letter-spacing: 0.02em;
+    padding: 0.8rem 1.2rem;
+    background-color: #dc143cff;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    & svg {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+.pressed {
+    opacity: 0.75;
+}
