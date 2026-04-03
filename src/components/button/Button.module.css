@@ -27,15 +27,16 @@
     padding: 1.6rem 2.4rem;
 }
 
-.rounded {
+.square {
     width: 5.6rem;
     height: 5.6rem;
-    border-radius: 50%;
+    border-radius: 1.6rem;
+    corner-shape: squircle;
 }
 
 .small {
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 2.8rem;
+    height: 2.8rem;
 }
 
 .pressed {

@@ -1,7 +1,9 @@
 .card {
+    break-inside: avoid;
+    margin-bottom: 1.2rem;
     border-radius: 1.6rem;
-    padding: 1.2rem 0.8rem;
     corner-shape: squircle;
+    padding: 1.2rem 0.8rem;
     color: var(--neutral-900);
     box-shadow: var(--shadow);
     background-color: var(--primary);
@@ -9,12 +11,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 1.6rem;
+    gap: 0.8rem;
 
     & header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
 }
 

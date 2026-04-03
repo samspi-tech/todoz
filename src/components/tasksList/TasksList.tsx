@@ -1,25 +1,44 @@
 import { Plus } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
 import CreateTasksListForm from '@/components/createTasksListForm/CreateTasksListForm.tsx';
+import Empty from '@/components/empty/Empty.tsx';
 
 import styles from './TasksList.module.css';
 import { useModal } from '@/hooks/useModal.ts';
+import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import TasksListCard from '@/components/tasksListCard/TasksListCard.tsx';
 
 const TasksList = () => {
     const [error, setError] = useState<string | null>(null);
 
+    const { taskLists, getAllTaskLists } = useTaskListsContext();
     const { dialogRef, handleOpenModal, handleCloseModal } = useModal();
+
+    useEffect(() => {
+        getAllTaskLists();
+    }, []);
 
     return (
         <section className={styles.taskListsContainer}>
             <h2>Your task lists</h2>
 
-            <Button variant="rounded" onClick={handleOpenModal}>
-                <Plus />
-            </Button>
+            {!taskLists.length && <Empty />}
+
+            <div className={styles.cardsContainer}>
+                {taskLists &&
+                    taskLists.map((list) => (
+                        <TasksListCard key={list.id} title={list.title} />
+                    ))}
+            </div>
+
+            <div className={styles.addButtonContainer}>
+                <Button variant="square" onClick={handleOpenModal}>
+                    <Plus />
+                </Button>
+            </div>
 
             <Modal
                 ref={dialogRef}

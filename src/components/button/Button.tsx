@@ -4,7 +4,7 @@ import styles from './Button.module.css';
 
 interface ButtonProps extends ComponentProps<'button'> {
     size?: 'small';
-    variant?: 'primary' | 'rounded';
+    variant?: 'primary' | 'square';
 }
 
 const Button = ({

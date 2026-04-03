@@ -10,6 +10,7 @@ import Button from '@/components/button/Button.tsx';
 
 import styles from './CreateTasksListForm.module.css';
 import type { TasksListType } from '@/types/types.ts';
+import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 
 interface CreateTasksListFormProps {
     onClose: () => void;
@@ -23,6 +24,8 @@ const CreateTasksListForm = ({
     setError,
 }: CreateTasksListFormProps) => {
     const [title, setTitle] = useState('');
+
+    const { getAllTaskLists } = useTaskListsContext();
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
@@ -41,7 +44,7 @@ const CreateTasksListForm = ({
             .filter((item) => item !== '')
             .join('-');
 
-        const localStorageList = localStorage.getItem('tasksList');
+        const localStorageList = localStorage.getItem('taskLists');
 
         const isTitleDuplicate = localStorageList?.includes(id);
 
@@ -67,12 +70,13 @@ const CreateTasksListForm = ({
             : [];
 
         localStorage.setItem(
-            'tasksList',
+            'taskLists',
             JSON.stringify([newList, ...parsedLocalStorageList])
         );
 
         setTitle('');
         setError(null);
+        getAllTaskLists();
         onClose();
     };
 

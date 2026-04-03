@@ -1,4 +1,4 @@
-import { EllipsisVertical, Pin } from 'lucide-react';
+import { EllipsisVertical } from 'lucide-react';
 
 import styles from './TasksListCard.module.css';
 
@@ -11,7 +11,6 @@ const TasksListCard = ({ title, footerText }: TasksListCardProps) => {
     return (
         <article className={styles.card}>
             <header>
-                <Pin />
                 <EllipsisVertical />
             </header>
 
