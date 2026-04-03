@@ -1,4 +1,10 @@
-import type { PropsWithChildren, RefObject } from 'react';
+import {
+    type Dispatch,
+    type PropsWithChildren,
+    type RefObject,
+    type SetStateAction,
+    useEffect,
+} from 'react';
 import { X } from 'lucide-react';
 
 import Button from '@/components/button/Button.tsx';
@@ -9,6 +15,9 @@ interface ModalProps {
     title: string;
     onClose: () => void;
     ref: RefObject<HTMLDialogElement | null>;
+    runInterval?: boolean;
+    timer?: number;
+    setTimer?: Dispatch<SetStateAction<number>>;
 }
 
 const Modal = ({
@@ -16,7 +25,24 @@ const Modal = ({
     onClose,
     ref,
     children,
+    runInterval = false,
+    timer = 0,
+    setTimer,
 }: PropsWithChildren<ModalProps>) => {
+    useEffect(() => {
+        if (!runInterval || !setTimer || timer <= 0) {
+            return;
+        }
+
+        const intervalId = setInterval(() => {
+            setTimer((prevState) => prevState - 1);
+        }, 1000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [timer > 0]);
+
     return (
         <dialog ref={ref} className={styles.modal}>
             <header>

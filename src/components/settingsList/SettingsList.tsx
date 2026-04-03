@@ -16,8 +16,9 @@ const SettingsList = () => {
     const isDisabled = timer > 0;
 
     const navigate = useNavigate();
-    const { deleteLocalStorage, taskLists } = useTaskListsContext();
     const { dialogRef, handleOpenModal, handleCloseModal } = useModal();
+    const { deleteLocalStorage, taskLists, getAllTaskLists } =
+        useTaskListsContext();
 
     const handleDeleteLocalStorage = () => {
         deleteLocalStorage();
@@ -31,18 +32,8 @@ const SettingsList = () => {
     };
 
     useEffect(() => {
-        if (timer <= 0) {
-            return;
-        }
-
-        const intervalId = setInterval(() => {
-            setTimer((prevState) => prevState - 1);
-        }, 1000);
-
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, [isDisabled]);
+        getAllTaskLists();
+    }, []);
 
     return (
         <section className={styles.settingsContainer}>
@@ -64,6 +55,9 @@ const SettingsList = () => {
             )}
 
             <Modal
+                runInterval={true}
+                setTimer={setTimer}
+                timer={timer}
                 ref={dialogRef}
                 onClose={handleCloseModal}
                 title="Are you sure you want to delete all data?"
