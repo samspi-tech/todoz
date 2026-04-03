@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 import Modal from '@/components/modal/Modal.tsx';
@@ -11,14 +11,15 @@ import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 import { routerOptions } from '@/react-router/options.ts';
 
 const SettingsList = () => {
-    const [timer, setTimer] = useState(0);
-
-    const isDisabled = timer > 0;
-
     const navigate = useNavigate();
-    const { dialogRef, handleOpenModal, handleCloseModal } = useModal();
+
+    const { dialogRef, handleOpenModal, handleCloseModal, timer, setTimer } =
+        useModal();
+
     const { deleteLocalStorage, taskLists, getAllTaskLists } =
         useTaskListsContext();
+
+    const isDisabled = timer > 0;
 
     const handleDeleteLocalStorage = () => {
         deleteLocalStorage();

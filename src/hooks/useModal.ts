@@ -1,6 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 export const useModal = () => {
+    const [timer, setTimer] = useState(0);
+
     const dialogRef = useRef<HTMLDialogElement>(null);
 
     const handleOpenModal = () => {
@@ -27,5 +29,7 @@ export const useModal = () => {
         dialogRef,
         handleOpenModal,
         handleCloseModal,
+        timer,
+        setTimer,
     };
 };
