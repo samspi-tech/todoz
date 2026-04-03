@@ -14,6 +14,10 @@
     background-color: var(--primary);
     font-family: 'Poppins', sans-serif;
 
+    &:disabled {
+        filter: brightness(0.7);
+    }
+
     & svg {
         width: 2rem;
         height: 2rem;
@@ -21,10 +25,17 @@
     }
 }
 
-.primary {
+.primary,
+.danger {
     border-radius: 1.6rem;
     corner-shape: squircle;
     padding: 1.6rem 2.4rem;
+}
+
+& .danger {
+    width: 100%;
+    color: #ffffff;
+    background-color: #dc143cff;
 }
 
 .square {
@@ -37,8 +48,12 @@
 .small {
     width: 2.8rem;
     height: 2.8rem;
+    min-width: 2.8rem;
+    min-height: 2.8rem;
 }
 
 .pressed {
-    opacity: 50%;
+    &:not(:disabled) {
+        opacity: 75%;
+    }
 }

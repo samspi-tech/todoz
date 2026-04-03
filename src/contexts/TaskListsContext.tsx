@@ -6,6 +6,7 @@ interface TaskListsContextValues {
     taskLists: TasksListType[];
     getAllTaskLists: () => void;
     getSingleTasksList: (id: string) => TasksListType | undefined;
+    deleteLocalStorage: () => void;
 }
 
 export const TaskListsContext = createContext<TaskListsContextValues | null>(
@@ -35,12 +36,18 @@ export const TaskListsProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
+    const deleteLocalStorage = () => {
+        localStorage.clear();
+        setTaskLists([]);
+    };
+
     return (
         <TaskListsContext.Provider
             value={{
                 taskLists,
                 getAllTaskLists,
                 getSingleTasksList,
+                deleteLocalStorage,
             }}
         >
             {children}
