@@ -7,6 +7,7 @@ interface TaskListsContextValues {
     getAllTaskLists: () => void;
     getSingleTasksList: (id: string) => TasksListType | undefined;
     deleteLocalStorage: () => void;
+    hasDataLoaded: boolean;
 }
 
 export const TaskListsContext = createContext<TaskListsContextValues | null>(
@@ -14,6 +15,7 @@ export const TaskListsContext = createContext<TaskListsContextValues | null>(
 );
 
 export const TaskListsProvider = ({ children }: PropsWithChildren) => {
+    const [hasDataLoaded, setHasDataLoaded] = useState(false);
     const [taskLists, setTaskLists] = useState<TasksListType[]>([]);
 
     const getAllTaskLists = () => {
@@ -22,6 +24,8 @@ export const TaskListsProvider = ({ children }: PropsWithChildren) => {
         if (localStorageTaskLists) {
             setTaskLists(JSON.parse(localStorageTaskLists));
         }
+
+        setHasDataLoaded(true);
     };
 
     const getSingleTasksList = (id: string) => {
@@ -48,6 +52,7 @@ export const TaskListsProvider = ({ children }: PropsWithChildren) => {
                 getAllTaskLists,
                 getSingleTasksList,
                 deleteLocalStorage,
+                hasDataLoaded,
             }}
         >
             {children}

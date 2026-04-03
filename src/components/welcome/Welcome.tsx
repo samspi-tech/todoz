@@ -11,12 +11,12 @@ const Welcome = () => {
     const navigate = useNavigate();
 
     const handleNavigateToTasksPage = () => {
-        const routerOptions: RouterNavigateOptions = {
+        const options: RouterNavigateOptions = {
             replace: true,
             viewTransition: true,
         };
 
-        navigate('/tasks', routerOptions);
+        navigate('/tasks', options);
     };
 
     return (
