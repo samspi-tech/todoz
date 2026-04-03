@@ -1,9 +1,9 @@
-import { Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import Modal from '@/components/modal/Modal.tsx';
 import Button from '@/components/button/Button.tsx';
+import SettingsFooter from '@/components/settingsList/partials/settingsFooter/SettingsFooter.tsx';
 
 import styles from './SettingsList.module.css';
 import { useModal } from '@/hooks/useModal.ts';
@@ -12,7 +12,6 @@ import { routerOptions } from '@/react-router/options.ts';
 
 const SettingsList = () => {
     const [timer, setTimer] = useState(0);
-    const [isPressed, setIsPressed] = useState(false);
 
     const isDisabled = timer > 0;
 
@@ -33,20 +32,7 @@ const SettingsList = () => {
     return (
         <section className={styles.settingsContainer}>
             {taskLists.length > 0 && (
-                <footer>
-                    <button
-                        onClick={() => {
-                            handleOpenModal();
-                            setTimer(2);
-                        }}
-                        onTouchStart={() => setIsPressed(true)}
-                        onTouchEnd={() => setIsPressed(false)}
-                        className={`${styles.deleteBtn} ${isPressed && styles.pressed}`}
-                    >
-                        <Trash2 />
-                        <span>Delete all data</span>
-                    </button>
-                </footer>
+                <SettingsFooter onOpen={handleOpenModal} setTimer={setTimer} />
             )}
 
             <Modal
