@@ -5,6 +5,7 @@ import type { TasksListType } from '@/types/types.ts';
 interface TaskListsContextValues {
     taskLists: TasksListType[];
     getAllTaskLists: () => void;
+    getSingleTasksList: (id: string) => TasksListType | undefined;
 }
 
 export const TaskListsContext = createContext<TaskListsContextValues | null>(
@@ -22,11 +23,24 @@ export const TaskListsProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
+    const getSingleTasksList = (id: string) => {
+        const localStorageTaskLists = localStorage.getItem('taskLists');
+
+        if (localStorageTaskLists) {
+            const parsedTaskLists: TasksListType[] = JSON.parse(
+                localStorageTaskLists
+            );
+
+            return parsedTaskLists.filter((list) => list.id === id).at(0);
+        }
+    };
+
     return (
         <TaskListsContext.Provider
             value={{
                 taskLists,
                 getAllTaskLists,
+                getSingleTasksList,
             }}
         >
             {children}

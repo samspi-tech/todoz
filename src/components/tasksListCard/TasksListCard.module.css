@@ -29,3 +29,8 @@
         word-wrap: break-word;
     }
 }
+
+.pressed {
+    opacity: 0.75;
+    transform: scale(0.95);
+}

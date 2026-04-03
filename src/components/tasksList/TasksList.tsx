@@ -5,11 +5,11 @@ import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
 import CreateTasksListForm from '@/components/createTasksListForm/CreateTasksListForm.tsx';
 import Empty from '@/components/empty/Empty.tsx';
+import TasksListCard from '@/components/tasksListCard/TasksListCard.tsx';
 
 import styles from './TasksList.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
-import TasksListCard from '@/components/tasksListCard/TasksListCard.tsx';
 
 const TasksList = () => {
     const [error, setError] = useState<string | null>(null);
@@ -30,7 +30,7 @@ const TasksList = () => {
             <div className={styles.cardsContainer}>
                 {taskLists &&
                     taskLists.map((list) => (
-                        <TasksListCard key={list.id} title={list.title} />
+                        <TasksListCard key={list.id} cardDetails={list} />
                     ))}
             </div>
 
@@ -48,11 +48,7 @@ const TasksList = () => {
                     handleCloseModal();
                 }}
             >
-                <CreateTasksListForm
-                    error={error}
-                    setError={setError}
-                    onClose={handleCloseModal}
-                />
+                <CreateTasksListForm error={error} setError={setError} />
             </Modal>
         </section>
     );

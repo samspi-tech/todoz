@@ -4,28 +4,23 @@ import {
     type SubmitEventHandler,
     useState,
 } from 'react';
+import { useNavigate } from 'react-router';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
 
 import styles from './CreateTasksListForm.module.css';
 import type { TasksListType } from '@/types/types.ts';
-import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 
 interface CreateTasksListFormProps {
-    onClose: () => void;
     error: string | null;
     setError: Dispatch<SetStateAction<string | null>>;
 }
 
-const CreateTasksListForm = ({
-    onClose,
-    error,
-    setError,
-}: CreateTasksListFormProps) => {
+const CreateTasksListForm = ({ error, setError }: CreateTasksListFormProps) => {
     const [title, setTitle] = useState('');
 
-    const { getAllTaskLists } = useTaskListsContext();
+    const navigate = useNavigate();
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
@@ -76,8 +71,7 @@ const CreateTasksListForm = ({
 
         setTitle('');
         setError(null);
-        getAllTaskLists();
-        onClose();
+        navigate(`/tasks/${id}`, { viewTransition: true });
     };
 
     return (

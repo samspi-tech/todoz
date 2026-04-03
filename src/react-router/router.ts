@@ -4,6 +4,7 @@ import Home from '@/pages/Home.tsx';
 import Settings from '@/pages/Settings.tsx';
 import Tasks from '@/pages/Tasks.tsx';
 import AppLayout from '@/pages/appLayout/AppLayout.tsx';
+import TasksListDetails from '@/pages/TasksListDetails.tsx';
 
 export const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
             {
                 path: '/tasks',
                 Component: Tasks,
+            },
+            {
+                path: '/tasks/:id',
+                Component: TasksListDetails,
             },
             {
                 path: '/settings',
