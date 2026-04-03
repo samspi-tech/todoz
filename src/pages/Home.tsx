@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import { type RouterNavigateOptions, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import Welcome from '@/components/welcome/Welcome.tsx';
 
 import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import { routerOptions } from '@/react-router/options.ts';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -13,12 +14,7 @@ const Home = () => {
         getAllTaskLists();
 
         if (hasDataLoaded && taskLists.length > 0) {
-            const options: RouterNavigateOptions = {
-                replace: true,
-                viewTransition: true,
-            };
-
-            navigate('/tasks', options);
+            navigate('/tasks', routerOptions);
         }
     }, [hasDataLoaded]);
 

@@ -1,6 +1,6 @@
 import { Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { type RouterNavigateOptions, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import Modal from '@/components/modal/Modal.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -8,6 +8,7 @@ import Button from '@/components/button/Button.tsx';
 import styles from './SettingsList.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import { routerOptions } from '@/react-router/options.ts';
 
 const SettingsList = () => {
     const [timer, setTimer] = useState(0);
@@ -22,13 +23,7 @@ const SettingsList = () => {
 
     const handleDeleteLocalStorage = () => {
         deleteLocalStorage();
-
-        const options: RouterNavigateOptions = {
-            replace: true,
-            viewTransition: true,
-        };
-
-        navigate('/', options);
+        navigate('/', routerOptions);
     };
 
     useEffect(() => {

@@ -1,22 +1,18 @@
 import { ArrowRight } from 'lucide-react';
-import { type RouterNavigateOptions, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import Button from '@/components/button/Button.tsx';
 
 import styles from './Welcome.module.css';
 import lightLogo from '@/assets/light-logo.svg';
 import illustration from '@/assets/unsplash-irvan-maulana-illustration.jpg';
+import { routerOptions } from '@/react-router/options.ts';
 
 const Welcome = () => {
     const navigate = useNavigate();
 
     const handleNavigateToTasksPage = () => {
-        const options: RouterNavigateOptions = {
-            replace: true,
-            viewTransition: true,
-        };
-
-        navigate('/tasks', options);
+        navigate('/tasks', routerOptions);
     };
 
     return (
