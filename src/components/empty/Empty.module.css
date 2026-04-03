@@ -1,0 +1,18 @@
+.emptyContainer {
+    flex-grow: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageContainer {
+    width: 35rem;
+    height: 35rem;
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

@@ -1,10 +1,13 @@
 .taskListsContainer {
-    height: 100%;
+    flex-grow: 1;
     position: relative;
+
+    display: flex;
+    flex-direction: column;
 
     & > button {
         position: absolute;
-        bottom: 4.8rem;
+        bottom: 0;
         left: 50%;
         transform: translateX(-50%);
 
