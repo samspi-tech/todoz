@@ -10,7 +10,12 @@ import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
 
 import styles from './CreateTasksListForm.module.css';
-import type { TasksListType } from '@/types/types.ts';
+import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import {
+    cleanUpTitle,
+    convertTitleToId,
+    saveListToLocalStorage,
+} from '@/components/createTasksListForm/helpers.ts';
 
 interface CreateTasksListFormProps {
     error: string | null;
@@ -21,6 +26,7 @@ const CreateTasksListForm = ({ error, setError }: CreateTasksListFormProps) => {
     const [title, setTitle] = useState('');
 
     const navigate = useNavigate();
+    const { getSingleTasksList } = useTaskListsContext();
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
@@ -33,15 +39,9 @@ const CreateTasksListForm = ({ error, setError }: CreateTasksListFormProps) => {
             return;
         }
 
-        const id = titleValue
-            .toLowerCase()
-            .split(' ')
-            .filter((item) => item !== '')
-            .join('-');
-
-        const localStorageList = localStorage.getItem('taskLists');
-
-        const isTitleDuplicate = localStorageList?.includes(id);
+        const id = convertTitleToId(titleValue);
+        const localStorageList = getSingleTasksList(id);
+        const isTitleDuplicate = localStorageList?.id === id;
 
         if (isTitleDuplicate) {
             setTitle('');
@@ -50,27 +50,14 @@ const CreateTasksListForm = ({ error, setError }: CreateTasksListFormProps) => {
             return;
         }
 
-        const listTitle = titleValue
-            .split(' ')
-            .filter((item) => item !== '')
-            .join(' ');
+        const listTitle = cleanUpTitle(titleValue);
 
         const newList = {
             id,
             title: listTitle,
         };
 
-        const parsedLocalStorageList: TasksListType[] = localStorageList
-            ? JSON.parse(localStorageList)
-            : [];
-
-        localStorage.setItem(
-            'taskLists',
-            JSON.stringify([newList, ...parsedLocalStorageList])
-        );
-
-        setTitle('');
-        setError(null);
+        saveListToLocalStorage(newList);
         navigate(`/tasks/${id}`, { viewTransition: true });
     };
 
