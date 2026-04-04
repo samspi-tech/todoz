@@ -15,6 +15,16 @@ export const useModal = () => {
         currDialog.showModal();
     };
 
+    const handleOpenPopover = () => {
+        const currDialog = dialogRef.current;
+
+        if (!currDialog) {
+            return;
+        }
+
+        currDialog.showPopover();
+    };
+
     const handleCloseModal = () => {
         const currDialog = dialogRef.current;
 
@@ -29,6 +39,7 @@ export const useModal = () => {
         dialogRef,
         handleOpenModal,
         handleCloseModal,
+        handleOpenPopover,
         timer,
         setTimer,
     };

@@ -57,3 +57,7 @@
         opacity: 75%;
     }
 }
+
+.anchor {
+    anchor-name: --card-button;
+}

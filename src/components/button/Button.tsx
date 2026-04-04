@@ -4,12 +4,14 @@ import styles from './Button.module.css';
 
 interface ButtonProps extends ComponentProps<'button'> {
     size?: 'small';
+    isAnchor?: boolean;
     variant?: 'primary' | 'square' | 'danger';
 }
 
 const Button = ({
     variant = 'primary',
     size,
+    isAnchor = false,
     ...rest
 }: PropsWithChildren<ButtonProps>) => {
     const [isPressed, setIsPressed] = useState(false);
@@ -18,7 +20,7 @@ const Button = ({
         <button
             onTouchStart={() => setIsPressed(true)}
             onTouchEnd={() => setIsPressed(false)}
-            className={`${styles.button} ${styles[variant]} ${size && styles[size]} ${isPressed && styles.pressed}`}
+            className={`${styles.button} ${styles[variant]} ${size && styles[size]} ${isPressed && styles.pressed} ${isAnchor && styles.anchor}`}
             {...rest}
         />
     );
