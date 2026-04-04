@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
@@ -12,10 +12,8 @@ import { useModal } from '@/hooks/useModal.ts';
 import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 
 const TasksList = () => {
-    const [error, setError] = useState<string | null>(null);
-
-    const { taskLists, getAllTaskLists } = useTaskListsContext();
     const { dialogRef, handleOpenModal, handleCloseModal } = useModal();
+    const { taskLists, getAllTaskLists, setError } = useTaskListsContext();
 
     useEffect(() => {
         getAllTaskLists();
@@ -23,16 +21,23 @@ const TasksList = () => {
 
     return (
         <section className={styles.taskListsContainer}>
-            <h2>Your task lists</h2>
+            {!taskLists.length && (
+                <>
+                    <h2>Add a new list</h2>
+                    <Empty />
+                </>
+            )}
 
-            {!taskLists.length && <Empty />}
-
-            <div className={styles.cardsContainer}>
-                {taskLists &&
-                    taskLists.map((list) => (
-                        <TasksListCard key={list.id} cardDetails={list} />
-                    ))}
-            </div>
+            {taskLists.length > 0 && (
+                <>
+                    <h2>Your task lists</h2>
+                    <div className={styles.cardsContainer}>
+                        {taskLists.map((list) => (
+                            <TasksListCard key={list.id} cardDetails={list} />
+                        ))}
+                    </div>
+                </>
+            )}
 
             <div className={styles.addButtonContainer}>
                 <Button variant="square" onClick={handleOpenModal}>
@@ -48,7 +53,7 @@ const TasksList = () => {
                     handleCloseModal();
                 }}
             >
-                <CreateTasksListForm error={error} setError={setError} />
+                <CreateTasksListForm />
             </Modal>
         </section>
     );

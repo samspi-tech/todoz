@@ -1,4 +1,10 @@
-import { createContext, type PropsWithChildren, useState } from 'react';
+import {
+    createContext,
+    type Dispatch,
+    type PropsWithChildren,
+    type SetStateAction,
+    useState,
+} from 'react';
 
 import type { TasksListType } from '@/types/types.ts';
 
@@ -8,6 +14,8 @@ interface TaskListsContextValues {
     getSingleTasksList: (id: string) => TasksListType | undefined;
     deleteLocalStorage: () => void;
     hasDataLoaded: boolean;
+    error: string | null;
+    setError: Dispatch<SetStateAction<string | null>>;
 }
 
 export const TaskListsContext = createContext<TaskListsContextValues | null>(
@@ -15,6 +23,7 @@ export const TaskListsContext = createContext<TaskListsContextValues | null>(
 );
 
 export const TaskListsProvider = ({ children }: PropsWithChildren) => {
+    const [error, setError] = useState<string | null>(null);
     const [hasDataLoaded, setHasDataLoaded] = useState(false);
     const [taskLists, setTaskLists] = useState<TasksListType[]>([]);
 
@@ -53,6 +62,8 @@ export const TaskListsProvider = ({ children }: PropsWithChildren) => {
                 getSingleTasksList,
                 deleteLocalStorage,
                 hasDataLoaded,
+                error,
+                setError,
             }}
         >
             {children}

@@ -1,9 +1,4 @@
-import {
-    type Dispatch,
-    type SetStateAction,
-    type SubmitEventHandler,
-    useState,
-} from 'react';
+import { type SubmitEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import Input from '@/components/input/Input.tsx';
@@ -17,16 +12,11 @@ import {
     saveListToLocalStorage,
 } from '@/components/createTasksListForm/helpers.ts';
 
-interface CreateTasksListFormProps {
-    error: string | null;
-    setError: Dispatch<SetStateAction<string | null>>;
-}
-
-const CreateTasksListForm = ({ error, setError }: CreateTasksListFormProps) => {
+const CreateTasksListForm = () => {
     const [title, setTitle] = useState('');
 
     const navigate = useNavigate();
-    const { getSingleTasksList } = useTaskListsContext();
+    const { getSingleTasksList, error, setError } = useTaskListsContext();
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
