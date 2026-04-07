@@ -12,6 +12,7 @@ interface TaskListsContextValues {
     taskLists: TasksListType[];
     getAllTaskLists: () => void;
     getSingleTasksList: (id: string) => TasksListType | undefined;
+    deleteSingleTasksList: (id: string) => void;
     deleteLocalStorage: () => void;
     hasDataLoaded: boolean;
     error: string | null;
@@ -49,6 +50,24 @@ export const TaskListsProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
+    const deleteSingleTasksList = (id: string) => {
+        const localStorageTaskLists = localStorage.getItem('taskLists');
+
+        if (localStorageTaskLists) {
+            const parsedTaskLists: TasksListType[] = JSON.parse(
+                localStorageTaskLists
+            );
+
+            const updatedList = parsedTaskLists.filter(
+                (list) => list.id !== id
+            );
+
+            localStorage.setItem('taskLists', JSON.stringify(updatedList));
+
+            getAllTaskLists();
+        }
+    };
+
     const deleteLocalStorage = () => {
         localStorage.clear();
         setTaskLists([]);
@@ -60,6 +79,7 @@ export const TaskListsProvider = ({ children }: PropsWithChildren) => {
                 taskLists,
                 getAllTaskLists,
                 getSingleTasksList,
+                deleteSingleTasksList,
                 deleteLocalStorage,
                 hasDataLoaded,
                 error,

@@ -32,7 +32,7 @@
     padding: 1.6rem 2.4rem;
 }
 
-& .danger {
+.danger {
     width: 100%;
     color: #ffffff;
     background-color: #dc143cff;

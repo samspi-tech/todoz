@@ -10,6 +10,7 @@ import styles from './TasksListCard.module.css';
 import type { TasksListType } from '@/types/types.ts';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedButtonAnchorContext } from '@/hooks/useSelectedButtonAnchorContext.ts';
+import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 
 interface TasksListCardProps {
     cardDetails: TasksListType;
@@ -21,6 +22,7 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
 
     const navigate = useNavigate();
     const { dialogRef, handleOpenPopover } = useModal();
+    const { deleteSingleTasksList } = useTaskListsContext();
     const { selectedCardTitle, setSelectedCardTitle } =
         useSelectedButtonAnchorContext();
 
@@ -50,7 +52,9 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
                 </Button>
 
                 <Popover ref={dialogRef}>
-                    <OptionsDropdownMenu />
+                    <OptionsDropdownMenu
+                        onDelete={() => deleteSingleTasksList(id)}
+                    />
                 </Popover>
             </header>
 
