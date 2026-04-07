@@ -87,7 +87,7 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
 
             <Modal
                 ref={modalRef}
-                title="Edit your list"
+                title="Edit list"
                 onClose={() => {
                     setError(null);
                     handleCloseModal();
@@ -96,7 +96,6 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
                 <TasksListForm
                     isUpdate
                     editListId={id}
-                    defaultTitle={title}
                     onClose={handleCloseModal}
                 />
             </Modal>

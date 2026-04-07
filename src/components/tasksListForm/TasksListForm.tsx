@@ -15,7 +15,6 @@ import {
 interface TasksListFormProps {
     isUpdate?: boolean;
     editListId?: string;
-    defaultTitle?: string;
     onClose?: () => void;
 }
 
