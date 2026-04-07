@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
-import CreateTasksListForm from '@/components/createTasksListForm/CreateTasksListForm.tsx';
+import TasksListForm from '@/components/tasksListForm/TasksListForm.tsx';
 import Empty from '@/components/empty/Empty.tsx';
 import TasksListCard from '@/components/tasksListCard/TasksListCard.tsx';
 
@@ -13,7 +13,9 @@ import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 
 const TasksList = () => {
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
-    const { taskLists, getAllTaskLists, setError } = useTaskListsContext();
+
+    const { taskLists, getAllTaskLists, setError, setTitle } =
+        useTaskListsContext();
 
     useEffect(() => {
         getAllTaskLists();
@@ -40,7 +42,13 @@ const TasksList = () => {
             )}
 
             <div className={styles.addButtonContainer}>
-                <Button variant="square" onClick={handleOpenModal}>
+                <Button
+                    variant="square"
+                    onClick={() => {
+                        setTitle('');
+                        handleOpenModal();
+                    }}
+                >
                     <Plus />
                 </Button>
             </div>
@@ -53,7 +61,7 @@ const TasksList = () => {
                     handleCloseModal();
                 }}
             >
-                <CreateTasksListForm />
+                <TasksListForm />
             </Modal>
         </section>
     );

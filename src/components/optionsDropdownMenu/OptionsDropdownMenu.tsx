@@ -3,14 +3,18 @@ import { SquarePen, Trash2 } from 'lucide-react';
 import styles from './OptionsDropdownMenu.module.css';
 
 interface OptionsDropdownMenuProps {
+    onEdit: () => void;
     onDelete: () => void;
 }
 
-const OptionsDropdownMenu = ({ onDelete }: OptionsDropdownMenuProps) => {
+const OptionsDropdownMenu = ({
+    onEdit,
+    onDelete,
+}: OptionsDropdownMenuProps) => {
     return (
         <ul className={styles.dropdownMenu}>
             <li>
-                <button>
+                <button onClick={onEdit}>
                     <SquarePen />
                     <span>Edit</span>
                 </button>

@@ -11,6 +11,8 @@ import type { TasksListType } from '@/types/types.ts';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedButtonAnchorContext } from '@/hooks/useSelectedButtonAnchorContext.ts';
 import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import Modal from '@/components/modal/Modal.tsx';
+import TasksListForm from '@/components/tasksListForm/TasksListForm.tsx';
 
 interface TasksListCardProps {
     cardDetails: TasksListType;
@@ -21,10 +23,18 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
     const navigate = useNavigate();
-    const { popoverRef, handleOpenPopover } = useModal();
-    const { deleteSingleTasksList } = useTaskListsContext();
+    const { deleteSingleTasksList, setError, setTitle } = useTaskListsContext();
+
     const { selectedCardTitle, setSelectedCardTitle } =
         useSelectedButtonAnchorContext();
+
+    const {
+        popoverRef,
+        handleOpenPopover,
+        modalRef,
+        handleOpenModal,
+        handleCloseModal,
+    } = useModal();
 
     const { id, title } = cardDetails;
 
@@ -37,38 +47,60 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
     }, [selectedCardTitle]);
 
     return (
-        <article className={styles.card}>
-            <header>
-                <Button
-                    size="small"
-                    variant="square"
-                    isAnchor={isActiveAnchor}
-                    onClick={() => {
-                        handleOpenPopover();
-                        setSelectedCardTitle(title);
-                    }}
+        <>
+            <article className={styles.card}>
+                <header>
+                    <Button
+                        size="small"
+                        variant="square"
+                        isAnchor={isActiveAnchor}
+                        onClick={() => {
+                            handleOpenPopover();
+                            setSelectedCardTitle(title);
+                        }}
+                    >
+                        <EllipsisVertical />
+                    </Button>
+
+                    <Popover ref={popoverRef}>
+                        <OptionsDropdownMenu
+                            onEdit={() => {
+                                setTitle(title);
+                                handleOpenModal();
+                            }}
+                            onDelete={() => deleteSingleTasksList(id)}
+                        />
+                    </Popover>
+                </header>
+
+                <div
+                    className={`${styles.cardBody} ${isPressed && styles.pressed}`}
+                    onTouchStart={() => setIsPressed(true)}
+                    onTouchEnd={() => setIsPressed(false)}
+                    onClick={() =>
+                        navigate(`/tasks/${id}`, { viewTransition: true })
+                    }
                 >
-                    <EllipsisVertical />
-                </Button>
+                    <h3>{title}</h3>
+                </div>
+            </article>
 
-                <Popover ref={popoverRef}>
-                    <OptionsDropdownMenu
-                        onDelete={() => deleteSingleTasksList(id)}
-                    />
-                </Popover>
-            </header>
-
-            <div
-                className={`${styles.cardBody} ${isPressed && styles.pressed}`}
-                onTouchStart={() => setIsPressed(true)}
-                onTouchEnd={() => setIsPressed(false)}
-                onClick={() =>
-                    navigate(`/tasks/${id}`, { viewTransition: true })
-                }
+            <Modal
+                ref={modalRef}
+                title="Edit your list"
+                onClose={() => {
+                    setError(null);
+                    handleCloseModal();
+                }}
             >
-                <h3>{title}</h3>
-            </div>
-        </article>
+                <TasksListForm
+                    isUpdate
+                    editListId={id}
+                    defaultTitle={title}
+                    onClose={handleCloseModal}
+                />
+            </Modal>
+        </>
     );
 };
 
