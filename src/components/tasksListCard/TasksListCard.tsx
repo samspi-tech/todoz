@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import Popover from '@/components/popover/Popover.tsx';
 import Button from '@/components/button/Button.tsx';
+import OptionsDropdownMenu from '@/components/optionsDropdownMenu/OptionsDropdownMenu.tsx';
 
 import styles from './TasksListCard.module.css';
 import type { TasksListType } from '@/types/types.ts';
@@ -49,7 +50,7 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
                 </Button>
 
                 <Popover ref={dialogRef}>
-                    <p>options</p>
+                    <OptionsDropdownMenu />
                 </Popover>
             </header>
 
