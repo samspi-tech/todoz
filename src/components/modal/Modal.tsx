@@ -15,7 +15,6 @@ interface ModalProps {
     title: string;
     onClose: () => void;
     ref: RefObject<HTMLDialogElement | null>;
-    runInterval?: boolean;
     timer?: number;
     setTimer?: Dispatch<SetStateAction<number>>;
 }
@@ -25,12 +24,11 @@ const Modal = ({
     onClose,
     ref,
     children,
-    runInterval = false,
     timer = 0,
     setTimer,
 }: PropsWithChildren<ModalProps>) => {
     useEffect(() => {
-        if (!runInterval || !setTimer || timer <= 0) {
+        if (!setTimer || timer <= 0) {
             return;
         }
 

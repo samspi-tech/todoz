@@ -3,40 +3,42 @@ import { useRef, useState } from 'react';
 export const useModal = () => {
     const [timer, setTimer] = useState(0);
 
-    const dialogRef = useRef<HTMLDialogElement>(null);
+    const modalRef = useRef<HTMLDialogElement>(null);
+    const popoverRef = useRef<HTMLDialogElement>(null);
 
     const handleOpenModal = () => {
-        const currDialog = dialogRef.current;
+        const currModal = modalRef.current;
 
-        if (!currDialog) {
+        if (!currModal) {
             return;
         }
 
-        currDialog.showModal();
+        currModal.showModal();
     };
 
     const handleOpenPopover = () => {
-        const currDialog = dialogRef.current;
+        const currPopover = popoverRef.current;
 
-        if (!currDialog) {
+        if (!currPopover) {
             return;
         }
 
-        currDialog.showPopover();
+        currPopover.showPopover();
     };
 
     const handleCloseModal = () => {
-        const currDialog = dialogRef.current;
+        const currModal = modalRef.current;
 
-        if (!currDialog) {
+        if (!currModal) {
             return;
         }
 
-        currDialog.close();
+        currModal.close();
     };
 
     return {
-        dialogRef,
+        modalRef,
+        popoverRef,
         handleOpenModal,
         handleCloseModal,
         handleOpenPopover,

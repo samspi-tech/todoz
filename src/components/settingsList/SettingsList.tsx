@@ -13,7 +13,7 @@ import { routerOptions } from '@/react-router/options.ts';
 const SettingsList = () => {
     const navigate = useNavigate();
 
-    const { dialogRef, handleOpenModal, handleCloseModal, timer, setTimer } =
+    const { modalRef, handleOpenModal, handleCloseModal, timer, setTimer } =
         useModal();
 
     const { deleteLocalStorage, taskLists, getAllTaskLists } =
@@ -37,10 +37,9 @@ const SettingsList = () => {
             )}
 
             <Modal
-                runInterval={true}
-                setTimer={setTimer}
+                ref={modalRef}
                 timer={timer}
-                ref={dialogRef}
+                setTimer={setTimer}
                 onClose={handleCloseModal}
                 title="Are you sure you want to delete all data?"
             >

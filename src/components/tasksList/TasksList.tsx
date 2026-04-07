@@ -12,7 +12,7 @@ import { useModal } from '@/hooks/useModal.ts';
 import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 
 const TasksList = () => {
-    const { dialogRef, handleOpenModal, handleCloseModal } = useModal();
+    const { modalRef, handleOpenModal, handleCloseModal } = useModal();
     const { taskLists, getAllTaskLists, setError } = useTaskListsContext();
 
     useEffect(() => {
@@ -46,7 +46,7 @@ const TasksList = () => {
             </div>
 
             <Modal
-                ref={dialogRef}
+                ref={modalRef}
                 title="Create list"
                 onClose={() => {
                     setError(null);

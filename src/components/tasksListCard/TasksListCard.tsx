@@ -21,7 +21,7 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
     const navigate = useNavigate();
-    const { dialogRef, handleOpenPopover } = useModal();
+    const { popoverRef, handleOpenPopover } = useModal();
     const { deleteSingleTasksList } = useTaskListsContext();
     const { selectedCardTitle, setSelectedCardTitle } =
         useSelectedButtonAnchorContext();
@@ -51,7 +51,7 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
                     <EllipsisVertical />
                 </Button>
 
-                <Popover ref={dialogRef}>
+                <Popover ref={popoverRef}>
                     <OptionsDropdownMenu
                         onDelete={() => deleteSingleTasksList(id)}
                     />
