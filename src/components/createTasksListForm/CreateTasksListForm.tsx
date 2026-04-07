@@ -18,41 +18,39 @@ const CreateTasksListForm = () => {
     const navigate = useNavigate();
     const { getSingleTasksList, error, setError } = useTaskListsContext();
 
-    const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
+    const handleCreateNewList: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
         const titleValue = title.trim();
 
         if (!titleValue) {
             setError('Title is required.');
-
             return;
         }
 
-        const id = convertTitleToId(titleValue);
-        const localStorageList = getSingleTasksList(id);
-        const isTitleDuplicate = localStorageList?.id === id;
+        const newId = convertTitleToId(titleValue);
+        const localStorageList = getSingleTasksList(newId);
+        const isTitleDuplicate = localStorageList?.id === newId;
 
         if (isTitleDuplicate) {
             setTitle('');
             setError(`"${title}" is a duplicate. Title must be unique.`);
-
             return;
         }
 
-        const listTitle = cleanUpTitle(titleValue);
+        const newTitle = cleanUpTitle(titleValue);
 
         const newList = {
-            id,
-            title: listTitle,
+            id: newId,
+            title: newTitle,
         };
 
         saveListToLocalStorage(newList);
-        navigate(`/tasks/${id}`, { viewTransition: true });
+        navigate(`/tasks/${newId}`, { viewTransition: true });
     };
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleCreateNewList}>
             <Input
                 id="title"
                 type="text"
