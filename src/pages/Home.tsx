@@ -14,7 +14,7 @@ const Home = () => {
         getAllTaskLists();
 
         if (hasDataLoaded && taskLists.length > 0) {
-            navigate('/tasks', routerOptions);
+            navigate('/lists', routerOptions);
         }
     }, [hasDataLoaded]);
 

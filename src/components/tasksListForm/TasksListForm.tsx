@@ -72,7 +72,7 @@ const TasksListForm = ({
             title: newList.newTitle,
         });
 
-        navigate(`/tasks/${newList.newId}`, { viewTransition: true });
+        navigate(`/lists/${newList.newId}`, { viewTransition: true });
     };
 
     const handleEditList = () => {

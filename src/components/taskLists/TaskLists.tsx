@@ -7,11 +7,11 @@ import TasksListForm from '@/components/tasksListForm/TasksListForm.tsx';
 import Empty from '@/components/empty/Empty.tsx';
 import TasksListCard from '@/components/tasksListCard/TasksListCard.tsx';
 
-import styles from './TasksList.module.css';
+import styles from './TaskLists.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 
-const TasksList = () => {
+const TaskLists = () => {
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
     const { taskLists, getAllTaskLists, setError, setTitle } =
@@ -67,4 +67,4 @@ const TasksList = () => {
     );
 };
 
-export default TasksList;
+export default TaskLists;

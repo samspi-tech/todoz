@@ -78,7 +78,7 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
                     onTouchStart={() => setIsPressed(true)}
                     onTouchEnd={() => setIsPressed(false)}
                     onClick={() =>
-                        navigate(`/tasks/${id}`, { viewTransition: true })
+                        navigate(`/lists/${id}`, { viewTransition: true })
                     }
                 >
                     <h3>{title}</h3>

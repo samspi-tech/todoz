@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import type { TasksListType } from '@/types/types.ts';
 import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
 
-const TasksListDetails = () => {
+const ListTasks = () => {
     const [tasksList, setTasksList] = useState<TasksListType | null>(null);
 
     const { id } = useParams();
@@ -26,4 +26,4 @@ const TasksListDetails = () => {
     );
 };
 
-export default TasksListDetails;
+export default ListTasks;

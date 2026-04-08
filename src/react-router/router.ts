@@ -2,9 +2,9 @@ import { createBrowserRouter } from 'react-router';
 
 import Home from '@/pages/Home.tsx';
 import Settings from '@/pages/Settings.tsx';
-import Tasks from '@/pages/Tasks.tsx';
+import Lists from '@/pages/Lists.tsx';
 import AppLayout from '@/pages/appLayout/AppLayout.tsx';
-import TasksListDetails from '@/pages/TasksListDetails.tsx';
+import ListTasks from '@/pages/ListTasks.tsx';
 
 export const router = createBrowserRouter([
     {
@@ -15,12 +15,12 @@ export const router = createBrowserRouter([
         Component: AppLayout,
         children: [
             {
-                path: '/tasks',
-                Component: Tasks,
+                path: '/lists',
+                Component: Lists,
             },
             {
-                path: '/tasks/:id',
-                Component: TasksListDetails,
+                path: '/lists/:id',
+                Component: ListTasks,
             },
             {
                 path: '/settings',

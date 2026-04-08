@@ -6,7 +6,7 @@ import logo from '@/assets/dark-logo.svg';
 const Logo = () => {
     return (
         <NavLink
-            to="/tasks"
+            to="/lists"
             viewTransition={true}
             className={styles.logoContainer}
             aria-label="Navigate to tasks page"
