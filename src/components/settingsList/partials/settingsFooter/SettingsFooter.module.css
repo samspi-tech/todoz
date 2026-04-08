@@ -11,9 +11,10 @@
     width: 100%;
     border: none;
     color: #ffffff;
-    font-weight: bold;
     text-align: left;
+    font-weight: bold;
     font-size: 1.6rem;
+    margin-right: auto;
     max-width: 36.9rem;
     border-radius: 0.8rem;
     corner-shape: squircle;

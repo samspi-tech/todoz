@@ -5,6 +5,9 @@
     flex-direction: column;
 
     & main {
+        width: 100%;
+        max-width: 124rem;
+        margin: 0 auto;
         flex-grow: 1;
         padding: 2.4rem 1.2rem;
 
