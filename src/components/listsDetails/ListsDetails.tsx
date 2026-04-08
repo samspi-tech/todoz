@@ -3,39 +3,38 @@ import { useEffect } from 'react';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
-import TasksListForm from '@/components/tasksListForm/TasksListForm.tsx';
+import ListForm from '@/components/listForm/ListForm.tsx';
 import Empty from '@/components/empty/Empty.tsx';
-import TasksListCard from '@/components/tasksListCard/TasksListCard.tsx';
+import ListCard from '@/components/listCard/ListCard.tsx';
 
-import styles from './TaskLists.module.css';
+import styles from './ListsDetails.module.css';
 import { useModal } from '@/hooks/useModal.ts';
-import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import { useListContext } from '@/hooks/useListContext.ts';
 
-const TaskLists = () => {
+const ListsDetails = () => {
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
-    const { taskLists, getAllTaskLists, setError, setTitle } =
-        useTaskListsContext();
+    const { lists, getAllLists, setError, setTitle } = useListContext();
 
     useEffect(() => {
-        getAllTaskLists();
+        getAllLists();
     }, []);
 
     return (
         <section className={styles.taskListsContainer}>
-            {!taskLists.length && (
+            {!lists.length && (
                 <>
                     <h2>Add a new list</h2>
                     <Empty />
                 </>
             )}
 
-            {taskLists.length > 0 && (
+            {lists.length > 0 && (
                 <>
-                    <h2>Your task lists</h2>
+                    <h2>Your lists</h2>
                     <div className={styles.cardsContainer}>
-                        {taskLists.map((list) => (
-                            <TasksListCard key={list.id} cardDetails={list} />
+                        {lists.map((list) => (
+                            <ListCard key={list.id} cardDetails={list} />
                         ))}
                     </div>
                 </>
@@ -61,10 +60,10 @@ const TaskLists = () => {
                     handleCloseModal();
                 }}
             >
-                <TasksListForm />
+                <ListForm />
             </Modal>
         </section>
     );
 };
 
-export default TaskLists;
+export default ListsDetails;

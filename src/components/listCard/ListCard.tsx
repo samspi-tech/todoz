@@ -5,28 +5,26 @@ import { useEffect, useState } from 'react';
 import Popover from '@/components/popover/Popover.tsx';
 import Button from '@/components/button/Button.tsx';
 import OptionsDropdownMenu from '@/components/optionsDropdownMenu/OptionsDropdownMenu.tsx';
-
-import styles from './TasksListCard.module.css';
-import type { TasksListType } from '@/types/types.ts';
-import { useModal } from '@/hooks/useModal.ts';
-import { useSelectedButtonAnchorContext } from '@/hooks/useSelectedButtonAnchorContext.ts';
-import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import ListForm from '@/components/listForm/ListForm.tsx';
 import Modal from '@/components/modal/Modal.tsx';
-import TasksListForm from '@/components/tasksListForm/TasksListForm.tsx';
 
-interface TasksListCardProps {
-    cardDetails: TasksListType;
+import styles from './ListCard.module.css';
+import type { List } from '@/types/types.ts';
+import { useModal } from '@/hooks/useModal.ts';
+import { useSelectedListCardContext } from '@/hooks/useSelectedListCardContext.ts';
+import { useListContext } from '@/hooks/useListContext.ts';
+
+interface ListCardProps {
+    cardDetails: List;
 }
 
-const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
+const ListCard = ({ cardDetails }: ListCardProps) => {
     const [isPressed, setIsPressed] = useState(false);
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
     const navigate = useNavigate();
-    const { deleteSingleTasksList, setError, setTitle } = useTaskListsContext();
-
-    const { selectedCardTitle, setSelectedCardTitle } =
-        useSelectedButtonAnchorContext();
+    const { deleteList, setError, setTitle } = useListContext();
+    const { cardTitle, setCardTitle } = useSelectedListCardContext();
 
     const {
         popoverRef,
@@ -39,12 +37,12 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
     const { id, title } = cardDetails;
 
     useEffect(() => {
-        if (selectedCardTitle === title) {
+        if (cardTitle === title) {
             setIsActiveAnchor(true);
         } else {
             setIsActiveAnchor(false);
         }
-    }, [selectedCardTitle]);
+    }, [cardTitle]);
 
     return (
         <>
@@ -56,7 +54,7 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
                         isAnchor={isActiveAnchor}
                         onClick={() => {
                             handleOpenPopover();
-                            setSelectedCardTitle(title);
+                            setCardTitle(title);
                         }}
                     >
                         <EllipsisVertical />
@@ -68,7 +66,7 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
                                 setTitle(title);
                                 handleOpenModal();
                             }}
-                            onDelete={() => deleteSingleTasksList(id)}
+                            onDelete={() => deleteList(id)}
                         />
                     </Popover>
                 </header>
@@ -93,14 +91,10 @@ const TasksListCard = ({ cardDetails }: TasksListCardProps) => {
                     handleCloseModal();
                 }}
             >
-                <TasksListForm
-                    isUpdate
-                    editListId={id}
-                    onClose={handleCloseModal}
-                />
+                <ListForm isUpdate editListId={id} onClose={handleCloseModal} />
             </Modal>
         </>
     );
 };
 
-export default TasksListCard;
+export default ListCard;

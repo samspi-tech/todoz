@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router';
 
 import Welcome from '@/components/welcome/Welcome.tsx';
 
-import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import { useListContext } from '@/hooks/useListContext.ts';
 import { routerOptions } from '@/react-router/options.ts';
 
 const Home = () => {
     const navigate = useNavigate();
-    const { taskLists, getAllTaskLists, hasDataLoaded } = useTaskListsContext();
+    const { lists, getAllLists, hasDataLoaded } = useListContext();
 
     useEffect(() => {
-        getAllTaskLists();
+        getAllLists();
 
-        if (hasDataLoaded && taskLists.length > 0) {
+        if (hasDataLoaded && lists.length > 0) {
             navigate('/lists', routerOptions);
         }
     }, [hasDataLoaded]);

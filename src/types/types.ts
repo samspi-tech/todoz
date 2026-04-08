@@ -1,4 +1,4 @@
-export type TasksListType = {
+export type List = {
     id: string;
     title: string;
 };

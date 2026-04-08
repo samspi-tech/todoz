@@ -3,21 +3,19 @@ import { useNavigate } from 'react-router';
 
 import Modal from '@/components/modal/Modal.tsx';
 import Button from '@/components/button/Button.tsx';
-import SettingsFooter from '@/components/settingsList/partials/settingsFooter/SettingsFooter.tsx';
+import SettingsFooter from '@/components/settingsDetails/partials/settingsFooter/SettingsFooter.tsx';
 
-import styles from './SettingsList.module.css';
+import styles from './SettingsDetails.module.css';
 import { useModal } from '@/hooks/useModal.ts';
-import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import { useListContext } from '@/hooks/useListContext.ts';
 import { routerOptions } from '@/react-router/options.ts';
 
-const SettingsList = () => {
+const SettingsDetails = () => {
     const navigate = useNavigate();
+    const { deleteLocalStorage, lists, getAllLists } = useListContext();
 
     const { modalRef, handleOpenModal, handleCloseModal, timer, setTimer } =
         useModal();
-
-    const { deleteLocalStorage, taskLists, getAllTaskLists } =
-        useTaskListsContext();
 
     const isDisabled = timer > 0;
 
@@ -27,12 +25,12 @@ const SettingsList = () => {
     };
 
     useEffect(() => {
-        getAllTaskLists();
+        getAllLists();
     }, []);
 
     return (
         <section className={styles.settingsContainer}>
-            {taskLists.length > 0 && (
+            {lists.length > 0 && (
                 <SettingsFooter onOpen={handleOpenModal} setTimer={setTimer} />
             )}
 
@@ -57,4 +55,4 @@ const SettingsList = () => {
     );
 };
 
-export default SettingsList;
+export default SettingsDetails;

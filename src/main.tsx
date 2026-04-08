@@ -3,15 +3,15 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
 
-import { TaskListsProvider } from '@/contexts/TaskListsContext.tsx';
-import { SelectedCardTitleProvider } from '@/contexts/SelectedCardTitle.tsx';
+import { ListProvider } from '@/contexts/ListContext.tsx';
+import { SelectedListCardProvider } from '@/contexts/SelectedListCardContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <SelectedCardTitleProvider>
-            <TaskListsProvider>
+        <SelectedListCardProvider>
+            <ListProvider>
                 <App />
-            </TaskListsProvider>
-        </SelectedCardTitleProvider>
+            </ListProvider>
+        </SelectedListCardProvider>
     </StrictMode>
 );

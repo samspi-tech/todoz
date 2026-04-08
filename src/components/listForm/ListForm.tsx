@@ -4,35 +4,25 @@ import { useNavigate } from 'react-router';
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
 
-import styles from './TasksListForm.module.css';
-import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
+import styles from './ListForm.module.css';
+import { useListContext } from '@/hooks/useListContext.ts';
 import {
     cleanUpTitle,
     convertTitleToId,
     saveListToLocalStorage,
-} from '@/components/tasksListForm/helpers.ts';
+} from '@/components/listForm/helpers.ts';
 
-interface TasksListFormProps {
+interface ListFormProps {
     isUpdate?: boolean;
     editListId?: string;
     onClose?: () => void;
 }
 
-const TasksListForm = ({
-    isUpdate = false,
-    editListId,
-    onClose,
-}: TasksListFormProps) => {
+const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
     const navigate = useNavigate();
 
-    const {
-        getSingleTasksList,
-        error,
-        setError,
-        updateSingleListTitle,
-        title,
-        setTitle,
-    } = useTaskListsContext();
+    const { getList, error, setError, updateListTitle, title, setTitle } =
+        useListContext();
 
     const getListTitleAndId = () => {
         const titleValue = title.trim();
@@ -43,7 +33,7 @@ const TasksListForm = ({
         }
 
         const newId = convertTitleToId(titleValue);
-        const localStorageList = getSingleTasksList(newId);
+        const localStorageList = getList(newId);
         const isTitleDuplicate = localStorageList?.id === newId;
 
         if (isTitleDuplicate) {
@@ -82,7 +72,7 @@ const TasksListForm = ({
             return;
         }
 
-        updateSingleListTitle(editListId!, {
+        updateListTitle(editListId!, {
             id: updatedList.newId,
             title: updatedList.newTitle,
         });
@@ -114,4 +104,4 @@ const TasksListForm = ({
     );
 };
 
-export default TasksListForm;
+export default ListForm;

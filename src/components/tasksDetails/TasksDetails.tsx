@@ -4,29 +4,29 @@ import { Plus } from 'lucide-react';
 
 import Button from '@/components/button/Button.tsx';
 
-import { useTaskListsContext } from '@/hooks/useTaskListsContext.ts';
-import type { TasksListType } from '@/types/types.ts';
-import styles from './ListTasksDetails.module.css';
+import { useListContext } from '@/hooks/useListContext.ts';
+import type { List } from '@/types/types.ts';
+import styles from './TasksDetails.module.css';
 
-const ListTasksDetails = () => {
-    const [tasksList, setTasksList] = useState<TasksListType | null>(null);
+const TasksDetails = () => {
+    const [list, setList] = useState<List | null>(null);
 
     const { id } = useParams();
-    const { getSingleTasksList } = useTaskListsContext();
+    const { getList } = useListContext();
 
     useEffect(() => {
-        const list = getSingleTasksList(id!);
-        setTasksList(list!);
+        const listData = getList(id!);
+        setList(listData!);
 
         return () => {
-            setTasksList(null);
+            setList(null);
         };
     }, [id]);
 
     return (
         <section className={styles.tasksContainer}>
             <header>
-                <h2>{tasksList?.title}</h2>
+                <h2>{list?.title}</h2>
                 <Button variant="square" size="small">
                     <Plus />
                 </Button>
@@ -35,4 +35,4 @@ const ListTasksDetails = () => {
     );
 };
 
-export default ListTasksDetails;
+export default TasksDetails;

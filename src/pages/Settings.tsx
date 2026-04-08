@@ -1,7 +1,7 @@
-import SettingsList from '@/components/settingsList/SettingsList.tsx';
+import SettingsDetails from '@/components/settingsDetails/SettingsDetails.tsx';
 
 const Settings = () => {
-    return <SettingsList />;
+    return <SettingsDetails />;
 };
 
 export default Settings;

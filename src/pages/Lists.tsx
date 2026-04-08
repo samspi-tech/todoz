@@ -1,7 +1,7 @@
-import TaskLists from '@/components/taskLists/TaskLists.tsx';
+import ListsDetails from '@/components/listsDetails/ListsDetails.tsx';
 
 const Lists = () => {
-    return <TaskLists />;
+    return <ListsDetails />;
 };
 
 export default Lists;

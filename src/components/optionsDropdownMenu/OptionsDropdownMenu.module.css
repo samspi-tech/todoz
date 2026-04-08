@@ -1,14 +1,16 @@
 .dropdownMenu {
     width: 15rem;
     list-style: none;
+    padding: 0 1.2rem;
     border-radius: 1.6rem;
     corner-shape: squircle;
-    padding: 1.2rem 1.2rem;
     background-color: var(--background);
     border: 1px solid var(--neutral-300);
 
     & button {
+        width: 100%;
         border: none;
+        padding: 1.2rem 0;
         font-size: 1.6rem;
         color: var(--text);
         background-color: transparent;
@@ -24,11 +26,6 @@
     }
 
     & li:nth-child(1) {
-        padding-bottom: 1.2rem;
         border-bottom: 1px solid var(--neutral-300);
-    }
-
-    & li:nth-child(2) {
-        padding-top: 1.2rem;
     }
 }
