@@ -1,0 +1,13 @@
+.tasksContainer {
+    & header {
+        display: flex;
+        justify-content: space-between;
+
+        padding-right: 0.2rem;
+
+        & h2 {
+            line-height: 1.2;
+            padding-right: 4.8rem;
+        }
+    }
+}

@@ -28,12 +28,12 @@
 
     & header {
         display: flex;
-        align-items: flex-start;
         justify-content: space-between;
         gap: 3rem;
 
         & h2 {
             line-height: 1.1;
+            align-self: center;
         }
     }
 }
