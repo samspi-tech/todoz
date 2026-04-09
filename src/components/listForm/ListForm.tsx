@@ -6,11 +6,12 @@ import Button from '@/components/button/Button.tsx';
 
 import styles from './ListForm.module.css';
 import { useListContext } from '@/hooks/useListContext.ts';
+import type { List } from '@/types/types.ts';
 import {
-    cleanUpTitle,
-    convertTitleToId,
-    saveListToLocalStorage,
-} from '@/components/listForm/helpers.ts';
+    cleanUpString,
+    convertStringToId,
+    saveItemToLocalStorage,
+} from '@/utils/helpers.ts';
 
 interface ListFormProps {
     isUpdate?: boolean;
@@ -32,7 +33,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
             return;
         }
 
-        const newId = convertTitleToId(titleValue);
+        const newId = convertStringToId(titleValue);
         const localStorageList = getList(newId);
         const isTitleDuplicate = localStorageList?.id === newId;
 
@@ -42,7 +43,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
             return;
         }
 
-        const newTitle = cleanUpTitle(titleValue);
+        const newTitle = cleanUpString(titleValue);
 
         return {
             newId,
@@ -57,7 +58,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
             return;
         }
 
-        saveListToLocalStorage({
+        saveItemToLocalStorage<List>('lists', {
             id: newList.newId,
             title: newList.newTitle,
         });

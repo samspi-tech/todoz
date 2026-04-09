@@ -12,3 +12,24 @@
     flex-direction: column;
     gap: 1.2rem;
 }
+
+.smallInputsContainer {
+    display: flex;
+    gap: 1.6rem;
+}
+
+.optionsInput {
+    position: relative;
+
+    & select {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        height: 5rem;
+        font-size: 1.6rem;
+        border-radius: 0 0.8rem 0.8rem 0;
+        border: 1px solid var(--neutral-300);
+        border-left:none;
+    }
+}

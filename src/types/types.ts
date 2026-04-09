@@ -7,9 +7,5 @@ export type Task = {
     id: string;
     description: string;
     quantity: number;
-};
-
-export type Tasks = {
-    listId: string;
-    tasks: Task[];
+    weight: string;
 };

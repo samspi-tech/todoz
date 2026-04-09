@@ -38,10 +38,10 @@ const TasksDetails = () => {
 
             <Modal
                 ref={modalRef}
-                title="Create task"
+                title={`${list?.title}`}
                 onClose={handleCloseModal}
             >
-                <TaskForm />
+                <TaskForm listId={list?.id!} />
             </Modal>
         </section>
     );
