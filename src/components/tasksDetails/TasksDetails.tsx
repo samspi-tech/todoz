@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
+import TaskForm from '@/components/taskForm/TaskForm.tsx';
 
 import { useListContext } from '@/hooks/useListContext.ts';
 import type { List } from '@/types/types.ts';
@@ -39,7 +40,9 @@ const TasksDetails = () => {
                 ref={modalRef}
                 title="Create task"
                 onClose={handleCloseModal}
-            ></Modal>
+            >
+                <TaskForm />
+            </Modal>
         </section>
     );
 };
