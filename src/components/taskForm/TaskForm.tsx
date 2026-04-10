@@ -22,7 +22,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
     const { newTask, setNewTask, handleInputChange, initialState } =
         useTaskContext();
 
-    const getTaskValues = () => {
+    const getTaskValues = (): Task | undefined => {
         const descriptionValue = newTask.description.trim();
 
         if (!descriptionValue) {
@@ -31,32 +31,30 @@ const TaskForm = ({ listId }: TaskFormProps) => {
 
         const id = convertStringToId(descriptionValue);
         const description = cleanUpString(descriptionValue);
+        const weight = newTask.weight && `${newTask.weight}${weightUnity}`;
 
         return {
             id,
             description,
+            quantity: newTask.quantity,
+            weight,
+            isChecked: false,
         };
     };
 
     const handleCreateNewTask = () => {
-        const task = getTaskValues();
+        const payload = getTaskValues();
 
-        if (!task) {
+        if (!payload) {
             return;
         }
 
-        saveItemToLocalStorage<Task>(listId, {
-            ...task,
-            quantity: newTask.quantity,
-            weight: `${newTask.weight}${weightUnity}`,
-        });
-
+        saveItemToLocalStorage<Task>(listId, { ...payload });
         setNewTask(initialState);
     };
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-
         handleCreateNewTask();
     };
 
@@ -79,6 +77,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
                         id="quantity"
                         error={null}
                         label="Quantity"
+                        placeholder="Nº"
                         value={newTask.quantity}
                         onChange={handleInputChange}
                     />
@@ -89,6 +88,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
                             type="number"
                             error={null}
                             label="Weight"
+                            placeholder="g — kg"
                             value={newTask.weight}
                             onChange={handleInputChange}
                         />

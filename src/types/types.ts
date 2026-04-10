@@ -6,6 +6,7 @@ export type List = {
 export type Task = {
     id: string;
     description: string;
-    quantity: number;
+    quantity: string;
     weight: string;
+    isChecked: boolean;
 };

@@ -22,8 +22,9 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     const initialState: Task = {
         id: '',
         description: '',
-        quantity: 0,
-        weight: '0',
+        quantity: '',
+        weight: '',
+        isChecked: false,
     };
 
     const [newTask, setNewTask] = useState<Task>(initialState);

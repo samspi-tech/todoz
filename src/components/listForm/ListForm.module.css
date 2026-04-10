@@ -28,8 +28,13 @@
 
         height: 5rem;
         font-size: 1.6rem;
+        color: var(--neutral-700);
         border-radius: 0 0.8rem 0.8rem 0;
         border: 1px solid var(--neutral-300);
         border-left:none;
+
+        &:focus-visible {
+            outline-offset: 0;
+        }
     }
 }
