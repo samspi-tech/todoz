@@ -19,8 +19,13 @@ interface TaskFormProps {
 const TaskForm = ({ listId }: TaskFormProps) => {
     const [weightUnity, setWeightUnity] = useState('g');
 
-    const { newTask, setNewTask, handleInputChange, initialState } =
-        useTaskContext();
+    const {
+        newTask,
+        setNewTask,
+        handleInputChange,
+        initialState,
+        getAllTasks,
+    } = useTaskContext();
 
     const getTaskValues = (): Task | undefined => {
         const descriptionValue = newTask.description.trim();
@@ -55,7 +60,9 @@ const TaskForm = ({ listId }: TaskFormProps) => {
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
+
         handleCreateNewTask();
+        getAllTasks(listId);
     };
 
     return (
