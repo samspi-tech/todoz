@@ -19,7 +19,7 @@ const TasksDetails = () => {
 
     const { id } = useParams();
     const { getList } = useListContext();
-    const { tasks, getAllTasks } = useTaskContext();
+    const { tasks, getAllTasks, setError } = useTaskContext();
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
     useEffect(() => {
@@ -59,7 +59,10 @@ const TasksDetails = () => {
             <Modal
                 ref={modalRef}
                 title={`${list?.title}`}
-                onClose={handleCloseModal}
+                onClose={() => {
+                    handleCloseModal();
+                    setError(null);
+                }}
             >
                 <TaskForm listId={list?.id!} />
             </Modal>

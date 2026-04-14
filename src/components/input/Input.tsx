@@ -5,7 +5,7 @@ import styles from './Input.module.css';
 interface InputProps extends ComponentProps<'input'> {
     id: string;
     label: string;
-    error: string | null;
+    error?: string | null;
 }
 
 const Input = ({ id, label, error, ...rest }: InputProps) => {

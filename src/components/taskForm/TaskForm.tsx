@@ -23,18 +23,30 @@ const TaskForm = ({ listId }: TaskFormProps) => {
         newTask,
         setNewTask,
         handleInputChange,
+        checkTaskDuplicate,
         initialState,
         getAllTasks,
+        error,
+        setError,
     } = useTaskContext();
 
     const getTaskValues = (): Task | undefined => {
         const descriptionValue = newTask.description.trim();
 
         if (!descriptionValue) {
+            setError('This field is required');
             return;
         }
 
         const id = convertStringToId(descriptionValue);
+        const isTaskDuplicate = checkTaskDuplicate(id);
+
+        if (isTaskDuplicate) {
+            setNewTask(initialState);
+            setError(`"${descriptionValue}" is already one of your tasks.`);
+            return;
+        }
+
         const description = cleanUpString(descriptionValue);
         const weight = newTask.weight && `${newTask.weight}${weightUnity}`;
 
@@ -56,6 +68,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
 
         saveItemToLocalStorage<Task>(listId, { ...payload });
         setNewTask(initialState);
+        setError(null);
     };
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
@@ -70,20 +83,19 @@ const TaskForm = ({ listId }: TaskFormProps) => {
             <div className={styles.inputsContainer}>
                 <Input
                     type="text"
-                    error={null}
+                    error={error}
                     id="description"
+                    placeholder="Task"
                     label="Description"
                     value={newTask.description}
                     onChange={handleInputChange}
-                    placeholder="Describe your task"
                 />
 
                 <div className={styles.smallInputsContainer}>
                     <Input
                         type="number"
                         id="quantity"
-                        error={null}
-                        label="Quantity"
+                        label="*Quantity"
                         placeholder="Nº"
                         value={newTask.quantity}
                         onChange={handleInputChange}
@@ -93,8 +105,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
                         <Input
                             id="weight"
                             type="number"
-                            error={null}
-                            label="Weight"
+                            label="*Weight"
                             placeholder="g — kg"
                             value={newTask.weight}
                             onChange={handleInputChange}
@@ -113,6 +124,10 @@ const TaskForm = ({ listId }: TaskFormProps) => {
             </div>
 
             <Button type="submit">Add task</Button>
+
+            <footer>
+                <small>*optional</small>
+            </footer>
         </form>
     );
 };

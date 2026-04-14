@@ -5,6 +5,10 @@
         width: 100%;
         margin-top: 2.4rem;
     }
+
+    & footer {
+         margin-top: 2.4rem;
+    }
 }
 
 .inputsContainer {
@@ -31,7 +35,7 @@
         color: var(--neutral-700);
         border-radius: 0 0.8rem 0.8rem 0;
         border: 1px solid var(--neutral-300);
-        border-left:none;
+        border-left: none;
 
         &:focus-visible {
             outline-offset: 0;

@@ -14,6 +14,9 @@ interface TaskContextValues {
     setNewTask: Dispatch<SetStateAction<Task>>;
     tasks: Task[];
     getAllTasks: (listId: string) => void;
+    error: string | null;
+    setError: Dispatch<SetStateAction<string | null>>;
+    checkTaskDuplicate: (id: string) => boolean;
     initialState: Task;
     handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -30,6 +33,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     };
 
     const [tasks, setTasks] = useState<Task[]>([]);
+    const [error, setError] = useState<string | null>(null);
     const [newTask, setNewTask] = useState<Task>(initialState);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +55,10 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
+    const checkTaskDuplicate = (id: string) => {
+        return tasks.map((task) => task.id).includes(id);
+    };
+
     return (
         <TaskContext.Provider
             value={{
@@ -59,7 +67,10 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 tasks,
                 getAllTasks,
                 initialState,
+                checkTaskDuplicate,
                 handleInputChange,
+                error,
+                setError,
             }}
         >
             {children}
