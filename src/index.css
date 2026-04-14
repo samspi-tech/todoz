@@ -7,7 +7,6 @@
         --text: #682860;
     }
 
-    &,
     &.dark-mode {
         --background: #682860;
         --text: #f8f8ff;

@@ -12,6 +12,7 @@ import styles from './TasksDetails.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
 import TaskCard from '@/components/taskCard/TaskCard.tsx';
+import Empty from '@/components/empty/Empty.tsx';
 
 const TasksDetails = () => {
     const [list, setList] = useState<List | null>(null);
@@ -41,15 +42,19 @@ const TasksDetails = () => {
                 </Button>
             </header>
 
-            <ul>
-                {tasks.map((task) => {
-                    return (
-                        !task.isChecked && (
-                            <TaskCard key={task.id} task={task} />
-                        )
-                    );
-                })}
-            </ul>
+            {!tasks.length && <Empty />}
+
+            {tasks.length > 0 && (
+                <ul>
+                    {tasks.map((task) => {
+                        return (
+                            !task.isChecked && (
+                                <TaskCard key={task.id} task={task} />
+                            )
+                        );
+                    })}
+                </ul>
+            )}
 
             <Modal
                 ref={modalRef}
