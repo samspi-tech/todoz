@@ -11,7 +11,7 @@ import Modal from '@/components/modal/Modal.tsx';
 import styles from './ListCard.module.css';
 import type { List } from '@/types/types.ts';
 import { useModal } from '@/hooks/useModal.ts';
-import { useSelectedListCardContext } from '@/hooks/useSelectedListCardContext.ts';
+import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useListContext } from '@/hooks/useListContext.ts';
 
 interface ListCardProps {
@@ -24,7 +24,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
 
     const navigate = useNavigate();
     const { deleteList, setError, setTitle } = useListContext();
-    const { cardTitle, setCardTitle } = useSelectedListCardContext();
+    const { cardTitle, setCardTitle } = useSelectedCardContext();
 
     const {
         popoverRef,
@@ -50,7 +50,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                 <header>
                     <Button
                         size="small"
-                        variant="square"
+                        variant="unstyled"
                         isAnchor={isActiveAnchor}
                         onClick={() => {
                             handleOpenPopover();

@@ -17,26 +17,6 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-
-        & dialog {
-            position-anchor: --card-button;
-
-            opacity: 0;
-            transition: display 1s, opacity 0.2s;
-            transition-behavior: allow-discrete;
-
-            position: absolute;
-            right: anchor(right);
-            top: anchor(top);
-
-            &:popover-open {
-                opacity: 1;
-
-                @starting-style {
-                    opacity: 0;
-                }
-            }
-        }
     }
 }
 

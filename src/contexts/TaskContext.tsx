@@ -12,6 +12,8 @@ import type { Task } from '@/types/types.ts';
 interface TaskContextValues {
     newTask: Task;
     setNewTask: Dispatch<SetStateAction<Task>>;
+    tasks: Task[];
+    getAllTasks: (listId: string) => void;
     initialState: Task;
     handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -27,6 +29,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         isChecked: false,
     };
 
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [newTask, setNewTask] = useState<Task>(initialState);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,11 +41,23 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         });
     };
 
+    const getAllTasks = (listId: string) => {
+        setTasks([]);
+        const localStorageTasks = localStorage.getItem(listId);
+
+        if (localStorageTasks) {
+            const parsedLocalStorageTasks = JSON.parse(localStorageTasks);
+            setTasks(parsedLocalStorageTasks);
+        }
+    };
+
     return (
         <TaskContext.Provider
             value={{
                 newTask,
                 setNewTask,
+                tasks,
+                getAllTasks,
                 initialState,
                 handleInputChange,
             }}

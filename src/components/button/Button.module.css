@@ -61,3 +61,8 @@
 .anchor {
     anchor-name: --card-button;
 }
+
+.unstyled {
+    box-shadow: none;
+    background-color: transparent;
+}

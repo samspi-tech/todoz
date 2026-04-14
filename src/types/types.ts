@@ -6,7 +6,7 @@ export type List = {
 export type Task = {
     id: string;
     description: string;
-    quantity: string;
-    weight: string;
+    quantity: string | undefined;
+    weight: string | undefined;
     isChecked: boolean;
 };

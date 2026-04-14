@@ -6,25 +6,25 @@ import {
     useState,
 } from 'react';
 
-interface SelectedListCardContextValues {
+interface SelectedCardContextValues {
     cardTitle: string | null;
     setCardTitle: Dispatch<SetStateAction<string | null>>;
 }
 
-export const SelectedListCardContext =
-    createContext<SelectedListCardContextValues | null>(null);
+export const SelectedCardContext =
+    createContext<SelectedCardContextValues | null>(null);
 
-export const SelectedListCardProvider = ({ children }: PropsWithChildren) => {
+export const SelectedCardProvider = ({ children }: PropsWithChildren) => {
     const [cardTitle, setCardTitle] = useState<string | null>(null);
 
     return (
-        <SelectedListCardContext.Provider
+        <SelectedCardContext.Provider
             value={{
                 cardTitle,
                 setCardTitle,
             }}
         >
             {children}
-        </SelectedListCardContext.Provider>
+        </SelectedCardContext.Provider>
     );
 };

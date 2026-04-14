@@ -4,17 +4,17 @@ import './index.css';
 import App from './App.tsx';
 
 import { ListProvider } from '@/contexts/ListContext.tsx';
-import { SelectedListCardProvider } from '@/contexts/SelectedListCardContext.tsx';
+import { SelectedCardProvider } from '@/contexts/SelectedCardContext.tsx';
 import { TaskProvider } from '@/contexts/TaskContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <TaskProvider>
-            <SelectedListCardProvider>
+            <SelectedCardProvider>
                 <ListProvider>
                     <App />
                 </ListProvider>
-            </SelectedListCardProvider>
+            </SelectedCardProvider>
         </TaskProvider>
     </StrictMode>
 );

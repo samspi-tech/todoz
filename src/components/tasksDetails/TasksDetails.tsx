@@ -10,17 +10,22 @@ import { useListContext } from '@/hooks/useListContext.ts';
 import type { List } from '@/types/types.ts';
 import styles from './TasksDetails.module.css';
 import { useModal } from '@/hooks/useModal.ts';
+import { useTaskContext } from '@/hooks/useTaskContext.ts';
+import TaskCard from '@/components/taskCard/TaskCard.tsx';
 
 const TasksDetails = () => {
     const [list, setList] = useState<List | null>(null);
 
     const { id } = useParams();
     const { getList } = useListContext();
+    const { tasks, getAllTasks } = useTaskContext();
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
     useEffect(() => {
         const listData = getList(id!);
         setList(listData!);
+
+        getAllTasks(id!);
 
         return () => {
             setList(null);
@@ -35,6 +40,16 @@ const TasksDetails = () => {
                     <Plus />
                 </Button>
             </header>
+
+            <ul>
+                {tasks.map((task) => {
+                    return (
+                        !task.isChecked && (
+                            <TaskCard key={task.id} task={task} />
+                        )
+                    );
+                })}
+            </ul>
 
             <Modal
                 ref={modalRef}
