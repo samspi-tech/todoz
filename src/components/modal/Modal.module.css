@@ -10,7 +10,9 @@
     background-color: var(--background);
 
     opacity: 0;
-    transition: display 1s, opacity 0.3s;
+    transition:
+        display 1s,
+        opacity 0.3s;
     transition-behavior: allow-discrete;
 
     &::backdrop {
@@ -34,6 +36,10 @@
         & h2 {
             line-height: 1.1;
             align-self: center;
+        }
+
+        & button {
+            color: var(--text);
         }
     }
 }

@@ -45,7 +45,7 @@ const Modal = ({
         <dialog ref={ref} className={styles.modal}>
             <header>
                 <h2>{title}</h2>
-                <Button size="small" variant="square" onClick={onClose}>
+                <Button size="small" variant="unstyled" onClick={onClose}>
                     <X />
                 </Button>
             </header>
