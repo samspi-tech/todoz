@@ -7,6 +7,7 @@ import {
 } from 'react';
 
 import type { List } from '@/types/types.ts';
+import { setNewTasksLocalStorageName } from '@/utils/helpers.ts';
 
 interface ListContextValues {
     title: string;
@@ -48,13 +49,6 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
 
             return parsedTaskLists.filter((list) => list.id === id).at(0);
         }
-    };
-
-    const setNewTasksLocalStorageName = (listId: string, newListId: string) => {
-        const tasks = localStorage.getItem(listId);
-        localStorage.setItem(newListId, tasks!);
-
-        localStorage.removeItem(listId);
     };
 
     const updateListTitle = (id: string, updatedList: List) => {

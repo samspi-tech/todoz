@@ -30,3 +30,13 @@ export const cleanUpString = (string: string) => {
         .filter((item) => item !== '')
         .join(' ');
 };
+
+export const setNewTasksLocalStorageName = (
+    listId: string,
+    newListId: string
+) => {
+    const tasks = localStorage.getItem(listId);
+    localStorage.setItem(newListId, tasks!);
+
+    localStorage.removeItem(listId);
+};
