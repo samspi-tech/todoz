@@ -14,6 +14,7 @@ interface TaskContextValues {
     setNewTask: Dispatch<SetStateAction<Task>>;
     tasks: Task[];
     getAllTasks: (listId: string) => void;
+    deleteTask: (listId: string, id: string) => void;
     error: string | null;
     setError: Dispatch<SetStateAction<string | null>>;
     checkTaskDuplicate: (id: string) => boolean;
@@ -59,6 +60,19 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         return tasks.map((task) => task.id).includes(id);
     };
 
+    const deleteTask = (listId: string, id: string) => {
+        const localStorageTasks = localStorage.getItem(listId);
+
+        if (localStorageTasks) {
+            const parsedTasks: Task[] = JSON.parse(localStorageTasks);
+
+            const updatedTasks = parsedTasks.filter((task) => task.id !== id);
+
+            localStorage.setItem(listId, JSON.stringify(updatedTasks));
+            getAllTasks(listId);
+        }
+    };
+
     return (
         <TaskContext.Provider
             value={{
@@ -66,6 +80,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 setNewTask,
                 tasks,
                 getAllTasks,
+                deleteTask,
                 initialState,
                 checkTaskDuplicate,
                 handleInputChange,

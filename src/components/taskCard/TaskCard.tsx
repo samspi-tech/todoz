@@ -9,18 +9,21 @@ import type { Task } from '@/types/types.ts';
 import styles from './TaskCard.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
+import { useTaskContext } from '@/hooks/useTaskContext.ts';
 
 interface TaskCardProps {
     task: Task;
+    listId: string;
 }
 
-const TaskCard = ({ task }: TaskCardProps) => {
+const TaskCard = ({ task, listId }: TaskCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
+    const { deleteTask } = useTaskContext();
     const { popoverRef, handleOpenPopover } = useModal();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
 
-    const { description, quantity, weight } = task;
+    const { description, quantity, weight, id } = task;
 
     useEffect(() => {
         if (cardTitle === description) {
@@ -57,7 +60,10 @@ const TaskCard = ({ task }: TaskCardProps) => {
             </li>
 
             <Popover ref={popoverRef}>
-                <OptionsDropdownMenu onEdit={() => {}} onDelete={() => {}} />
+                <OptionsDropdownMenu
+                    onEdit={() => {}}
+                    onDelete={() => deleteTask(listId, id)}
+                />
             </Popover>
         </>
     );

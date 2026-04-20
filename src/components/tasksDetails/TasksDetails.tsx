@@ -49,7 +49,11 @@ const TasksDetails = () => {
                     {tasks.map((task) => {
                         return (
                             !task.isChecked && (
-                                <TaskCard key={task.id} task={task} />
+                                <TaskCard
+                                    task={task}
+                                    listId={id!}
+                                    key={task.id}
+                                />
                             )
                         );
                     })}
