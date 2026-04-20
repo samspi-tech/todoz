@@ -10,6 +10,8 @@ import styles from './TaskCard.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
+import Modal from '@/components/modal/Modal.tsx';
+import TaskForm from '@/components/taskForm/TaskForm.tsx';
 
 interface TaskCardProps {
     task: Task;
@@ -19,11 +21,28 @@ interface TaskCardProps {
 const TaskCard = ({ task, listId }: TaskCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
-    const { deleteTask } = useTaskContext();
-    const { popoverRef, handleOpenPopover } = useModal();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
+    const { deleteTask, setNewTask, initialState } = useTaskContext();
+
+    const {
+        popoverRef,
+        handleOpenPopover,
+        modalRef,
+        handleOpenModal,
+        handleCloseModal,
+    } = useModal();
 
     const { description, quantity, weight, id } = task;
+
+    const handleEditTask = () => {
+        const taskToEdit = {
+            ...task,
+            weight: weight?.slice(0, -2),
+        };
+
+        handleOpenModal();
+        setNewTask(taskToEdit);
+    };
 
     useEffect(() => {
         if (cardTitle === description) {
@@ -61,10 +80,26 @@ const TaskCard = ({ task, listId }: TaskCardProps) => {
 
             <Popover ref={popoverRef}>
                 <OptionsDropdownMenu
-                    onEdit={() => {}}
+                    onEdit={handleEditTask}
                     onDelete={() => deleteTask(listId, id)}
                 />
             </Popover>
+
+            <Modal
+                title="Edit"
+                onClose={() => {
+                    handleCloseModal();
+                    setNewTask(initialState);
+                }}
+                ref={modalRef}
+            >
+                <TaskForm
+                    isUpdate
+                    taskId={id}
+                    listId={listId}
+                    onClose={handleCloseModal}
+                />
+            </Modal>
         </>
     );
 };

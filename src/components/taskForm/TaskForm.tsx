@@ -14,18 +14,28 @@ import {
 
 interface TaskFormProps {
     listId: string;
+    isUpdate?: boolean;
+    taskId?: string;
+    onClose?: () => void;
 }
 
-const TaskForm = ({ listId }: TaskFormProps) => {
-    const [weightUnity, setWeightUnity] = useState('g');
+const TaskForm = ({
+    listId,
+    isUpdate = false,
+    taskId,
+    onClose,
+}: TaskFormProps) => {
+    const [weightUnity, setWeightUnity] = useState('g.');
 
     const {
         newTask,
         setNewTask,
         handleInputChange,
         checkTaskDuplicate,
+        checkTaskToEditDuplicate,
         initialState,
         getAllTasks,
+        updateTask,
         error,
         setError,
     } = useTaskContext();
@@ -41,7 +51,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
         const id = convertStringToId(descriptionValue);
         const isTaskDuplicate = checkTaskDuplicate(id);
 
-        if (isTaskDuplicate) {
+        if (isTaskDuplicate && !isUpdate) {
             setNewTask(initialState);
             setError(`"${descriptionValue}" is already one of your tasks.`);
             return;
@@ -60,6 +70,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
     };
 
     const handleCreateNewTask = () => {
+        setNewTask(initialState);
         const payload = getTaskValues();
 
         if (!payload) {
@@ -67,15 +78,36 @@ const TaskForm = ({ listId }: TaskFormProps) => {
         }
 
         saveItemToLocalStorage<Task>(listId, { ...payload });
-        setNewTask(initialState);
         setError(null);
+    };
+
+    const handleUpdateTask = () => {
+        const payload = getTaskValues();
+
+        if (!payload) {
+            return;
+        }
+
+        const isDuplicate = checkTaskToEditDuplicate(taskId!, payload.id);
+
+        if (isDuplicate) {
+            setNewTask(initialState);
+            setError(`"${payload.description}" is already one of your tasks.`);
+            return;
+        }
+
+        updateTask(listId, taskId!, payload);
+        setError(null);
+        onClose?.();
     };
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        handleCreateNewTask();
+        isUpdate ? handleUpdateTask() : handleCreateNewTask();
+
         getAllTasks(listId);
+        setNewTask(initialState);
     };
 
     return (
@@ -106,7 +138,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
                             id="weight"
                             type="number"
                             label="*Weight"
-                            placeholder="g — kg"
+                            placeholder="g. — kg"
                             value={newTask.weight}
                             onChange={handleInputChange}
                         />
@@ -116,7 +148,7 @@ const TaskForm = ({ listId }: TaskFormProps) => {
                             value={weightUnity}
                             onChange={(e) => setWeightUnity(e.target.value)}
                         >
-                            <option value="g">g</option>
+                            <option value="g.">g.</option>
                             <option value="kg">kg</option>
                         </select>
                     </div>

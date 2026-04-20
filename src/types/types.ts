@@ -10,3 +10,7 @@ export type Task = {
     weight: string | undefined;
     isChecked: boolean;
 };
+
+export type CheckDuplicate = {
+    isCheckDuplicate: boolean;
+};

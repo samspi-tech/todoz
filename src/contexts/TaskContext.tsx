@@ -14,10 +14,12 @@ interface TaskContextValues {
     setNewTask: Dispatch<SetStateAction<Task>>;
     tasks: Task[];
     getAllTasks: (listId: string) => void;
+    updateTask: (listId: string, id: string, updatedTask: Task) => void;
     deleteTask: (listId: string, id: string) => void;
     error: string | null;
     setError: Dispatch<SetStateAction<string | null>>;
     checkTaskDuplicate: (id: string) => boolean;
+    checkTaskToEditDuplicate: (editTaskId: string, newId: string) => boolean;
     initialState: Task;
     handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -73,6 +75,32 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
+    const checkTaskToEditDuplicate = (editTaskId: string, newId: string) => {
+        const allTasksWithoutTaskToEdit = tasks.filter(
+            (task) => task.id !== editTaskId
+        );
+
+        return allTasksWithoutTaskToEdit.map((task) => task.id).includes(newId);
+    };
+
+    const updateTask = (listId: string, id: string, updatedTask: Task) => {
+        const localStorageTasks = localStorage.getItem(listId);
+
+        if (localStorageTasks) {
+            const parsedTasks: Task[] = JSON.parse(localStorageTasks);
+
+            const updatedTasks = parsedTasks.map((task) => {
+                if (task.id === id) {
+                    return { ...updatedTask };
+                } else {
+                    return task;
+                }
+            });
+
+            localStorage.setItem(listId, JSON.stringify(updatedTasks));
+        }
+    };
+
     return (
         <TaskContext.Provider
             value={{
@@ -80,9 +108,11 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 setNewTask,
                 tasks,
                 getAllTasks,
+                updateTask,
                 deleteTask,
                 initialState,
                 checkTaskDuplicate,
+                checkTaskToEditDuplicate,
                 handleInputChange,
                 error,
                 setError,
