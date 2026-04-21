@@ -1,0 +1,49 @@
+.completedTasksContainer {
+    position: fixed;
+    right: 0;
+    left: 0;
+
+    color: var(--neutral-700);
+    padding: 0 1.2rem 0.8rem 1.2rem;
+    background-color: var(--primary);
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
+
+    & > button {
+        margin: 0 auto;
+        color: var(--neutral-700);
+
+        & svg {
+            width: 3.2rem;
+            height: 3.2rem;
+        }
+    }
+
+    & h4 {
+        letter-spacing: -0.025em;
+        text-transform: uppercase;
+
+        display: flex;
+        justify-content: space-between;
+
+        & span {
+            letter-spacing: 0.05em;
+        }
+    }
+
+    & ul {
+        padding-top: 2.4rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+}
+
+.hide {
+    bottom: 0;
+}
+
+.show {
+    bottom: 0;
+    top: 15.68rem;
+}

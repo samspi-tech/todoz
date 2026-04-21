@@ -45,3 +45,10 @@
         color: var(--text);
     }
 }
+
+.checked {
+    opacity: 0.6;
+    border-radius: 1.6rem;
+    corner-shape: squircle;
+    background-color: #ffffff;
+}

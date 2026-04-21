@@ -17,9 +17,10 @@ import TaskCheckbox from '@/components/taskCard/partials/TaskCheckbox.tsx';
 interface TaskCardProps {
     task: Task;
     listId: string;
+    isChecked?: boolean;
 }
 
-const TaskCard = ({ task, listId }: TaskCardProps) => {
+const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
     const { cardTitle, setCardTitle } = useSelectedCardContext();
@@ -55,7 +56,9 @@ const TaskCard = ({ task, listId }: TaskCardProps) => {
 
     return (
         <>
-            <li className={styles.listContainer}>
+            <li
+                className={`${styles.listContainer} ${isChecked && styles.checked}`}
+            >
                 <TaskCheckbox task={task} listId={listId} />
 
                 <div>
