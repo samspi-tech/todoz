@@ -4,14 +4,15 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/button/Button.tsx';
 import Popover from '@/components/popover/Popover.tsx';
 import OptionsDropdownMenu from '@/components/optionsDropdownMenu/OptionsDropdownMenu.tsx';
+import TaskForm from '@/components/taskForm/TaskForm.tsx';
+import Modal from '@/components/modal/Modal.tsx';
 
 import type { Task } from '@/types/types.ts';
 import styles from './TaskCard.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
-import Modal from '@/components/modal/Modal.tsx';
-import TaskForm from '@/components/taskForm/TaskForm.tsx';
+import TaskCheckbox from '@/components/taskCard/partials/TaskCheckbox.tsx';
 
 interface TaskCardProps {
     task: Task;
@@ -55,7 +56,7 @@ const TaskCard = ({ task, listId }: TaskCardProps) => {
     return (
         <>
             <li className={styles.listContainer}>
-                <input type="checkbox" id="completeTask" name="completeTask" />
+                <TaskCheckbox task={task} listId={listId} />
 
                 <div>
                     <p>{description}</p>
