@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import Modal from '@/components/modal/Modal.tsx';
 import Button from '@/components/button/Button.tsx';
 import SettingsFooter from '@/components/settingsDetails/partials/settingsFooter/SettingsFooter.tsx';
+import Theme from '@/components/settingsDetails/partials/theme/Theme.tsx';
 
 import styles from './SettingsDetails.module.css';
 import { useModal } from '@/hooks/useModal.ts';
@@ -29,10 +30,19 @@ const SettingsDetails = () => {
     }, []);
 
     return (
-        <section className={styles.settingsContainer}>
-            {lists.length > 0 && (
-                <SettingsFooter onOpen={handleOpenModal} setTimer={setTimer} />
-            )}
+        <>
+            <section className={styles.settingsContainer}>
+                <div className={styles.optionsContainer}>
+                    <Theme />
+                </div>
+
+                {lists.length > 0 && (
+                    <SettingsFooter
+                        setTimer={setTimer}
+                        onOpen={handleOpenModal}
+                    />
+                )}
+            </section>
 
             <Modal
                 ref={modalRef}
@@ -51,7 +61,7 @@ const SettingsDetails = () => {
                     </Button>
                 </div>
             </Modal>
-        </section>
+        </>
     );
 };
 

@@ -1,0 +1,88 @@
+.optionLabel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    border: none;
+    font-size: 1.6rem;
+    padding: 1.2rem 0.8rem;
+    color: var(--neutral-700);
+    background-color: transparent;
+    font-family: 'Poppins', sans-serif;
+
+    & p {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+
+        font-weight: 600;
+    }
+}
+
+.optionBody {
+    display: flex;
+    align-items: center;
+
+    padding: 1.2rem 0.8rem;
+    background-color: var(--neutral-300);
+}
+
+.optionContent {
+    animation: show-option 0.2s linear forwards;
+}
+
+.chevronDown,
+.chevronUp {
+    transition: transform 0.2s;
+}
+
+.chevronUp {
+    transform: rotate(180deg);
+}
+
+.chevronDown {
+    transform: rotate(0);
+}
+
+.show {
+    animation: slide-down 0.2s linear forwards;
+}
+
+.hide {
+    animation: slide-up 0.2s linear forwards;
+}
+
+@keyframes slide-down {
+    from {
+        height: 0;
+        padding: 0;
+    }
+    to {
+        height: 8rem;
+        padding: 1.2rem 0.8rem;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        height: 8rem;
+        padding: 1.2rem 0.8rem;
+    }
+    to {
+        height: 0;
+        padding: 0;
+    }
+}
+
+@keyframes show-option {
+    0% {
+        opacity: 0;
+    }
+    90% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
