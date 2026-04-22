@@ -31,7 +31,7 @@ const CompletedTasks = ({ tasks, listId }: CompletedTasksProps) => {
             {isOpen ? (
                 <Button
                     size="small"
-                    variant="unstyled"
+                    variant="square"
                     onClick={handleOpenCompletedTasks}
                 >
                     <ChevronDown />
@@ -39,7 +39,7 @@ const CompletedTasks = ({ tasks, listId }: CompletedTasksProps) => {
             ) : (
                 <Button
                     size="small"
-                    variant="unstyled"
+                    variant="square"
                     onClick={handleOpenCompletedTasks}
                 >
                     <ChevronUp />
