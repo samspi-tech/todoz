@@ -7,6 +7,7 @@ import {
 } from 'react';
 
 import type { List } from '@/types/types.ts';
+import { setNewTasksLocalStorageName } from '@/utils/helpers.ts';
 
 interface ListContextValues {
     title: string;
@@ -65,6 +66,8 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
             });
 
             localStorage.setItem('lists', JSON.stringify(updatedLists));
+
+            setNewTasksLocalStorageName(id, updatedList.id);
             getAllLists();
         }
     };
@@ -78,6 +81,8 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
             const updatedList = parsedTaskLists.filter(
                 (list) => list.id !== id
             );
+
+            localStorage.removeItem(id); // remove all tasks from the list
 
             localStorage.setItem('lists', JSON.stringify(updatedList));
 

@@ -40,7 +40,8 @@ body {
 
 a,
 button,
-input {
+input,
+select {
     &:focus-visible {
         outline-offset: 1px;
         outline: 4px solid hsl(from var(--primary) h s calc(l - 30));
