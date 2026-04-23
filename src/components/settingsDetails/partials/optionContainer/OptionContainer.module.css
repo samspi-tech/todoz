@@ -1,0 +1,42 @@
+.optionLabel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    border: none;
+    font-size: 1.6rem;
+    padding: 1.2rem 0.8rem;
+    color: var(--neutral-700);
+    background-color: transparent;
+    font-family: 'Poppins', sans-serif;
+
+    & p {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+
+        font-weight: 600;
+    }
+}
+
+.optionPanel {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 0.8rem;
+
+    transition: max-height 0.2s ease-out;
+}
+
+.chevronDown,
+.chevronUp {
+    transition: transform 0.2s;
+}
+
+.chevronUp {
+    transform: rotate(180deg);
+}
+
+.chevronDown {
+    transform: rotate(0);
+}

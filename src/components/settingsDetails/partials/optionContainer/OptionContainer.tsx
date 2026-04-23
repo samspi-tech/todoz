@@ -1,5 +1,11 @@
 import { ChevronDown } from 'lucide-react';
-import { type PropsWithChildren, type ReactNode, useState } from 'react';
+import {
+    type PropsWithChildren,
+    type ReactNode,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 
 import styles from './OptionContainer.module.css';
 
@@ -13,17 +19,33 @@ const OptionContainer = ({
     icon,
     children,
 }: PropsWithChildren<OptionProps>) => {
+    const panelRef = useRef<HTMLDivElement>(null);
+
     const [isVisible, setIsVisible] = useState(false);
 
     const handleOptionVisibility = () => {
         setIsVisible((prevState) => !prevState);
     };
 
+    useEffect(() => {
+        const panel = panelRef.current;
+
+        if (!panel) {
+            return;
+        }
+
+        if (isVisible) {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+        } else {
+            panel.style.maxHeight = '0';
+        }
+    }, [isVisible]);
+
     return (
         <article>
             <button
-                onClick={handleOptionVisibility}
                 className={styles.optionLabel}
+                onClick={handleOptionVisibility}
             >
                 <p>
                     {icon}
@@ -35,12 +57,8 @@ const OptionContainer = ({
                 />
             </button>
 
-            <div
-                className={`${styles.optionBody} ${isVisible ? styles.show : styles.hide}`}
-            >
-                {isVisible && (
-                    <div className={styles.optionContent}>{children}</div>
-                )}
+            <div ref={panelRef} className={styles.optionPanel}>
+                {children}
             </div>
         </article>
     );
