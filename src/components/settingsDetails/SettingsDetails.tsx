@@ -10,6 +10,7 @@ import styles from './SettingsDetails.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useListContext } from '@/hooks/useListContext.ts';
 import { routerOptions } from '@/react-router/options.ts';
+import { Info } from 'lucide-react';
 
 const SettingsDetails = () => {
     const navigate = useNavigate();
@@ -52,6 +53,15 @@ const SettingsDetails = () => {
                 title="Are you sure you want to delete all data?"
             >
                 <div className={styles.dialogButtonContainer}>
+                    <p>
+                        <Info />
+
+                        <span>
+                            This will also revert the color theme to the initial
+                            default value after reloading the app.
+                        </span>
+                    </p>
+
                     <Button
                         variant="danger"
                         disabled={isDisabled}
