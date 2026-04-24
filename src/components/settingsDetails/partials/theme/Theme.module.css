@@ -1,0 +1,17 @@
+.themeContainer {
+    list-style: none;
+    padding: 0.8rem 0;
+
+    & li {
+        padding: 1.2rem;
+        color: var(--neutral-700);
+    }
+}
+
+.active {
+    border-radius: 1.6rem;
+    corner-shape: squircle;
+    color: var(--neutral-900);
+    background-color: var(--primary);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+}

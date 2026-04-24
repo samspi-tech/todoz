@@ -2,8 +2,31 @@
     flex-grow: 1;
 
     display: flex;
+    flex-direction: column;
 }
 
 .dialogButtonContainer {
-    padding-top: 2.4rem;
+    & p {
+        display: flex;
+        gap: 0.8rem;
+
+        & svg {
+            min-width: 2rem;
+            min-height: 2rem;
+
+            /* align icon with the first paragraph's line */
+            margin-top: -0.36rem;
+        }
+
+        line-height: 1.3;
+        font-size: 1.4rem;
+        padding: 2.4rem 0;
+    }
+}
+
+.optionsContainer {
+    border-radius: 1.6rem;
+    corner-shape: squircle;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.9);
 }
