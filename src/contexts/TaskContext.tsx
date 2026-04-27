@@ -20,7 +20,9 @@ interface TaskContextValues {
     setError: Dispatch<SetStateAction<string | null>>;
     checkTaskDuplicate: (id: string) => boolean;
     initialState: Task;
-    handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleInputChange: (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => void;
 }
 
 export const TaskContext = createContext<TaskContextValues | null>(null);
@@ -31,6 +33,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         description: '',
         quantity: '',
         weight: '',
+        weightUnit: 'g.',
         isChecked: false,
     };
 
@@ -38,7 +41,9 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     const [error, setError] = useState<string | null>(null);
     const [newTask, setNewTask] = useState<Task>(initialState);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         const { name, value } = e.target;
 
         setNewTask({

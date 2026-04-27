@@ -34,12 +34,13 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
         handleCloseModal,
     } = useModal();
 
-    const { description, quantity, weight, id } = task;
+    const { description, quantity, weight, weightUnit, id } = task;
 
     const handleEditTask = () => {
         const taskToEdit = {
             ...task,
-            weight: weight?.slice(0, -2),
+            weight,
+            weightUnit,
         };
 
         handleOpenModal();
@@ -64,8 +65,13 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
                 <div>
                     <p>{description}</p>
                     <span>
-                        {quantity && <small>Nº {quantity}</small>}
-                        {weight && <small>{weight}</small>}
+                        {!!Number(quantity) && <small>Nº {quantity}</small>}
+                        {!!Number(weight) && (
+                            <small>
+                                {weight}
+                                {weightUnit}
+                            </small>
+                        )}
                     </span>
                 </div>
 

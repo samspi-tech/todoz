@@ -10,6 +10,7 @@ export type Task = {
     description: string;
     quantity?: string | undefined;
     weight?: string | undefined;
+    weightUnit?: string | undefined;
     isChecked: boolean;
 };
 

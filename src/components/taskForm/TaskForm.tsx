@@ -1,4 +1,4 @@
-import { type SubmitEventHandler, useState } from 'react';
+import { type SubmitEventHandler } from 'react';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -26,8 +26,6 @@ const TaskForm = ({
     taskId,
     onClose,
 }: TaskFormProps) => {
-    const [weightUnity, setWeightUnity] = useState('g.');
-
     const {
         tasks,
         newTask,
@@ -59,13 +57,13 @@ const TaskForm = ({
         }
 
         const description = cleanUpString(descriptionValue);
-        const weight = newTask.weight && `${newTask.weight}${weightUnity}`;
 
         return {
             id,
             description,
             quantity: newTask.quantity,
-            weight,
+            weight: newTask.weight,
+            weightUnit: newTask.weightUnit,
             isChecked: false,
         };
     };
@@ -150,11 +148,11 @@ const TaskForm = ({
                         />
 
                         <select
-                            id="weightUnity"
-                            name="weightUnity"
-                            value={weightUnity}
+                            id="weightUnit"
+                            name="weightUnit"
+                            value={newTask.weightUnit}
+                            onChange={handleInputChange}
                             className={styles.selectInput}
-                            onChange={(e) => setWeightUnity(e.target.value)}
                         >
                             <option value="g.">g.</option>
                             <option value="kg">kg</option>
