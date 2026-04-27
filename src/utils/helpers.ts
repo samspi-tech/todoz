@@ -35,8 +35,24 @@ export const setNewTasksLocalStorageName = (
     listId: string,
     newListId: string
 ) => {
-    const tasks = localStorage.getItem(listId);
-    localStorage.setItem(newListId, tasks!);
+    const hasNameChanged = listId !== newListId;
 
-    localStorage.removeItem(listId);
+    if (hasNameChanged) {
+        const tasks = localStorage.getItem(listId);
+        localStorage.setItem(newListId, tasks!);
+
+        localStorage.removeItem(listId);
+    }
+};
+
+export const checkItemToEditDuplicate = (
+    items: List[] | Task[],
+    editId: string,
+    newId: string
+) => {
+    const allItemsWithoutItemToEdit = items.filter(
+        (item) => item.id !== editId
+    );
+
+    return allItemsWithoutItemToEdit.map((item) => item.id).includes(newId);
 };

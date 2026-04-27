@@ -85,7 +85,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                 <OptionsDropdownMenu
                     onEdit={() => {
                         handleOpenModal();
-                        setNewList({ id, title });
+                        setNewList({ id, title, resetDays });
                     }}
                     onDelete={() => deleteList(id)}
                 />

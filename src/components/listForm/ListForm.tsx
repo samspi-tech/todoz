@@ -1,4 +1,4 @@
-import { type SubmitEventHandler, useState } from 'react';
+import { type SubmitEventHandler } from 'react';
 import { useNavigate } from 'react-router';
 
 import Input from '@/components/input/Input.tsx';
@@ -9,6 +9,7 @@ import styles from './ListForm.module.css';
 import { useListContext } from '@/hooks/useListContext.ts';
 import type { List } from '@/types/types.ts';
 import {
+    checkItemToEditDuplicate,
     cleanUpString,
     convertStringToId,
     saveItemToLocalStorage,
@@ -21,15 +22,14 @@ interface ListFormProps {
 }
 
 const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
-    const [resetDays, setResetDays] = useState('');
-
     const navigate = useNavigate();
 
     const {
+        lists,
         getList,
         error,
         setError,
-        updateListTitle,
+        updateList,
         newList,
         setNewList,
         initialValues,
@@ -48,7 +48,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
         const localStorageList = getList(id);
         const isTitleDuplicate = localStorageList?.id === id;
 
-        if (isTitleDuplicate) {
+        if (isTitleDuplicate && !isUpdate) {
             setNewList(initialValues);
             setError(
                 `"${newList.title}" is a duplicate. Title must be unique.`
@@ -62,7 +62,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
         return {
             id,
             title,
-            resetDays,
+            resetDays: newList.resetDays,
             startingDate: new Date(),
         };
     };
@@ -78,14 +78,26 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
         navigate(`/lists/${newList.id}`, { viewTransition: true });
     };
 
-    const handleEditList = () => {
+    const handleUpdateList = () => {
         const updatedList = getListValues();
 
         if (!updatedList) {
             return;
         }
 
-        updateListTitle(editListId!, { ...updatedList });
+        const isDuplicate = checkItemToEditDuplicate(
+            lists,
+            editListId!,
+            updatedList.id
+        );
+
+        if (isDuplicate) {
+            setNewList(initialValues);
+            setError(`${updatedList.title} already exists.`);
+            return;
+        }
+
+        updateList(editListId!, { ...updatedList });
 
         onClose?.();
         setError(null);
@@ -94,7 +106,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        isUpdate ? handleEditList() : handleCreateNewList();
+        isUpdate ? handleUpdateList() : handleCreateNewList();
     };
 
     return (
@@ -112,15 +124,15 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
                 />
 
                 <div className={inputStyle.inputContainer}>
-                    <label htmlFor="reset">
+                    <label htmlFor="resetDays">
                         Choose when to reset your tasks
                     </label>
 
                     <select
-                        id="reset"
-                        name="reset"
-                        value={resetDays}
-                        onChange={(e) => setResetDays(e.target.value)}
+                        id="resetDays"
+                        name="resetDays"
+                        value={newList.resetDays}
+                        onChange={handleInputChange}
                         className={styles.selectInput}
                     >
                         <option value="">-- Optional --</option>

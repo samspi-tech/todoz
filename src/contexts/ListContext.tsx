@@ -12,13 +12,15 @@ import { setNewTasksLocalStorageName } from '@/utils/helpers.ts';
 
 interface ListContextValues {
     initialValues: List;
-    handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleInputChange: (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => void;
     newList: List;
     setNewList: Dispatch<SetStateAction<List>>;
     lists: List[];
     getAllLists: () => void;
     getList: (id: string) => List | undefined;
-    updateListTitle: (id: string, updatedList: List) => void;
+    updateList: (id: string, updatedList: List) => void;
     deleteList: (id: string) => void;
     deleteLocalStorage: () => void;
     hasDataLoaded: boolean;
@@ -41,7 +43,9 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
     const [error, setError] = useState<string | null>(null);
     const [hasDataLoaded, setHasDataLoaded] = useState(false);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         const { name, value } = e.target;
 
         setNewList({
@@ -70,7 +74,7 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
-    const updateListTitle = (id: string, updatedList: List) => {
+    const updateList = (id: string, updatedList: List) => {
         const localStorageTaskLists = localStorage.getItem('lists');
 
         if (localStorageTaskLists) {
@@ -122,7 +126,7 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
                 lists,
                 getAllLists,
                 getList,
-                updateListTitle,
+                updateList,
                 deleteList,
                 deleteLocalStorage,
                 hasDataLoaded,

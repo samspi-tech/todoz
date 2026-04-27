@@ -7,6 +7,7 @@ import styles from '@/components/listForm/ListForm.module.css';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
 import type { Task } from '@/types/types.ts';
 import {
+    checkItemToEditDuplicate,
     cleanUpString,
     convertStringToId,
     saveItemToLocalStorage,
@@ -28,11 +29,11 @@ const TaskForm = ({
     const [weightUnity, setWeightUnity] = useState('g.');
 
     const {
+        tasks,
         newTask,
         setNewTask,
         handleInputChange,
         checkTaskDuplicate,
-        checkTaskToEditDuplicate,
         initialState,
         getAllTasks,
         updateTask,
@@ -88,7 +89,11 @@ const TaskForm = ({
             return;
         }
 
-        const isDuplicate = checkTaskToEditDuplicate(taskId!, payload.id);
+        const isDuplicate = checkItemToEditDuplicate(
+            tasks,
+            taskId!,
+            payload.id
+        );
 
         if (isDuplicate) {
             setNewTask(initialState);

@@ -19,7 +19,6 @@ interface TaskContextValues {
     error: string | null;
     setError: Dispatch<SetStateAction<string | null>>;
     checkTaskDuplicate: (id: string) => boolean;
-    checkTaskToEditDuplicate: (editTaskId: string, newId: string) => boolean;
     initialState: Task;
     handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -75,14 +74,6 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
-    const checkTaskToEditDuplicate = (editTaskId: string, newId: string) => {
-        const allTasksWithoutTaskToEdit = tasks.filter(
-            (task) => task.id !== editTaskId
-        );
-
-        return allTasksWithoutTaskToEdit.map((task) => task.id).includes(newId);
-    };
-
     const updateTask = (listId: string, id: string, updatedTask: Task) => {
         const localStorageTasks = localStorage.getItem(listId);
 
@@ -112,7 +103,6 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 deleteTask,
                 initialState,
                 checkTaskDuplicate,
-                checkTaskToEditDuplicate,
                 handleInputChange,
                 error,
                 setError,
