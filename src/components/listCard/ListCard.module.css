@@ -8,14 +8,22 @@
     box-shadow: var(--shadow);
     background-color: var(--primary);
 
-    display: flex;
-    justify-content: space-between;
-    gap: 0.8rem;
+    & > div {
+        display: flex;
+        justify-content: space-between;
+    }
 
     & > button {
         order: 2;
         min-width: min-content;
         color: var(--neutral-700);
+    }
+
+    & footer {
+        line-height: 1.1;
+        text-wrap: pretty;
+        font-size: 1.3rem;
+        padding-top: 1.6rem;
     }
 }
 

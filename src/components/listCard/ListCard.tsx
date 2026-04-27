@@ -36,7 +36,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
         handleCloseModal,
     } = useModal();
 
-    const { id, title } = cardDetails;
+    const { id, title, resetDays } = cardDetails;
 
     useEffect(() => {
         if (cardTitle === title) {
@@ -49,7 +49,18 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     return (
         <>
             <article className={styles.card}>
-                <>
+                <div>
+                    <div
+                        className={`${styles.cardBody} ${isPressed && styles.pressed}`}
+                        onTouchStart={() => setIsPressed(true)}
+                        onTouchEnd={() => setIsPressed(false)}
+                        onClick={() =>
+                            navigate(`/lists/${id}`, { viewTransition: true })
+                        }
+                    >
+                        <h3>{title}</h3>
+                    </div>
+
                     <Button
                         size="small"
                         variant="unstyled"
@@ -61,29 +72,24 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                     >
                         <EllipsisVertical />
                     </Button>
-
-                    <Popover ref={popoverRef}>
-                        <OptionsDropdownMenu
-                            onEdit={() => {
-                                handleOpenModal();
-                                setNewList(initialValues);
-                            }}
-                            onDelete={() => deleteList(id)}
-                        />
-                    </Popover>
-                </>
-
-                <div
-                    className={`${styles.cardBody} ${isPressed && styles.pressed}`}
-                    onTouchStart={() => setIsPressed(true)}
-                    onTouchEnd={() => setIsPressed(false)}
-                    onClick={() =>
-                        navigate(`/lists/${id}`, { viewTransition: true })
-                    }
-                >
-                    <h3>{title}</h3>
                 </div>
+
+                {resetDays && (
+                    <footer>
+                        <p>All tasks will reset every {resetDays} days</p>
+                    </footer>
+                )}
             </article>
+
+            <Popover ref={popoverRef}>
+                <OptionsDropdownMenu
+                    onEdit={() => {
+                        handleOpenModal();
+                        setNewList({ id, title });
+                    }}
+                    onDelete={() => deleteList(id)}
+                />
+            </Popover>
 
             <Modal
                 ref={modalRef}
@@ -91,6 +97,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                 onClose={() => {
                     setError(null);
                     handleCloseModal();
+                    setNewList(initialValues);
                 }}
             >
                 <ListForm isUpdate editListId={id} onClose={handleCloseModal} />
