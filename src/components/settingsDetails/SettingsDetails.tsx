@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { Info } from 'lucide-react';
 
 import Modal from '@/components/modal/Modal.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -10,7 +11,6 @@ import styles from './SettingsDetails.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useListContext } from '@/hooks/useListContext.ts';
 import { routerOptions } from '@/react-router/options.ts';
-import { Info } from 'lucide-react';
 
 const SettingsDetails = () => {
     const navigate = useNavigate();

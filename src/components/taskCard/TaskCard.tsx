@@ -6,13 +6,13 @@ import Popover from '@/components/popover/Popover.tsx';
 import OptionsDropdownMenu from '@/components/optionsDropdownMenu/OptionsDropdownMenu.tsx';
 import TaskForm from '@/components/taskForm/TaskForm.tsx';
 import Modal from '@/components/modal/Modal.tsx';
+import TaskCheckbox from '@/components/taskCard/partials/TaskCheckbox.tsx';
 
 import type { Task } from '@/types/types.ts';
 import styles from './TaskCard.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
-import TaskCheckbox from '@/components/taskCard/partials/TaskCheckbox.tsx';
 
 interface TaskCardProps {
     task: Task;

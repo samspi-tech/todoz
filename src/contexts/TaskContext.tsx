@@ -89,7 +89,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         if (localStorageTasks) {
             const parsedTasks: Task[] = JSON.parse(localStorageTasks);
 
-            const updatedTasks = parsedTasks.map((task) => {
+            const tasks = parsedTasks.map((task) => {
                 if (task.id === id) {
                     return { ...updatedTask };
                 } else {
@@ -97,7 +97,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 }
             });
 
-            localStorage.setItem(listId, JSON.stringify(updatedTasks));
+            localStorage.setItem(listId, JSON.stringify(tasks));
         }
     };
 

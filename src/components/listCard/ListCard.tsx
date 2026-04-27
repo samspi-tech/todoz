@@ -23,8 +23,10 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
     const navigate = useNavigate();
-    const { deleteList, setError, setTitle } = useListContext();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
+
+    const { deleteList, setError, setNewList, initialValues } =
+        useListContext();
 
     const {
         popoverRef,
@@ -63,8 +65,8 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                     <Popover ref={popoverRef}>
                         <OptionsDropdownMenu
                             onEdit={() => {
-                                setTitle(title);
                                 handleOpenModal();
+                                setNewList(initialValues);
                             }}
                             onDelete={() => deleteList(id)}
                         />

@@ -114,6 +114,7 @@ const TaskForm = ({
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputsContainer}>
                 <Input
+                    autoFocus
                     type="text"
                     error={error}
                     id="description"
@@ -142,10 +143,12 @@ const TaskForm = ({
                             value={newTask.weight}
                             onChange={handleInputChange}
                         />
+
                         <select
                             id="weightUnity"
                             name="weightUnity"
                             value={weightUnity}
+                            className={styles.selectInput}
                             onChange={(e) => setWeightUnity(e.target.value)}
                         >
                             <option value="g.">g.</option>

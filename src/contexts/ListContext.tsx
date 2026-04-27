@@ -1,4 +1,5 @@
 import {
+    type ChangeEvent,
     createContext,
     type Dispatch,
     type PropsWithChildren,
@@ -10,8 +11,10 @@ import type { List } from '@/types/types.ts';
 import { setNewTasksLocalStorageName } from '@/utils/helpers.ts';
 
 interface ListContextValues {
-    title: string;
-    setTitle: Dispatch<SetStateAction<string>>;
+    initialValues: List;
+    handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    newList: List;
+    setNewList: Dispatch<SetStateAction<List>>;
     lists: List[];
     getAllLists: () => void;
     getList: (id: string) => List | undefined;
@@ -26,10 +29,26 @@ interface ListContextValues {
 export const ListContext = createContext<ListContextValues | null>(null);
 
 export const ListProvider = ({ children }: PropsWithChildren) => {
-    const [title, setTitle] = useState('');
+    const initialValues: List = {
+        id: '',
+        title: '',
+        resetDays: '',
+        startingDate: new Date(),
+    };
+
     const [lists, setLists] = useState<List[]>([]);
+    const [newList, setNewList] = useState(initialValues);
     const [error, setError] = useState<string | null>(null);
     const [hasDataLoaded, setHasDataLoaded] = useState(false);
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+
+        setNewList({
+            ...newList,
+            [name]: value,
+        });
+    };
 
     const getAllLists = () => {
         const localStorageTaskLists = localStorage.getItem('lists');
@@ -57,7 +76,7 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
         if (localStorageTaskLists) {
             const parsedTaskLists: List[] = JSON.parse(localStorageTaskLists);
 
-            const updatedLists = parsedTaskLists.map((list) => {
+            const lists = parsedTaskLists.map((list) => {
                 if (list.id === id) {
                     return { ...updatedList };
                 } else {
@@ -65,7 +84,7 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
                 }
             });
 
-            localStorage.setItem('lists', JSON.stringify(updatedLists));
+            localStorage.setItem('lists', JSON.stringify(lists));
 
             setNewTasksLocalStorageName(id, updatedList.id);
             getAllLists();
@@ -98,6 +117,8 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
     return (
         <ListContext.Provider
             value={{
+                initialValues,
+                handleInputChange,
                 lists,
                 getAllLists,
                 getList,
@@ -105,8 +126,8 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
                 deleteList,
                 deleteLocalStorage,
                 hasDataLoaded,
-                title,
-                setTitle,
+                newList,
+                setNewList,
                 error,
                 setError,
             }}
