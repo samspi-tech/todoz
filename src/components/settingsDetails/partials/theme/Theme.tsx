@@ -17,14 +17,14 @@ const Theme = () => {
                     onClick={handleToggleDarkMode}
                     className={`${!isDarkMode && styles.active}`}
                 >
-                    <span>Light</span>
+                    Light
                 </li>
 
                 <li
                     onClick={handleToggleDarkMode}
                     className={`${isDarkMode && styles.active}`}
                 >
-                    <span>Dark</span>
+                    Dark
                 </li>
             </ul>
         </OptionContainer>

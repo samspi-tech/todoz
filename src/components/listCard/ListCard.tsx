@@ -47,7 +47,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     return (
         <>
             <article className={styles.card}>
-                <header>
+                <>
                     <Button
                         size="small"
                         variant="unstyled"
@@ -69,7 +69,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                             onDelete={() => deleteList(id)}
                         />
                     </Popover>
-                </header>
+                </>
 
                 <div
                     className={`${styles.cardBody} ${isPressed && styles.pressed}`}
