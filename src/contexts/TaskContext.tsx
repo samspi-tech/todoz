@@ -109,6 +109,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
             });
 
             localStorage.setItem(listId, JSON.stringify(tasks));
+            getAllTasks(listId);
         }
     };
 

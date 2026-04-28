@@ -49,6 +49,10 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     }, [cardTitle]);
 
     useEffect(() => {
+        if (!daysReset) {
+            return;
+        }
+
         const currentDate = new Date().setHours(0, 0, 0, 0);
         const listDateCreated = new Date(dateCreated!);
 
@@ -93,7 +97,13 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
 
                 {daysReset && (
                     <footer>
-                        <p>All tasks will reset every {daysReset} days</p>
+                        <p>
+                            All tasks will reset every{' '}
+                            {Number(daysReset) > 1
+                                ? `${daysReset} days`
+                                : 'day'}
+                            .
+                        </p>
                     </footer>
                 )}
             </article>

@@ -136,6 +136,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
                         className={styles.selectInput}
                     >
                         <option value="">-- Optional --</option>
+                        <option value="1">Every day</option>
                         <option value="7">Every 7 days</option>
                     </select>
                 </div>
