@@ -27,7 +27,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     const { resetTasks } = useTaskContext();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
 
-    const { deleteList, setError, setNewList, initialValues } =
+    const { deleteList, setError, setNewList, initialValues, updateList } =
         useListContext();
 
     const {
@@ -53,17 +53,27 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
             return;
         }
 
-        const currentDate = new Date().setHours(0, 0, 0, 0);
+        const currentDate = new Date();
         const listDateCreated = new Date(dateCreated!);
 
         const listDateReset = listDateCreated.setDate(
             listDateCreated.getDate() + Number(daysReset)
         );
 
-        const dayToResetTask = new Date(listDateReset).setHours(0, 0, 0, 0);
+        const dayToResetTask = new Date(listDateReset);
 
-        if (currentDate === dayToResetTask) {
+        const isResetDay =
+            currentDate.setHours(0, 0, 0, 0) ===
+            dayToResetTask.setHours(0, 0, 0, 0);
+
+        if (isResetDay) {
+            const payload = {
+                ...cardDetails,
+                dateCreated: currentDate,
+            };
+
             resetTasks(id);
+            updateList(id, payload);
         }
     }, []);
 

@@ -51,4 +51,8 @@
     border-radius: 1.6rem;
     corner-shape: squircle;
     background-color: #ffffff;
+
+    & button {
+        color: var(--neutral-700);
+    }
 }
