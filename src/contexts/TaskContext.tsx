@@ -20,6 +20,7 @@ interface TaskContextValues {
     setError: Dispatch<SetStateAction<string | null>>;
     checkTaskDuplicate: (id: string) => boolean;
     initialState: Task;
+    resetTasks: (listId: string) => void;
     handleInputChange: (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => void;
@@ -97,6 +98,20 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
+    const resetTasks = (listId: string) => {
+        const localStorageTasks = localStorage.getItem(listId);
+
+        if (localStorageTasks) {
+            const parsedTasks: Task[] = JSON.parse(localStorageTasks);
+
+            const tasks = parsedTasks.map((task) => {
+                return { ...task, isChecked: false };
+            });
+
+            localStorage.setItem(listId, JSON.stringify(tasks));
+        }
+    };
+
     return (
         <TaskContext.Provider
             value={{
@@ -109,6 +124,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 initialState,
                 checkTaskDuplicate,
                 handleInputChange,
+                resetTasks,
                 error,
                 setError,
             }}

@@ -13,6 +13,7 @@ import type { List } from '@/types/types.ts';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useListContext } from '@/hooks/useListContext.ts';
+import { useTaskContext } from '@/hooks/useTaskContext.ts';
 
 interface ListCardProps {
     cardDetails: List;
@@ -23,6 +24,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
     const navigate = useNavigate();
+    const { resetTasks } = useTaskContext();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
 
     const { deleteList, setError, setNewList, initialValues } =
@@ -36,7 +38,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
         handleCloseModal,
     } = useModal();
 
-    const { id, title, resetDays } = cardDetails;
+    const { id, title, daysReset, dateCreated } = cardDetails;
 
     useEffect(() => {
         if (cardTitle === title) {
@@ -45,6 +47,21 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
             setIsActiveAnchor(false);
         }
     }, [cardTitle]);
+
+    useEffect(() => {
+        const currentDate = new Date().setHours(0, 0, 0, 0);
+        const listDateCreated = new Date(dateCreated!);
+
+        const listDateReset = listDateCreated.setDate(
+            listDateCreated.getDate() + Number(daysReset)
+        );
+
+        const dayToResetTask = new Date(listDateReset).setHours(0, 0, 0, 0);
+
+        if (currentDate === dayToResetTask) {
+            resetTasks(id);
+        }
+    }, []);
 
     return (
         <>
@@ -74,9 +91,9 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                     </Button>
                 </div>
 
-                {resetDays && (
+                {daysReset && (
                     <footer>
-                        <p>All tasks will reset every {resetDays} days</p>
+                        <p>All tasks will reset every {daysReset} days</p>
                     </footer>
                 )}
             </article>
@@ -85,7 +102,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                 <OptionsDropdownMenu
                     onEdit={() => {
                         handleOpenModal();
-                        setNewList({ id, title, resetDays });
+                        setNewList({ id, title, daysReset });
                     }}
                     onDelete={() => deleteList(id)}
                 />

@@ -1,8 +1,8 @@
 export type List = {
     id: string;
     title: string;
-    resetDays?: string | undefined;
-    startingDate?: Date | undefined;
+    daysReset?: string | undefined;
+    dateCreated?: Date | undefined;
 };
 
 export type Task = {

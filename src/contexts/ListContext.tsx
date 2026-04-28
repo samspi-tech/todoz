@@ -34,8 +34,8 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
     const initialValues: List = {
         id: '',
         title: '',
-        resetDays: '',
-        startingDate: new Date(),
+        daysReset: '',
+        dateCreated: new Date(),
     };
 
     const [lists, setLists] = useState<List[]>([]);

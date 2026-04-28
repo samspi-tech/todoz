@@ -62,8 +62,8 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
         return {
             id,
             title,
-            resetDays: newList.resetDays,
-            startingDate: new Date(),
+            daysReset: newList.daysReset,
+            dateCreated: new Date(),
         };
     };
 
@@ -129,9 +129,9 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
                     </label>
 
                     <select
-                        id="resetDays"
-                        name="resetDays"
-                        value={newList.resetDays}
+                        id="daysReset"
+                        name="daysReset"
+                        value={newList.daysReset}
                         onChange={handleInputChange}
                         className={styles.selectInput}
                     >
