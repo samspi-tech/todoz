@@ -34,7 +34,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         description: '',
         quantity: '',
         weight: '',
-        weightUnit: 'g.',
+        weightUnit: 'gr',
         isChecked: false,
     };
 

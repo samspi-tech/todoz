@@ -36,6 +36,7 @@ export const ListProvider = ({ children }: PropsWithChildren) => {
         title: '',
         daysReset: '',
         dateCreated: new Date(),
+        dateUpdated: new Date(),
     };
 
     const [lists, setLists] = useState<List[]>([]);

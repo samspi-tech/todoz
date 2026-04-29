@@ -57,6 +57,7 @@ const TaskForm = ({
         }
 
         const description = cleanUpString(descriptionValue);
+        const isChecked = isUpdate ? newTask.isChecked : false;
 
         return {
             id,
@@ -64,7 +65,7 @@ const TaskForm = ({
             quantity: newTask.quantity,
             weight: newTask.weight,
             weightUnit: newTask.weightUnit,
-            isChecked: false,
+            isChecked,
         };
     };
 
@@ -142,7 +143,7 @@ const TaskForm = ({
                             id="weight"
                             type="number"
                             label="*Weight"
-                            placeholder="g. — kg"
+                            placeholder="gr — kg"
                             value={newTask.weight}
                             onChange={handleInputChange}
                         />
@@ -154,7 +155,7 @@ const TaskForm = ({
                             onChange={handleInputChange}
                             className={styles.selectInput}
                         >
-                            <option value="g.">g.</option>
+                            <option value="gr">gr</option>
                             <option value="kg">kg</option>
                         </select>
                     </div>

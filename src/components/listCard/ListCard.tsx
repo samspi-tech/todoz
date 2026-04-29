@@ -38,7 +38,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
         handleCloseModal,
     } = useModal();
 
-    const { id, title, daysReset, dateCreated } = cardDetails;
+    const { id, title, daysReset, dateUpdated } = cardDetails;
 
     useEffect(() => {
         if (cardTitle === title) {
@@ -53,23 +53,20 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
             return;
         }
 
-        const currentDate = new Date();
-        const listDateCreated = new Date(dateCreated!);
+        const currentDate = new Date().setHours(0, 0, 0, 0);
+        const listDateCreated = new Date(dateUpdated!);
 
         const listDateReset = listDateCreated.setDate(
             listDateCreated.getDate() + Number(daysReset)
         );
 
-        const dayToResetTask = new Date(listDateReset);
-
-        const isResetDay =
-            currentDate.setHours(0, 0, 0, 0) ===
-            dayToResetTask.setHours(0, 0, 0, 0);
+        const dayToResetTask = new Date(listDateReset).setHours(0, 0, 0, 0);
+        const isResetDay = currentDate === dayToResetTask;
 
         if (isResetDay) {
             const payload = {
                 ...cardDetails,
-                dateCreated: currentDate,
+                dateUpdated: new Date(),
             };
 
             resetTasks(id);
@@ -122,7 +119,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                 <OptionsDropdownMenu
                     onEdit={() => {
                         handleOpenModal();
-                        setNewList({ id, title, daysReset });
+                        setNewList(cardDetails);
                     }}
                     onDelete={() => deleteList(id)}
                 />

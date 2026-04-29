@@ -58,12 +58,14 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
         }
 
         const title = cleanUpString(titleValue);
+        const dateCreated = isUpdate ? newList.dateCreated : new Date();
 
         return {
             id,
             title,
             daysReset: newList.daysReset,
-            dateCreated: new Date(),
+            dateCreated,
+            dateUpdated: new Date(),
         };
     };
 

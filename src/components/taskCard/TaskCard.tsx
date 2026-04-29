@@ -23,8 +23,8 @@ interface TaskCardProps {
 const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
+    const { deleteTask, setNewTask } = useTaskContext();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
-    const { deleteTask, setNewTask, initialState } = useTaskContext();
 
     const {
         popoverRef,
@@ -99,7 +99,7 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
                 title="Edit"
                 onClose={() => {
                     handleCloseModal();
-                    setNewTask(initialState);
+                    setNewTask(task);
                 }}
                 ref={modalRef}
             >
