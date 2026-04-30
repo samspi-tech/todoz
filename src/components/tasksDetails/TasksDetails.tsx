@@ -79,7 +79,7 @@ const TasksDetails = () => {
                     setError(null);
                 }}
             >
-                <TaskForm listId={list?.id!} />
+                <TaskForm onClose={handleCloseModal} listId={list?.id!} />
             </Modal>
         </>
     );

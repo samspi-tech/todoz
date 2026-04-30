@@ -1,7 +1,8 @@
-import { type SubmitEventHandler } from 'react';
+import { type SubmitEventHandler, useState } from 'react';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
+import Checkbox from '@/components/checkbox/Checkbox.tsx';
 
 import styles from '@/components/listForm/ListForm.module.css';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
@@ -17,7 +18,7 @@ interface TaskFormProps {
     listId: string;
     isUpdate?: boolean;
     taskId?: string;
-    onClose?: () => void;
+    onClose: () => void;
 }
 
 const TaskForm = ({
@@ -26,6 +27,8 @@ const TaskForm = ({
     taskId,
     onClose,
 }: TaskFormProps) => {
+    const [isKeepAddingTasks, setIsKeepAddingTasks] = useState(false);
+
     const {
         tasks,
         newTask,
@@ -79,6 +82,10 @@ const TaskForm = ({
 
         saveItemToLocalStorage<Task>(listId, { ...payload });
         setError(null);
+
+        if (!isKeepAddingTasks) {
+            onClose();
+        }
     };
 
     const handleUpdateTask = () => {
@@ -102,7 +109,7 @@ const TaskForm = ({
 
         updateTask(listId, taskId!, payload);
         setError(null);
-        onClose?.();
+        onClose();
     };
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
@@ -160,6 +167,15 @@ const TaskForm = ({
                         </select>
                     </div>
                 </div>
+
+                {!isUpdate && (
+                    <Checkbox
+                        label="Keep adding"
+                        name="isKeepAddingTasks"
+                        checked={isKeepAddingTasks}
+                        onChange={(e) => setIsKeepAddingTasks(e.target.checked)}
+                    />
+                )}
             </div>
 
             <Button type="submit">Add task</Button>
