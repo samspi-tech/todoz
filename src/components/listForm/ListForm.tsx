@@ -1,8 +1,9 @@
-import { type SubmitEventHandler } from 'react';
+import { type SubmitEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
+import Checkbox from '@/components/checkbox/Checkbox.tsx';
 
 import inputStyle from '@/components/input/Input.module.css';
 import styles from './ListForm.module.css';
@@ -22,6 +23,8 @@ interface ListFormProps {
 }
 
 const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
+    const [isResetDate, setIsResetDate] = useState(false);
+
     const navigate = useNavigate();
 
     const {
@@ -59,7 +62,9 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
 
         const title = cleanUpString(titleValue);
         const dateCreated = isUpdate ? newList.dateCreated : new Date();
-        const dateUpdated = isUpdate ? newList.dateUpdated : new Date();
+
+        const dateUpdated =
+            isResetDate || !isUpdate ? new Date() : newList.dateUpdated;
 
         return {
             id,
@@ -104,6 +109,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
 
         onClose?.();
         setError(null);
+        setIsResetDate(false);
     };
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
@@ -127,7 +133,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
                 />
 
                 <div className={inputStyle.inputContainer}>
-                    <label htmlFor="resetDays">
+                    <label htmlFor="daysReset">
                         Choose when to reset your tasks
                     </label>
 
@@ -143,6 +149,15 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
                         <option value="7">Every 7 days</option>
                     </select>
                 </div>
+
+                {isUpdate && (
+                    <Checkbox
+                        name="isResetDate"
+                        label="Start reset countdown from today"
+                        checked={isResetDate}
+                        onChange={(e) => setIsResetDate(e.target.checked)}
+                    />
+                )}
             </div>
 
             <Button type="submit">{isUpdate ? 'Edit' : 'Create'}</Button>
