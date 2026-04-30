@@ -19,9 +19,11 @@ interface TaskContextValues {
     error: string | null;
     setError: Dispatch<SetStateAction<string | null>>;
     checkTaskDuplicate: (id: string) => boolean;
-    checkTaskToEditDuplicate: (editTaskId: string, newId: string) => boolean;
     initialState: Task;
-    handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    resetTasks: (listId: string) => void;
+    handleInputChange: (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => void;
 }
 
 export const TaskContext = createContext<TaskContextValues | null>(null);
@@ -32,6 +34,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         description: '',
         quantity: '',
         weight: '',
+        weightUnit: 'gr',
         isChecked: false,
     };
 
@@ -39,7 +42,9 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     const [error, setError] = useState<string | null>(null);
     const [newTask, setNewTask] = useState<Task>(initialState);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         const { name, value } = e.target;
 
         setNewTask({
@@ -75,21 +80,13 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
-    const checkTaskToEditDuplicate = (editTaskId: string, newId: string) => {
-        const allTasksWithoutTaskToEdit = tasks.filter(
-            (task) => task.id !== editTaskId
-        );
-
-        return allTasksWithoutTaskToEdit.map((task) => task.id).includes(newId);
-    };
-
     const updateTask = (listId: string, id: string, updatedTask: Task) => {
         const localStorageTasks = localStorage.getItem(listId);
 
         if (localStorageTasks) {
             const parsedTasks: Task[] = JSON.parse(localStorageTasks);
 
-            const updatedTasks = parsedTasks.map((task) => {
+            const tasks = parsedTasks.map((task) => {
                 if (task.id === id) {
                     return { ...updatedTask };
                 } else {
@@ -97,7 +94,22 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 }
             });
 
-            localStorage.setItem(listId, JSON.stringify(updatedTasks));
+            localStorage.setItem(listId, JSON.stringify(tasks));
+        }
+    };
+
+    const resetTasks = (listId: string) => {
+        const localStorageTasks = localStorage.getItem(listId);
+
+        if (localStorageTasks) {
+            const parsedTasks: Task[] = JSON.parse(localStorageTasks);
+
+            const tasks = parsedTasks.map((task) => {
+                return { ...task, isChecked: false };
+            });
+
+            localStorage.setItem(listId, JSON.stringify(tasks));
+            getAllTasks(listId);
         }
     };
 
@@ -112,8 +124,8 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
                 deleteTask,
                 initialState,
                 checkTaskDuplicate,
-                checkTaskToEditDuplicate,
                 handleInputChange,
+                resetTasks,
                 error,
                 setError,
             }}

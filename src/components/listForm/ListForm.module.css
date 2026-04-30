@@ -7,7 +7,7 @@
     }
 
     & footer {
-         margin-top: 2.4rem;
+        margin-top: 2.4rem;
     }
 }
 
@@ -30,15 +30,21 @@
         bottom: 0;
         right: 0;
 
-        height: 5rem;
-        font-size: 1.6rem;
-        color: var(--neutral-700);
-        border-radius: 0 0.8rem 0.8rem 0;
         border: 1px solid var(--neutral-300);
         border-left: none;
+        border-radius: 0 0.8rem 0.8rem 0 !important;
 
         &:focus-visible {
             outline-offset: 0;
         }
     }
+}
+
+.selectInput {
+    height: 5rem;
+    padding: 0 0.8rem;
+    font-size: 1.6rem;
+    border-radius: 0.8rem;
+    color: var(--neutral-700);
+    font-family: 'Poppins', sans-serif;
 }

@@ -14,7 +14,8 @@ import { useListContext } from '@/hooks/useListContext.ts';
 const ListsDetails = () => {
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
-    const { lists, getAllLists, setError, setTitle } = useListContext();
+    const { lists, getAllLists, setError, setNewList, initialValues } =
+        useListContext();
 
     useEffect(() => {
         getAllLists();
@@ -44,8 +45,8 @@ const ListsDetails = () => {
                 <Button
                     variant="square"
                     onClick={() => {
-                        setTitle('');
                         handleOpenModal();
+                        setNewList(initialValues);
                     }}
                 >
                     <Plus />

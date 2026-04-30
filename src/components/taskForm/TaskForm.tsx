@@ -1,4 +1,4 @@
-import { type SubmitEventHandler, useState } from 'react';
+import { type SubmitEventHandler } from 'react';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -7,6 +7,7 @@ import styles from '@/components/listForm/ListForm.module.css';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
 import type { Task } from '@/types/types.ts';
 import {
+    checkItemToEditDuplicate,
     cleanUpString,
     convertStringToId,
     saveItemToLocalStorage,
@@ -25,14 +26,12 @@ const TaskForm = ({
     taskId,
     onClose,
 }: TaskFormProps) => {
-    const [weightUnity, setWeightUnity] = useState('g.');
-
     const {
+        tasks,
         newTask,
         setNewTask,
         handleInputChange,
         checkTaskDuplicate,
-        checkTaskToEditDuplicate,
         initialState,
         getAllTasks,
         updateTask,
@@ -58,14 +57,15 @@ const TaskForm = ({
         }
 
         const description = cleanUpString(descriptionValue);
-        const weight = newTask.weight && `${newTask.weight}${weightUnity}`;
+        const isChecked = isUpdate ? newTask.isChecked : false;
 
         return {
             id,
             description,
             quantity: newTask.quantity,
-            weight,
-            isChecked: false,
+            weight: newTask.weight,
+            weightUnit: newTask.weightUnit,
+            isChecked,
         };
     };
 
@@ -88,7 +88,11 @@ const TaskForm = ({
             return;
         }
 
-        const isDuplicate = checkTaskToEditDuplicate(taskId!, payload.id);
+        const isDuplicate = checkItemToEditDuplicate(
+            tasks,
+            taskId!,
+            payload.id
+        );
 
         if (isDuplicate) {
             setNewTask(initialState);
@@ -114,6 +118,7 @@ const TaskForm = ({
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputsContainer}>
                 <Input
+                    autoFocus
                     type="text"
                     error={error}
                     id="description"
@@ -138,17 +143,19 @@ const TaskForm = ({
                             id="weight"
                             type="number"
                             label="*Weight"
-                            placeholder="g. — kg"
+                            placeholder="gr — kg"
                             value={newTask.weight}
                             onChange={handleInputChange}
                         />
+
                         <select
-                            id="weightUnity"
-                            name="weightUnity"
-                            value={weightUnity}
-                            onChange={(e) => setWeightUnity(e.target.value)}
+                            id="weightUnit"
+                            name="weightUnit"
+                            value={newTask.weightUnit}
+                            onChange={handleInputChange}
+                            className={styles.selectInput}
                         >
-                            <option value="g.">g.</option>
+                            <option value="gr">gr</option>
                             <option value="kg">kg</option>
                         </select>
                     </div>

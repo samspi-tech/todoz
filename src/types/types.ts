@@ -1,16 +1,16 @@
 export type List = {
     id: string;
     title: string;
+    daysReset?: string;
+    dateCreated?: Date;
+    dateUpdated?: Date;
 };
 
 export type Task = {
     id: string;
     description: string;
-    quantity: string | undefined;
-    weight: string | undefined;
+    quantity?: string;
+    weight?: string;
+    weightUnit?: string;
     isChecked: boolean;
-};
-
-export type CheckDuplicate = {
-    isCheckDuplicate: boolean;
 };

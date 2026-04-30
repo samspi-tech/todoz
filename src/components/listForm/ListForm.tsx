@@ -1,13 +1,16 @@
-import { type SubmitEventHandler } from 'react';
+import { type SubmitEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
+import Checkbox from '@/components/checkbox/Checkbox.tsx';
 
+import inputStyle from '@/components/input/Input.module.css';
 import styles from './ListForm.module.css';
 import { useListContext } from '@/hooks/useListContext.ts';
 import type { List } from '@/types/types.ts';
 import {
+    checkItemToEditDuplicate,
     cleanUpString,
     convertStringToId,
     saveItemToLocalStorage,
@@ -20,86 +23,143 @@ interface ListFormProps {
 }
 
 const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
+    const [isResetDate, setIsResetDate] = useState(false);
+
     const navigate = useNavigate();
 
-    const { getList, error, setError, updateListTitle, title, setTitle } =
-        useListContext();
+    const {
+        lists,
+        getList,
+        error,
+        setError,
+        updateList,
+        newList,
+        setNewList,
+        initialValues,
+        handleInputChange,
+    } = useListContext();
 
-    const getListTitleAndId = () => {
-        const titleValue = title.trim();
+    const getListValues = (): List | undefined => {
+        const titleValue = newList.title.trim();
 
         if (!titleValue) {
             setError('Title is required.');
             return;
         }
 
-        const newId = convertStringToId(titleValue);
-        const localStorageList = getList(newId);
-        const isTitleDuplicate = localStorageList?.id === newId;
+        const id = convertStringToId(titleValue);
+        const localStorageList = getList(id);
+        const isTitleDuplicate = localStorageList?.id === id;
 
-        if (isTitleDuplicate) {
-            setTitle('');
-            setError(`"${title}" is a duplicate. Title must be unique.`);
+        if (isTitleDuplicate && !isUpdate) {
+            setNewList(initialValues);
+            setError(
+                `"${newList.title}" is a duplicate. Title must be unique.`
+            );
+
             return;
         }
 
-        const newTitle = cleanUpString(titleValue);
+        const title = cleanUpString(titleValue);
+        const dateCreated = isUpdate ? newList.dateCreated : new Date();
+
+        const dateUpdated =
+            isResetDate || !isUpdate ? new Date() : newList.dateUpdated;
 
         return {
-            newId,
-            newTitle,
+            id,
+            title,
+            daysReset: newList.daysReset,
+            dateCreated,
+            dateUpdated,
         };
     };
 
     const handleCreateNewList = () => {
-        const newList = getListTitleAndId();
+        const newList = getListValues();
 
         if (!newList) {
             return;
         }
 
-        saveItemToLocalStorage<List>('lists', {
-            id: newList.newId,
-            title: newList.newTitle,
-        });
-
-        navigate(`/lists/${newList.newId}`, { viewTransition: true });
+        saveItemToLocalStorage<List>('lists', { ...newList });
+        navigate(`/lists/${newList.id}`, { viewTransition: true });
     };
 
-    const handleEditList = () => {
-        const updatedList = getListTitleAndId();
+    const handleUpdateList = () => {
+        const updatedList = getListValues();
 
         if (!updatedList) {
             return;
         }
 
-        updateListTitle(editListId!, {
-            id: updatedList.newId,
-            title: updatedList.newTitle,
-        });
+        const isDuplicate = checkItemToEditDuplicate(
+            lists,
+            editListId!,
+            updatedList.id
+        );
+
+        if (isDuplicate) {
+            setNewList(initialValues);
+            setError(`${updatedList.title} already exists.`);
+            return;
+        }
+
+        updateList(editListId!, { ...updatedList });
 
         onClose?.();
         setError(null);
+        setIsResetDate(false);
     };
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        isUpdate ? handleEditList() : handleCreateNewList();
+        isUpdate ? handleUpdateList() : handleCreateNewList();
     };
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
-            <Input
-                id="title"
-                type="text"
-                label="Title"
-                error={error}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Your list title"
-                autoFocus
-            />
+            <div className={styles.inputsContainer}>
+                <Input
+                    autoFocus
+                    id="title"
+                    type="text"
+                    label="Title"
+                    error={error}
+                    value={newList.title}
+                    onChange={handleInputChange}
+                    placeholder="Your list title"
+                />
+
+                <div className={inputStyle.inputContainer}>
+                    <label htmlFor="daysReset">
+                        Choose when to reset your tasks
+                    </label>
+
+                    <select
+                        id="daysReset"
+                        name="daysReset"
+                        value={newList.daysReset}
+                        onChange={handleInputChange}
+                        className={styles.selectInput}
+                    >
+                        <option value="">-- Optional --</option>
+                        <option value="1">Every day</option>
+                        <option value="7">Every 7 days</option>
+                    </select>
+                </div>
+
+                {isUpdate && (
+                    <Checkbox
+                        name="isResetDate"
+                        label="Start reset countdown from today"
+                        checked={isResetDate}
+                        onChange={(e) => setIsResetDate(e.target.checked)}
+                    />
+                )}
+            </div>
+
             <Button type="submit">{isUpdate ? 'Edit' : 'Create'}</Button>
         </form>
     );

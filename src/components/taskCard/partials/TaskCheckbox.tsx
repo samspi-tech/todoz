@@ -1,5 +1,6 @@
 import type { Task } from '@/types/types.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
+import styles from './TaskCheckbox.module.css';
 
 interface TaskCheckboxProps {
     task: Task;
@@ -33,6 +34,7 @@ const TaskCheckbox = ({ task, listId }: TaskCheckboxProps) => {
             name="completeTask"
             onClick={handleUpdateTask}
             defaultChecked={task.isChecked}
+            className={styles.checkbox}
         />
     );
 };
