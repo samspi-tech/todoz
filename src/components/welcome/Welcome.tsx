@@ -5,21 +5,26 @@ import Button from '@/components/button/Button.tsx';
 
 import styles from './Welcome.module.css';
 import lightLogo from '@/assets/light-logo.svg';
+import darkLogo from '@/assets/dark-logo.svg';
 import illustration from '@/assets/unsplash-irvan-maulana-illustration.jpg';
 import { routerOptions } from '@/react-router/options.ts';
+import { useThemeContext } from '@/hooks/useThemeContext.ts';
 
 const Welcome = () => {
     const navigate = useNavigate();
+    const { isDarkMode } = useThemeContext();
 
     const handleNavigateToTasksPage = () => {
         navigate('/lists', routerOptions);
     };
 
+    const logo = isDarkMode ? darkLogo : lightLogo;
+
     return (
         <header className={styles.header}>
             <hgroup>
                 <h1>
-                    <img src={lightLogo} alt="ToDoz logo" />
+                    <img src={logo} alt="ToDoz logo" />
                     <span>ToDoz</span>
                 </h1>
                 <p>Create your personalized task lists</p>
