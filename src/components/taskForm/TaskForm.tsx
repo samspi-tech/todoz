@@ -139,7 +139,7 @@ const TaskForm = ({
                     <Input
                         type="number"
                         id="quantity"
-                        label="*Quantity"
+                        label="Quantity *"
                         placeholder="Nº"
                         value={newTask.quantity}
                         onChange={handleInputChange}
@@ -149,7 +149,7 @@ const TaskForm = ({
                         <Input
                             id="weight"
                             type="number"
-                            label="*Weight"
+                            label="Weight *"
                             placeholder="gr — kg"
                             value={newTask.weight}
                             onChange={handleInputChange}
