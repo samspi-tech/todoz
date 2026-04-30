@@ -56,3 +56,13 @@ export const checkItemToEditDuplicate = (
 
     return allItemsWithoutItemToEdit.map((item) => item.id).includes(newId);
 };
+
+export const getDateTasksReset = (dateStart: Date, skipDays: number) => {
+    const listDateCreated = new Date(dateStart);
+
+    const listDateReset = listDateCreated.setDate(
+        listDateCreated.getDate() + skipDays
+    );
+
+    return new Date(listDateReset);
+};

@@ -14,6 +14,7 @@ import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useListContext } from '@/hooks/useListContext.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
+import { getDateTasksReset } from '@/utils/helpers.ts';
 
 interface ListCardProps {
     cardDetails: List;
@@ -40,6 +41,9 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
 
     const { id, title, daysReset, dateUpdated } = cardDetails;
 
+    const dateTasksReset = getDateTasksReset(dateUpdated!, Number(daysReset));
+    const daysLeftTasksReset = dateTasksReset.getUTCDate();
+
     useEffect(() => {
         if (cardTitle === title) {
             setIsActiveAnchor(true);
@@ -54,14 +58,8 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
         }
 
         const currentDate = new Date().setHours(0, 0, 0, 0);
-        const listDateCreated = new Date(dateUpdated!);
 
-        const listDateReset = listDateCreated.setDate(
-            listDateCreated.getDate() + Number(daysReset)
-        );
-
-        const dayToResetTask = new Date(listDateReset).setHours(0, 0, 0, 0);
-        const isResetDay = currentDate === dayToResetTask;
+        const isResetDay = currentDate === dateTasksReset.setHours(0, 0, 0, 0);
 
         if (isResetDay) {
             const payload = {
@@ -105,10 +103,10 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                 {daysReset && (
                     <footer>
                         <p>
-                            All tasks will reset every{' '}
-                            {Number(daysReset) > 1
-                                ? `${daysReset} days`
-                                : 'day'}
+                            Next reset{' '}
+                            {daysLeftTasksReset > 1
+                                ? `in ${daysLeftTasksReset} days`
+                                : 'tomorrow'}
                             .
                         </p>
                     </footer>
