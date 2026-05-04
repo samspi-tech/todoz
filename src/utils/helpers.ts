@@ -66,3 +66,7 @@ export const getDateTasksReset = (dateStart: Date, skipDays: number) => {
 
     return new Date(listDateReset);
 };
+
+export const getDateWithoutSeconds = () => {
+    return new Date().toISOString().slice(0, -8);
+};

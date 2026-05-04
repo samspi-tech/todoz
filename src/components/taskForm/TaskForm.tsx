@@ -11,6 +11,7 @@ import {
     checkItemToEditDuplicate,
     cleanUpString,
     convertStringToId,
+    getDateWithoutSeconds,
     saveItemToLocalStorage,
 } from '@/utils/helpers.ts';
 
@@ -68,6 +69,7 @@ const TaskForm = ({
             quantity: newTask.quantity,
             weight: newTask.weight,
             weightUnit: newTask.weightUnit,
+            dateTime: newTask.dateTime,
             isChecked,
         };
     };
@@ -168,6 +170,15 @@ const TaskForm = ({
                     </div>
                 </div>
 
+                <Input
+                    id="dateTime"
+                    type="datetime-local"
+                    label="Date and Time *"
+                    value={newTask.dateTime}
+                    onChange={handleInputChange}
+                    min={getDateWithoutSeconds()}
+                />
+
                 {!isUpdate && (
                     <Checkbox
                         label="Keep adding"
@@ -178,7 +189,7 @@ const TaskForm = ({
                 )}
             </div>
 
-            <Button type="submit">Add task</Button>
+            <Button type="submit">{isUpdate ? 'edit task' : 'add task'}</Button>
 
             <footer>
                 <small>*optional</small>

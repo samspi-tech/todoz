@@ -23,8 +23,8 @@ interface TaskCardProps {
 const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
-    const { deleteTask, setNewTask } = useTaskContext();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
+    const { deleteTask, setNewTask, initialState } = useTaskContext();
 
     const {
         popoverRef,
@@ -35,17 +35,6 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
     } = useModal();
 
     const { description, quantity, weight, weightUnit, id } = task;
-
-    const handleEditTask = () => {
-        const taskToEdit = {
-            ...task,
-            weight,
-            weightUnit,
-        };
-
-        handleOpenModal();
-        setNewTask(taskToEdit);
-    };
 
     useEffect(() => {
         if (cardTitle === description) {
@@ -90,7 +79,10 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
 
             <Popover ref={popoverRef}>
                 <OptionsDropdownMenu
-                    onEdit={handleEditTask}
+                    onEdit={() => {
+                        handleOpenModal();
+                        setNewTask(task);
+                    }}
                     onDelete={() => deleteTask(listId, id)}
                 />
             </Popover>
@@ -99,7 +91,7 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
                 title="Edit"
                 onClose={() => {
                     handleCloseModal();
-                    setNewTask(task);
+                    setNewTask(initialState);
                 }}
                 ref={modalRef}
             >

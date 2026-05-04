@@ -12,6 +12,6 @@ export type Task = {
     quantity?: string;
     weight?: string;
     weightUnit?: string;
-    dateTime?: Date;
+    dateTime?: string;
     isChecked: boolean;
 };
