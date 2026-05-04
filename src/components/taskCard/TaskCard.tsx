@@ -1,4 +1,4 @@
-import { Ellipsis } from 'lucide-react';
+import { CalendarDays, Clock, Ellipsis, Hash, Weight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import Button from '@/components/button/Button.tsx';
@@ -13,6 +13,7 @@ import styles from './TaskCard.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
+import { formatDateAndTime } from '@/utils/helpers.ts';
 
 interface TaskCardProps {
     task: Task;
@@ -34,7 +35,8 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
         handleCloseModal,
     } = useModal();
 
-    const { description, quantity, weight, weightUnit, id } = task;
+    const { description, quantity, weight, weightUnit, id, dateTime } = task;
+    const formattedDateTime = formatDateAndTime(dateTime);
 
     useEffect(() => {
         if (cardTitle === description) {
@@ -53,15 +55,36 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
 
                 <div>
                     <p>{description}</p>
-                    <span>
-                        {!!Number(quantity) && <small>Nº {quantity}</small>}
-                        {!!Number(weight) && (
-                            <small>
-                                {weight}
-                                {weightUnit}
-                            </small>
+
+                    <small>
+                        {!!Number(quantity) && (
+                            <span>
+                                <Hash />
+                                {quantity}
+                            </span>
                         )}
-                    </span>
+
+                        {!!Number(weight) && (
+                            <span>
+                                <Weight />
+                                {weight} {weightUnit}
+                            </span>
+                        )}
+
+                        {dateTime && (
+                            <>
+                                <span>
+                                    <CalendarDays />
+                                    {formattedDateTime?.date}
+                                </span>
+
+                                <span>
+                                    <Clock />
+                                    {formattedDateTime?.time}
+                                </span>
+                            </>
+                        )}
+                    </small>
                 </div>
 
                 <Button

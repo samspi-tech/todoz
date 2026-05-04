@@ -70,3 +70,16 @@ export const getDateTasksReset = (dateStart: Date, skipDays: number) => {
 export const getDateWithoutSeconds = () => {
     return new Date().toISOString().slice(0, -8);
 };
+
+export const formatDateAndTime = (datetime: string | undefined) => {
+    if (!datetime) {
+        return null;
+    }
+
+    const [date, time] = datetime.split('T');
+
+    return {
+        date,
+        time,
+    };
+};
