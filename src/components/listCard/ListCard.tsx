@@ -42,7 +42,9 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     const { id, title, daysReset, dateUpdated } = cardDetails;
 
     const dateTasksReset = getDateTasksReset(dateUpdated!, Number(daysReset));
-    const daysLeftTasksReset = dateTasksReset.getUTCDate();
+
+    const daysLeftTasksReset =
+        dateTasksReset.getUTCDate() - new Date().getUTCDate();
 
     useEffect(() => {
         if (cardTitle === title) {
@@ -58,8 +60,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
         }
 
         const currentDate = new Date().setHours(0, 0, 0, 0);
-
-        const isResetDay = currentDate === dateTasksReset.setHours(0, 0, 0, 0);
+        const isResetDay = currentDate >= dateTasksReset.setHours(0, 0, 0, 0);
 
         if (isResetDay) {
             const payload = {
