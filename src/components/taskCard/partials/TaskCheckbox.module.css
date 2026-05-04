@@ -1,6 +1,6 @@
 .checkbox[type='checkbox'] {
-    width: 2.4rem;
-    height: 2.4rem;
+    min-width: 2.4rem;
+    min-height: 2.4rem;
     appearance: none;
     border-radius: 0.4rem;
     border: 1px solid var(--neutral-300);

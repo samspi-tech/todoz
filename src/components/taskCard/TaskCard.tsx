@@ -1,4 +1,4 @@
-import { Ellipsis } from 'lucide-react';
+import { CalendarDays, Clock, Ellipsis, Hash, Weight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import Button from '@/components/button/Button.tsx';
@@ -13,6 +13,7 @@ import styles from './TaskCard.module.css';
 import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
+import { formatDateAndTime } from '@/utils/helpers.ts';
 
 interface TaskCardProps {
     task: Task;
@@ -23,8 +24,8 @@ interface TaskCardProps {
 const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
-    const { deleteTask, setNewTask } = useTaskContext();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
+    const { deleteTask, setNewTask, initialState } = useTaskContext();
 
     const {
         popoverRef,
@@ -34,18 +35,8 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
         handleCloseModal,
     } = useModal();
 
-    const { description, quantity, weight, weightUnit, id } = task;
-
-    const handleEditTask = () => {
-        const taskToEdit = {
-            ...task,
-            weight,
-            weightUnit,
-        };
-
-        handleOpenModal();
-        setNewTask(taskToEdit);
-    };
+    const { description, quantity, weight, weightUnit, id, dateTime } = task;
+    const formattedDateTime = formatDateAndTime(dateTime);
 
     useEffect(() => {
         if (cardTitle === description) {
@@ -64,15 +55,36 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
 
                 <div>
                     <p>{description}</p>
-                    <span>
-                        {!!Number(quantity) && <small>Nº {quantity}</small>}
-                        {!!Number(weight) && (
-                            <small>
-                                {weight}
-                                {weightUnit}
-                            </small>
+
+                    <small>
+                        {!!Number(quantity) && (
+                            <span>
+                                <Hash />
+                                {quantity}
+                            </span>
                         )}
-                    </span>
+
+                        {!!Number(weight) && (
+                            <span>
+                                <Weight />
+                                {weight} {weightUnit}
+                            </span>
+                        )}
+
+                        {dateTime && (
+                            <>
+                                <span>
+                                    <CalendarDays />
+                                    {formattedDateTime?.date}
+                                </span>
+
+                                <span>
+                                    <Clock />
+                                    {formattedDateTime?.time}
+                                </span>
+                            </>
+                        )}
+                    </small>
                 </div>
 
                 <Button
@@ -90,7 +102,10 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
 
             <Popover ref={popoverRef}>
                 <OptionsDropdownMenu
-                    onEdit={handleEditTask}
+                    onEdit={() => {
+                        handleOpenModal();
+                        setNewTask(task);
+                    }}
                     onDelete={() => deleteTask(listId, id)}
                 />
             </Popover>
@@ -99,7 +114,7 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
                 title="Edit"
                 onClose={() => {
                     handleCloseModal();
-                    setNewTask(task);
+                    setNewTask(initialState);
                 }}
                 ref={modalRef}
             >

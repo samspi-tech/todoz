@@ -36,6 +36,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
         weight: '',
         weightUnit: 'gr',
         isChecked: false,
+        dateTime: '',
     };
 
     const [tasks, setTasks] = useState<Task[]>([]);

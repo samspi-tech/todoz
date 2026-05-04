@@ -40,8 +40,8 @@ const TasksDetails = () => {
                 <header>
                     <h2>{list?.title}</h2>
                     <Button
-                        variant="square"
                         size="small"
+                        variant="square"
                         onClick={handleOpenModal}
                     >
                         <Plus />
