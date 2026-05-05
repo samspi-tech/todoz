@@ -92,6 +92,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                         size="small"
                         variant="unstyled"
                         isAnchor={isActiveAnchor}
+                        aria-label="Open dropdown menu"
                         onClick={() => {
                             handleOpenPopover();
                             setCardTitle(title);

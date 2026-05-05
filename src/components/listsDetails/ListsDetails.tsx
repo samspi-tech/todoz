@@ -44,6 +44,7 @@ const ListsDetails = () => {
             <div className={styles.addButtonContainer}>
                 <Button
                     variant="square"
+                    aria-label="Add new list"
                     onClick={() => {
                         handleOpenModal();
                         setNewList(initialValues);
