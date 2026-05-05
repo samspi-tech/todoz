@@ -28,23 +28,15 @@ const CompletedTasks = ({ tasks, listId }: CompletedTasksProps) => {
         <div
             className={`${styles.completedTasksContainer} ${isOpen ? styles.show : styles.hide}`}
         >
-            {isOpen ? (
-                <Button
-                    size="small"
-                    variant="square"
-                    onClick={handleOpenCompletedTasks}
-                >
-                    <ChevronDown />
-                </Button>
-            ) : (
-                <Button
-                    size="small"
-                    variant="square"
-                    onClick={handleOpenCompletedTasks}
-                >
-                    <ChevronUp />
-                </Button>
-            )}
+            <Button
+                size="small"
+                variant="square"
+                aria-expanded={isOpen}
+                onClick={handleOpenCompletedTasks}
+                aria-label="Open or close completed tasks list"
+            >
+                {isOpen ? <ChevronDown /> : <ChevronUp />}
+            </Button>
 
             <h4>
                 Completed

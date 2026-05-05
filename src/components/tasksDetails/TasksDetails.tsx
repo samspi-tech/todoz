@@ -39,10 +39,12 @@ const TasksDetails = () => {
             <section className={styles.tasksContainer}>
                 <header>
                     <h2>{list?.title}</h2>
+
                     <Button
                         size="small"
                         variant="square"
                         onClick={handleOpenModal}
+                        aria-label="Add new task"
                     >
                         <Plus />
                     </Button>

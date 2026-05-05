@@ -13,11 +13,6 @@
     & > button {
         margin: 0 auto;
         color: var(--neutral-700);
-
-        & svg {
-            width: 3.2rem;
-            height: 3.2rem;
-        }
     }
 
     & h4 {
