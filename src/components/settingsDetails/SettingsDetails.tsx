@@ -6,6 +6,7 @@ import Modal from '@/components/modal/Modal.tsx';
 import Button from '@/components/button/Button.tsx';
 import SettingsFooter from '@/components/settingsDetails/partials/settingsFooter/SettingsFooter.tsx';
 import Theme from '@/components/settingsDetails/partials/theme/Theme.tsx';
+import Language from '@/components/settingsDetails/partials/language/Language.tsx';
 
 import styles from './SettingsDetails.module.css';
 import { useModal } from '@/hooks/useModal.ts';
@@ -35,6 +36,7 @@ const SettingsDetails = () => {
             <section className={styles.settingsContainer}>
                 <div className={styles.optionsContainer}>
                     <Theme />
+                    <Language />
                 </div>
 
                 {lists.length > 0 && (

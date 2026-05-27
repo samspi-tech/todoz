@@ -12,7 +12,7 @@ const Theme = () => {
 
     return (
         <OptionContainer icon={labelIcon} label="Theme">
-            <ul className={styles.themeContainer}>
+            <ul className={styles.container}>
                 <li
                     onClick={handleToggleDarkMode}
                     className={`${!isDarkMode && styles.active}`}
