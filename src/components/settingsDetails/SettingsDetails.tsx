@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Info } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import Modal from '@/components/modal/Modal.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -14,6 +15,7 @@ import { useListContext } from '@/hooks/useListContext.ts';
 import { routerOptions } from '@/react-router/options.ts';
 
 const SettingsDetails = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { deleteLocalStorage, lists, getAllLists } = useListContext();
 
@@ -52,15 +54,20 @@ const SettingsDetails = () => {
                 timer={timer}
                 setTimer={setTimer}
                 onClose={handleCloseModal}
-                title="Are you sure you want to delete all data?"
+                title={t(
+                    'areYouSureYouWantToDeleteAllData?',
+                    'Are you sure you want to delete all data?'
+                )}
             >
                 <div className={styles.dialogButtonContainer}>
                     <p>
                         <Info />
 
                         <span>
-                            This will also revert the color theme to the initial
-                            default value after reloading the app.
+                            {t(
+                                'thisWillAlsoRevertTheColorThemeToTheInitialDefaultValueAfterReloadingTheApp',
+                                'This will also revert the color theme to the initial default value after reloading the app.'
+                            )}
                         </span>
                     </p>
 
@@ -69,7 +76,7 @@ const SettingsDetails = () => {
                         disabled={isDisabled}
                         onClick={handleDeleteLocalStorage}
                     >
-                        Delete {isDisabled && `(${timer}s)`}
+                        {t('delete', 'Delete')} {isDisabled && `(${timer}s)`}
                     </Button>
                 </div>
             </Modal>

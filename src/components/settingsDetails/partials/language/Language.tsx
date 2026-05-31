@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import OptionContainer from '@/components/settingsDetails/partials/optionContainer/OptionContainer.tsx';
 
 import styles from '../theme/Theme.module.css';
-import { languages } from '@/components/settingsDetails/partials/language/dataSource.ts';
 
 const Language = () => {
     const { t, i18n } = useTranslation();
@@ -17,16 +16,18 @@ const Language = () => {
     return (
         <OptionContainer label={t('language', 'Language')} icon={<Languages />}>
             <ul className={styles.container}>
-                {languages.map((lang) => {
-                    return (
-                        <li
-                            onClick={() => handleChangeLanguage(lang.code)}
-                            className={`${i18n.resolvedLanguage === lang.code && styles.active}`}
-                        >
-                            {t(lang.language.toLowerCase(), lang.language)}
-                        </li>
-                    );
-                })}
+                <li
+                    onClick={() => handleChangeLanguage('en')}
+                    className={`${i18n.resolvedLanguage === 'en' && styles.active}`}
+                >
+                    {t('english', 'English')}
+                </li>
+                <li
+                    onClick={() => handleChangeLanguage('it')}
+                    className={`${i18n.resolvedLanguage === 'it' && styles.active}`}
+                >
+                    {t('italian', 'Italiano')}
+                </li>
             </ul>
         </OptionContainer>
     );

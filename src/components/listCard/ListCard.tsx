@@ -1,6 +1,7 @@
 import { EllipsisVertical } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Popover from '@/components/popover/Popover.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -24,6 +25,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     const [isPressed, setIsPressed] = useState(false);
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { resetTasks } = useTaskContext();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
@@ -92,7 +94,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                         size="small"
                         variant="unstyled"
                         isAnchor={isActiveAnchor}
-                        aria-label="Open dropdown menu"
+                        aria-label={t('openDropdownMenu', 'Open dropdown menu')}
                         onClick={() => {
                             handleOpenPopover();
                             setCardTitle(title);
@@ -105,10 +107,10 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                 {daysReset && (
                     <footer>
                         <p>
-                            Next reset{' '}
+                            {t('nextReset', 'Next reset')}{' '}
                             {daysLeftTasksReset > 1
-                                ? `in ${daysLeftTasksReset} days`
-                                : 'tomorrow'}
+                                ? `in ${daysLeftTasksReset} ${t('days', 'days')}`
+                                : t('tomorrow', 'tomorrow')}
                             .
                         </p>
                     </footer>
@@ -127,7 +129,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
 
             <Modal
                 ref={modalRef}
-                title="Edit list"
+                title={t('editList', 'Edit list')}
                 onClose={() => {
                     setError(null);
                     handleCloseModal();

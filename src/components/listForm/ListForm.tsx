@@ -1,5 +1,6 @@
 import { type SubmitEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -25,6 +26,7 @@ interface ListFormProps {
 const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
     const [isResetDate, setIsResetDate] = useState(false);
 
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const {
@@ -43,7 +45,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
         const titleValue = newList.title.trim();
 
         if (!titleValue) {
-            setError('Title is required.');
+            setError(t('titleIsRequired', 'Title is required.'));
             return;
         }
 
@@ -54,7 +56,7 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
         if (isTitleDuplicate && !isUpdate) {
             setNewList(initialValues);
             setError(
-                `"${newList.title}" is a duplicate. Title must be unique.`
+                `"${newList.title}" ${t('isADuplicate.titleMustBeUnique', 'is a duplicate. Title must be unique.')}`
             );
 
             return;
@@ -101,7 +103,9 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
 
         if (isDuplicate) {
             setNewList(initialValues);
-            setError(`${updatedList.title} already exists.`);
+            setError(
+                `${updatedList.title} ${t('alreadyExists', 'already exists.')}`
+            );
             return;
         }
 
@@ -125,16 +129,19 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
                     autoFocus
                     id="title"
                     type="text"
-                    label="Title"
+                    label={t('title', 'Title')}
                     error={error}
                     value={newList.title}
                     onChange={handleInputChange}
-                    placeholder="Your list title"
+                    placeholder={t('yourListTitle', 'Your list title')}
                 />
 
                 <div className={inputStyle.inputContainer}>
                     <label htmlFor="daysReset">
-                        Choose when to reset your tasks
+                        {t(
+                            'chooseWhenToResetYourTasks',
+                            'Choose when to reset your tasks'
+                        )}
                     </label>
 
                     <select
@@ -144,23 +151,32 @@ const ListForm = ({ isUpdate = false, editListId, onClose }: ListFormProps) => {
                         onChange={handleInputChange}
                         className={styles.selectInput}
                     >
-                        <option value="">-- Optional --</option>
-                        <option value="1">Every day</option>
-                        <option value="7">Every 7 days</option>
+                        <option value="">
+                            -- {t('optional', 'Optional')} --
+                        </option>
+                        <option value="1">{t('everyDay', 'Every day')}</option>
+                        <option value="7">
+                            {t('every7Days', 'Every 7 days')}
+                        </option>
                     </select>
                 </div>
 
                 {isUpdate && (
                     <Checkbox
                         name="isResetDate"
-                        label="Start reset countdown from today"
+                        label={t(
+                            'startResetCountdownFromToday',
+                            'Start reset countdown from today'
+                        )}
                         checked={isResetDate}
                         onChange={(e) => setIsResetDate(e.target.checked)}
                     />
                 )}
             </div>
 
-            <Button type="submit">{isUpdate ? 'Edit' : 'Create'}</Button>
+            <Button type="submit">
+                {isUpdate ? t('edit', 'Edit') : t('create', 'Create')}
+            </Button>
         </form>
     );
 };

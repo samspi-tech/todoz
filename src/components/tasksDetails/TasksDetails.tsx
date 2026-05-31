@@ -1,6 +1,7 @@
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
@@ -19,6 +20,7 @@ const TasksDetails = () => {
     const [list, setList] = useState<List | null>(null);
 
     const { id } = useParams();
+    const { t } = useTranslation();
     const { getList } = useListContext();
     const { tasks, getAllTasks, setError } = useTaskContext();
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
@@ -44,7 +46,7 @@ const TasksDetails = () => {
                         size="small"
                         variant="square"
                         onClick={handleOpenModal}
-                        aria-label="Add new task"
+                        aria-label={t('addNewTask', 'Add new task')}
                     >
                         <Plus />
                     </Button>

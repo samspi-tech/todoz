@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/button/Button.tsx';
 import TaskCard from '@/components/taskCard/TaskCard.tsx';
@@ -14,6 +15,8 @@ interface CompletedTasksProps {
 
 const CompletedTasks = ({ tasks, listId }: CompletedTasksProps) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const { t } = useTranslation();
 
     const completedTasks = useMemo(
         () => tasks.filter((task) => task.isChecked).length,
@@ -33,13 +36,16 @@ const CompletedTasks = ({ tasks, listId }: CompletedTasksProps) => {
                 variant="square"
                 aria-expanded={isOpen}
                 onClick={handleOpenCompletedTasks}
-                aria-label="Open or close completed tasks list"
+                aria-label={t(
+                    'openOrCloseCompletedTasksList',
+                    'Open or close completed tasks list'
+                )}
             >
                 {isOpen ? <ChevronDown /> : <ChevronUp />}
             </Button>
 
             <h4>
-                Completed
+                {t('completed', 'Completed')}
                 <span>
                     {completedTasks} / {tasks.length}
                 </span>
