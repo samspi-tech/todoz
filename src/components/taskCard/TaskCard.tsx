@@ -1,5 +1,6 @@
 import { CalendarDays, Clock, Ellipsis, Hash, Weight } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/button/Button.tsx';
 import Popover from '@/components/popover/Popover.tsx';
@@ -24,6 +25,7 @@ interface TaskCardProps {
 const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
+    const { t } = useTranslation();
     const { cardTitle, setCardTitle } = useSelectedCardContext();
     const { deleteTask, setNewTask, initialState } = useTaskContext();
 
@@ -91,7 +93,7 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
                     size="small"
                     variant="unstyled"
                     isAnchor={isActiveAnchor}
-                    aria-label="Open dropdown menu"
+                    aria-label={t('openDropdownMenu', 'Open dropdown menu')}
                     onClick={() => {
                         handleOpenPopover();
                         setCardTitle(description);
@@ -112,7 +114,7 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
             </Popover>
 
             <Modal
-                title="Edit"
+                title={t('edit', 'Edit')}
                 onClose={() => {
                     handleCloseModal();
                     setNewTask(initialState);

@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
@@ -12,6 +13,7 @@ import { useModal } from '@/hooks/useModal.ts';
 import { useListContext } from '@/hooks/useListContext.ts';
 
 const ListsDetails = () => {
+    const { t } = useTranslation();
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
 
     const { lists, getAllLists, setError, setNewList, initialValues } =
@@ -25,14 +27,14 @@ const ListsDetails = () => {
         <section className={styles.taskListsContainer}>
             {!lists.length && (
                 <>
-                    <h2>Add a new list</h2>
+                    <h2>{t('addANewList', 'Add a new list')}</h2>
                     <Empty />
                 </>
             )}
 
             {lists.length > 0 && (
                 <>
-                    <h2>Your lists</h2>
+                    <h2>{t('yourLists', 'Your lists')}</h2>
                     <div className={styles.cardsContainer}>
                         {lists.map((list) => (
                             <ListCard key={list.id} cardDetails={list} />
@@ -44,7 +46,7 @@ const ListsDetails = () => {
             <div className={styles.addButtonContainer}>
                 <Button
                     variant="square"
-                    aria-label="Add new list"
+                    aria-label={t('addNewList', 'Add new list')}
                     onClick={() => {
                         handleOpenModal();
                         setNewList(initialValues);
@@ -56,7 +58,7 @@ const ListsDetails = () => {
 
             <Modal
                 ref={modalRef}
-                title="Create list"
+                title={t('createList', 'Create list')}
                 onClose={() => {
                     setError(null);
                     handleCloseModal();

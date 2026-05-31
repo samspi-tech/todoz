@@ -1,4 +1,5 @@
 import { type SubmitEventHandler, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Input from '@/components/input/Input.tsx';
 import Button from '@/components/button/Button.tsx';
@@ -30,6 +31,8 @@ const TaskForm = ({
 }: TaskFormProps) => {
     const [isKeepAddingTasks, setIsKeepAddingTasks] = useState(false);
 
+    const { t } = useTranslation();
+
     const {
         tasks,
         newTask,
@@ -47,7 +50,7 @@ const TaskForm = ({
         const descriptionValue = newTask.description.trim();
 
         if (!descriptionValue) {
-            setError('This field is required');
+            setError(t('thisFieldIsRequired.', 'This field is required.'));
             return;
         }
 
@@ -56,7 +59,9 @@ const TaskForm = ({
 
         if (isTaskDuplicate && !isUpdate) {
             setNewTask(initialState);
-            setError(`"${descriptionValue}" is already one of your tasks.`);
+            setError(
+                `"${descriptionValue}" ${t('isAlreadyOneOfYourTasks.', 'is already one of your tasks.')}`
+            );
             return;
         }
 
@@ -105,7 +110,9 @@ const TaskForm = ({
 
         if (isDuplicate) {
             setNewTask(initialState);
-            setError(`"${payload.description}" is already one of your tasks.`);
+            setError(
+                `"${payload.description}" ${t('isAlreadyOneOfYourTasks.', 'is already one of your tasks.')}`
+            );
             return;
         }
 
@@ -131,8 +138,8 @@ const TaskForm = ({
                     type="text"
                     error={error}
                     id="description"
-                    placeholder="Task"
-                    label="Description"
+                    placeholder={t('description', 'Description')}
+                    label="Task"
                     value={newTask.description}
                     onChange={handleInputChange}
                 />
@@ -141,7 +148,7 @@ const TaskForm = ({
                     <Input
                         type="number"
                         id="quantity"
-                        label="Quantity *"
+                        label={t('quantity*', 'Quantity *')}
                         placeholder="Nº"
                         value={newTask.quantity}
                         onChange={handleInputChange}
@@ -151,7 +158,7 @@ const TaskForm = ({
                         <Input
                             id="weight"
                             type="number"
-                            label="Weight *"
+                            label={t('weight*', 'Weight *')}
                             placeholder="gr — kg"
                             value={newTask.weight}
                             onChange={handleInputChange}
@@ -173,7 +180,7 @@ const TaskForm = ({
                 <Input
                     id="dateTime"
                     type="datetime-local"
-                    label="Date and Time *"
+                    label={t('dateAndTime*', 'Date and Time *')}
                     value={newTask.dateTime}
                     onChange={handleInputChange}
                     min={getDateWithoutSeconds()}
@@ -181,7 +188,7 @@ const TaskForm = ({
 
                 {!isUpdate && (
                     <Checkbox
-                        label="Keep adding"
+                        label={t('keepAdding', 'Keep adding')}
                         name="isKeepAddingTasks"
                         checked={isKeepAddingTasks}
                         onChange={(e) => setIsKeepAddingTasks(e.target.checked)}
@@ -189,10 +196,12 @@ const TaskForm = ({
                 )}
             </div>
 
-            <Button type="submit">{isUpdate ? 'edit task' : 'add task'}</Button>
+            <Button type="submit">
+                {isUpdate ? t('edit', 'Edit') : t('add', 'Add')} task
+            </Button>
 
             <footer>
-                <small>*optional</small>
+                <small>{t('*optional', '*optional')}</small>
             </footer>
         </form>
     );

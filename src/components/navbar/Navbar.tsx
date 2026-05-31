@@ -1,11 +1,14 @@
 import { Settings } from 'lucide-react';
 import { NavLink } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import Logo from '@/components/navbar/partials/logo/Logo.tsx';
 
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
+    const { t } = useTranslation();
+
     return (
         <nav className={styles.container}>
             <div className={styles.navbar}>
@@ -14,7 +17,10 @@ const Navbar = () => {
                 <NavLink
                     to="/settings"
                     viewTransition={true}
-                    aria-label="Navigate to settings page"
+                    aria-label={t(
+                        'navigateToSettingsPage',
+                        'Navigate to settings page'
+                    )}
                 >
                     <Settings />
                 </NavLink>

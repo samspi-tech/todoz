@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/button/Button.tsx';
 
@@ -11,6 +12,7 @@ import { routerOptions } from '@/react-router/options.ts';
 import { useThemeContext } from '@/hooks/useThemeContext.ts';
 
 const Welcome = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { isDarkMode } = useThemeContext();
 
@@ -24,21 +26,29 @@ const Welcome = () => {
         <header className={styles.header}>
             <hgroup>
                 <h1>
-                    <img src={logo} alt="ToDoz logo" />
+                    <img src={logo} alt="Todoz logo" />
                     <span>ToDoz</span>
                 </h1>
-                <p>Create your personalized task lists</p>
+                <p>
+                    {t(
+                        'createYourPersonalizedTaskLists',
+                        'Create your personalized task lists'
+                    )}
+                </p>
             </hgroup>
 
             <div className={styles.illustrationContainer}>
                 <img
                     src={illustration}
-                    alt="Illustration by Irvan maulana on Unsplash"
+                    alt={t(
+                        'illustrationByIrvanMaulanaOnUnsplash',
+                        'Illustration by Irvan maulana on Unsplash'
+                    )}
                 />
             </div>
 
             <Button onClick={handleNavigateToTasksPage}>
-                <span>begin</span>
+                <span>{t('begin', 'Begin')}</span>
                 <ArrowRight />
             </Button>
         </header>

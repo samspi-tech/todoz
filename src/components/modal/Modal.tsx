@@ -6,6 +6,7 @@ import {
     useEffect,
 } from 'react';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import Button from '@/components/button/Button.tsx';
 
@@ -27,6 +28,8 @@ const Modal = ({
     timer = 0,
     setTimer,
 }: PropsWithChildren<ModalProps>) => {
+    const { t } = useTranslation();
+
     useEffect(() => {
         if (!setTimer || timer <= 0) {
             return;
@@ -50,7 +53,7 @@ const Modal = ({
                     size="small"
                     variant="unstyled"
                     onClick={onClose}
-                    aria-label="Close modal"
+                    aria-label={t('closeModal', 'Close modal')}
                 >
                     <X />
                 </Button>

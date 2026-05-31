@@ -1,8 +1,11 @@
 import './PWABadge.css';
 
 import { useRegisterSW } from 'virtual:pwa-register/react';
+import { useTranslation } from 'react-i18next';
 
 function PWABadge() {
+    const { t } = useTranslation();
+
     // check for updates every hour
     const period = 60 * 60 * 1000;
 
@@ -37,12 +40,17 @@ function PWABadge() {
                     <div className="PWABadge-message">
                         {offlineReady ? (
                             <span id="toast-message">
-                                App ready to work offline
+                                {t(
+                                    'appReadyToWorkOffline',
+                                    'App ready to work offline'
+                                )}
                             </span>
                         ) : (
                             <span id="toast-message">
-                                New content available, click on reload button to
-                                update.
+                                {t(
+                                    'newContentAvailable,ClickOnReloadButtonToUpdate.',
+                                    'New content available, click on reload button to update.'
+                                )}
                             </span>
                         )}
                     </div>
@@ -52,14 +60,14 @@ function PWABadge() {
                                 className="PWABadge-toast-button"
                                 onClick={() => updateServiceWorker(true)}
                             >
-                                Reload
+                                {t('reload', 'Reload')}
                             </button>
                         )}
                         <button
                             className="PWABadge-toast-button"
                             onClick={() => close()}
                         >
-                            Close
+                            {t('close', 'Close')}
                         </button>
                     </div>
                 </div>
