@@ -26,7 +26,7 @@ const Language = () => {
                     onClick={() => handleChangeLanguage('it')}
                     className={`${i18n.resolvedLanguage === 'it' && styles.active}`}
                 >
-                    {t('italian', 'Italiano')}
+                    {t('italian', 'Italian')}
                 </li>
             </ul>
         </OptionContainer>
