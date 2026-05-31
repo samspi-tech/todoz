@@ -19,9 +19,9 @@ const OptionContainer = ({
     icon,
     children,
 }: PropsWithChildren<OptionProps>) => {
-    const panelRef = useRef<HTMLDivElement>(null);
-
     const [isVisible, setIsVisible] = useState(false);
+
+    const panelRef = useRef<HTMLDivElement>(null);
 
     const handleOptionVisibility = () => {
         setIsVisible((prevState) => !prevState);
@@ -44,6 +44,7 @@ const OptionContainer = ({
     return (
         <article>
             <button
+                aria-expanded={isVisible}
                 className={styles.optionLabel}
                 onClick={handleOptionVisibility}
             >
