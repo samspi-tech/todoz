@@ -16,7 +16,7 @@
 
 <br>
 
-### Live Demo: [ToDoz](todoz-pt.netlify.app/)
+### Live Demo: [ToDoz](https://todoz-pt.netlify.app/)
 
 <br>
 
