@@ -15,7 +15,10 @@ import { useModal } from '@/hooks/useModal.ts';
 import { useSelectedCardContext } from '@/hooks/useSelectedCardContext.ts';
 import { useListContext } from '@/hooks/useListContext.ts';
 import { useTaskContext } from '@/hooks/useTaskContext.ts';
-import { getDateTasksReset } from '@/utils/helpers.ts';
+import {
+    getDateTasksReset,
+    getDaysLeftFromNextReset,
+} from '@/utils/helpers.ts';
 
 interface ListCardProps {
     cardDetails: List;
@@ -44,9 +47,7 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
     const { id, title, daysReset, dateUpdated } = cardDetails;
 
     const dateTasksReset = getDateTasksReset(dateUpdated!, Number(daysReset));
-
-    const daysLeftTasksReset =
-        dateTasksReset.getUTCDate() - new Date().getUTCDate();
+    const daysLeftTasksReset = getDaysLeftFromNextReset(dateTasksReset);
 
     useEffect(() => {
         if (cardTitle === title) {

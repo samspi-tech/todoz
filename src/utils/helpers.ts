@@ -83,3 +83,11 @@ export const formatDateAndTime = (datetime: string | undefined) => {
         time,
     };
 };
+
+export const getDaysLeftFromNextReset = (nextResetDay: Date) => {
+    const today = new Date();
+    const nextResetInMilliseconds = nextResetDay.getTime() - today.getTime();
+    const oneDayInMilliseconds = 1000 * 60 * 60 * 24;
+
+    return Math.round(nextResetInMilliseconds / oneDayInMilliseconds);
+};
