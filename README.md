@@ -9,6 +9,12 @@
 <p align='center'>App preview. Made with Figma.</p>
 
 <br>
+<br>
+
+<img src="images/todoz-screenshot-2.png" alt="Todoz Pages Screenshot">
+<p align='center'>Final working version.</p>
+
+<br>
 
 
 ### Built with
