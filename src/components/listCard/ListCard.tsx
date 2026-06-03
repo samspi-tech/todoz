@@ -89,6 +89,18 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                         }
                     >
                         <h3>{title}</h3>
+
+                        {daysReset && (
+                            <footer>
+                                <p>
+                                    {t('nextReset', 'Next reset')}{' '}
+                                    {daysLeftTasksReset > 1
+                                        ? `in ${daysLeftTasksReset} ${t('days', 'days')}`
+                                        : t('tomorrow', 'tomorrow')}
+                                    .
+                                </p>
+                            </footer>
+                        )}
                     </div>
 
                     <Button
@@ -104,18 +116,6 @@ const ListCard = ({ cardDetails }: ListCardProps) => {
                         <EllipsisVertical />
                     </Button>
                 </div>
-
-                {daysReset && (
-                    <footer>
-                        <p>
-                            {t('nextReset', 'Next reset')}{' '}
-                            {daysLeftTasksReset > 1
-                                ? `in ${daysLeftTasksReset} ${t('days', 'days')}`
-                                : t('tomorrow', 'tomorrow')}
-                            .
-                        </p>
-                    </footer>
-                )}
             </article>
 
             <Popover ref={popoverRef}>
