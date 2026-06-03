@@ -188,7 +188,10 @@ const TaskForm = ({
 
                 {!isUpdate && (
                     <Checkbox
-                        label={t('keepAdding', 'Keep adding')}
+                        label={t(
+                            'checkIfYouWantToKeepThisWindowOpenAndAddAnotherTask',
+                            'Check if you want to keep this window open and add another task'
+                        )}
                         name="isKeepAddingTasks"
                         checked={isKeepAddingTasks}
                         onChange={(e) => setIsKeepAddingTasks(e.target.checked)}

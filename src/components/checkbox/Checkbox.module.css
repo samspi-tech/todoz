@@ -1,7 +1,8 @@
 .checkboxInputContainer {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 1.2rem;
 
+    line-height: 1.3;
     padding-top: 0.8rem;
 }

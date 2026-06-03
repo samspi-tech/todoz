@@ -65,8 +65,8 @@ const SettingsDetails = () => {
 
                         <span>
                             {t(
-                                'thisWillAlsoRevertTheColorThemeToTheInitialDefaultValueAfterReloadingTheApp',
-                                'This will also revert the color theme to the initial default value after reloading the app.'
+                                'thisWillAlsoRevertTheColorThemeAndTheLanguageToTheInitialDefaultValueAfterReloadingTheApp',
+                                'This will also revert the color theme and the language to the initial default value after reloading the app.'
                             )}
                         </span>
                     </p>
