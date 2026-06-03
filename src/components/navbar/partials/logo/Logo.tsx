@@ -12,7 +12,7 @@ const Logo = () => {
             to="/lists"
             viewTransition={true}
             className={styles.logoContainer}
-            aria-label={t('navigateToTasksPage', 'Navigate to tasks page')}
+            aria-label={t('navigateToListsPage', 'Navigate to lists page')}
         >
             <img src={logo} alt="Todoz logo" />
             <p>

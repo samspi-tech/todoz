@@ -10,13 +10,14 @@
 }
 
 .navbar {
-    max-width: 124rem;
     margin: 0 auto;
+    max-width: 124rem;
     padding: 2.4rem 1.2rem;
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 3.2rem;
 
     & a {
         color: #f8f8ff;

@@ -1,4 +1,4 @@
-import { Settings } from 'lucide-react';
+import { Settings, ClipboardList } from 'lucide-react';
 import { NavLink } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
@@ -13,6 +13,17 @@ const Navbar = () => {
         <nav className={styles.container}>
             <div className={styles.navbar}>
                 <Logo />
+
+                <NavLink
+                    to="/lists"
+                    viewTransition={true}
+                    aria-label={t(
+                        'navigateToListsPage',
+                        'Navigate to lists page'
+                    )}
+                >
+                    <ClipboardList />
+                </NavLink>
 
                 <NavLink
                     to="/settings"
