@@ -1,16 +1,14 @@
 import { useParams } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { DragDropProvider } from '@dnd-kit/react';
-import { isSortable } from '@dnd-kit/react/sortable';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
 import TaskForm from '@/components/taskForm/TaskForm.tsx';
 import Empty from '@/components/empty/Empty.tsx';
-import TaskCard from '@/components/taskCard/TaskCard.tsx';
 import CompletedTasks from '@/components/tasksDetails/partials/completedTask/CompletedTasks.tsx';
+import DragAndDropTasks from '@/components/tasksDetails/partials/dragAndDropTasks/DragAndDropTasks.tsx';
 
 import { useListContext } from '@/hooks/useListContext.ts';
 import type { List } from '@/types/types.ts';
@@ -26,6 +24,16 @@ const TasksDetails = () => {
     const { getList } = useListContext();
     const { tasks, getAllTasks, setError } = useTaskContext();
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
+
+    const uncheckedTasks = useMemo(
+        () => tasks.filter((task) => !task.isChecked),
+        [tasks]
+    );
+
+    const checkedTasks = useMemo(
+        () => tasks.filter((task) => task.isChecked),
+        [tasks]
+    );
 
     useEffect(() => {
         const listData = getList(id!);
@@ -58,59 +66,16 @@ const TasksDetails = () => {
 
                 {tasks.length > 0 && (
                     <>
-                        <DragDropProvider
-                            onDragEnd={(e) => {
-                                if (e.canceled) return;
-
-                                const { source } = e.operation;
-
-                                if (isSortable(source)) {
-                                    const { initialIndex, index } = source;
-
-                                    if (initialIndex !== index) {
-                                        const checkedTasks = tasks.filter(
-                                            (task) => task.isChecked
-                                        );
-                                        const uncheckedTasks = tasks.filter(
-                                            (task) => !task.isChecked
-                                        );
-
-                                        const newItems = [...uncheckedTasks];
-                                        const [removed] = newItems.splice(
-                                            initialIndex,
-                                            1
-                                        );
-                                        newItems.splice(index, 0, removed);
-
-                                        localStorage.setItem(
-                                            id!,
-                                            JSON.stringify([
-                                                ...newItems,
-                                                ...checkedTasks,
-                                            ])
-                                        );
-                                        return getAllTasks(id!);
-                                    }
-                                }
-                            }}
-                        >
-                            <ul>
-                                {tasks
-                                    .filter((task) => !task.isChecked)
-                                    .map((task, i) => {
-                                        return (
-                                            <TaskCard
-                                                index={i}
-                                                task={task}
-                                                listId={id!}
-                                                key={task.id}
-                                            />
-                                        );
-                                    })}
-                            </ul>
-                        </DragDropProvider>
-
-                        <CompletedTasks tasks={tasks} listId={id!} />
+                        <DragAndDropTasks
+                            listId={id!}
+                            checkedTasks={checkedTasks}
+                            uncheckedTasks={uncheckedTasks}
+                        />
+                        <CompletedTasks
+                            listId={id!}
+                            numTasks={tasks.length}
+                            checkedTasks={checkedTasks}
+                        />
                     </>
                 )}
             </section>

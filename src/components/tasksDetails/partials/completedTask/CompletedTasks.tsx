@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,19 +9,19 @@ import styles from './CompletedTasks.module.css';
 import type { Task } from '@/types/types.ts';
 
 interface CompletedTasksProps {
-    tasks: Task[];
     listId: string;
+    numTasks: number;
+    checkedTasks: Task[];
 }
 
-const CompletedTasks = ({ tasks, listId }: CompletedTasksProps) => {
+const CompletedTasks = ({
+    checkedTasks,
+    numTasks,
+    listId,
+}: CompletedTasksProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const { t } = useTranslation();
-
-    const completedTasks = useMemo(
-        () => tasks.filter((task) => task.isChecked).length,
-        [tasks]
-    );
 
     const handleOpenCompletedTasks = () => {
         setIsOpen((prevState) => !prevState);
@@ -47,25 +47,23 @@ const CompletedTasks = ({ tasks, listId }: CompletedTasksProps) => {
             <h4>
                 {t('completed', 'Completed')}
                 <span>
-                    {completedTasks} / {tasks.length}
+                    {checkedTasks.length} / {numTasks}
                 </span>
             </h4>
 
             {isOpen && (
                 <ul>
-                    {tasks
-                        .filter((task) => task.isChecked)
-                        .map((task, i) => {
-                            return (
-                                <TaskCard
-                                    index={i}
-                                    isChecked
-                                    task={task}
-                                    key={task.id}
-                                    listId={listId}
-                                />
-                            );
-                        })}
+                    {checkedTasks.map((task, i) => {
+                        return (
+                            <TaskCard
+                                index={i}
+                                isChecked
+                                task={task}
+                                key={task.id}
+                                listId={listId}
+                            />
+                        );
+                    })}
                 </ul>
             )}
         </div>
