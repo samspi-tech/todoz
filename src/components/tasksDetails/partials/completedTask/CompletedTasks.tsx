@@ -53,18 +53,19 @@ const CompletedTasks = ({ tasks, listId }: CompletedTasksProps) => {
 
             {isOpen && (
                 <ul>
-                    {tasks.map((task) => {
-                        return (
-                            task.isChecked && (
+                    {tasks
+                        .filter((task) => task.isChecked)
+                        .map((task, i) => {
+                            return (
                                 <TaskCard
+                                    index={i}
                                     isChecked
                                     task={task}
                                     key={task.id}
                                     listId={listId}
                                 />
-                            )
-                        );
-                    })}
+                            );
+                        })}
                 </ul>
             )}
         </div>

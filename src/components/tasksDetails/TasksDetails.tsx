@@ -2,6 +2,8 @@ import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { DragDropProvider } from '@dnd-kit/react';
+import { isSortable } from '@dnd-kit/react/sortable';
 
 import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
@@ -56,19 +58,57 @@ const TasksDetails = () => {
 
                 {tasks.length > 0 && (
                     <>
-                        <ul>
-                            {tasks.map((task) => {
-                                return (
-                                    !task.isChecked && (
-                                        <TaskCard
-                                            task={task}
-                                            listId={id!}
-                                            key={task.id}
-                                        />
-                                    )
-                                );
-                            })}
-                        </ul>
+                        <DragDropProvider
+                            onDragEnd={(e) => {
+                                if (e.canceled) return;
+
+                                const { source } = e.operation;
+
+                                if (isSortable(source)) {
+                                    const { initialIndex, index } = source;
+
+                                    if (initialIndex !== index) {
+                                        const checkedTasks = tasks.filter(
+                                            (task) => task.isChecked
+                                        );
+                                        const uncheckedTasks = tasks.filter(
+                                            (task) => !task.isChecked
+                                        );
+
+                                        const newItems = [...uncheckedTasks];
+                                        const [removed] = newItems.splice(
+                                            initialIndex,
+                                            1
+                                        );
+                                        newItems.splice(index, 0, removed);
+
+                                        localStorage.setItem(
+                                            id!,
+                                            JSON.stringify([
+                                                ...newItems,
+                                                ...checkedTasks,
+                                            ])
+                                        );
+                                        return getAllTasks(id!);
+                                    }
+                                }
+                            }}
+                        >
+                            <ul>
+                                {tasks
+                                    .filter((task) => !task.isChecked)
+                                    .map((task, i) => {
+                                        return (
+                                            <TaskCard
+                                                index={i}
+                                                task={task}
+                                                listId={id!}
+                                                key={task.id}
+                                            />
+                                        );
+                                    })}
+                            </ul>
+                        </DragDropProvider>
 
                         <CompletedTasks tasks={tasks} listId={id!} />
                     </>

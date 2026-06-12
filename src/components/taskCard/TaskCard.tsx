@@ -1,6 +1,7 @@
 import { CalendarDays, Clock, Ellipsis, Hash, Weight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSortable } from '@dnd-kit/react/sortable';
 
 import Button from '@/components/button/Button.tsx';
 import Popover from '@/components/popover/Popover.tsx';
@@ -18,11 +19,17 @@ import { formatDateAndTime } from '@/utils/helpers.ts';
 
 interface TaskCardProps {
     task: Task;
+    index: number;
     listId: string;
     isChecked?: boolean;
 }
 
-const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
+const TaskCard = ({
+    task,
+    index,
+    listId,
+    isChecked = false,
+}: TaskCardProps) => {
     const [isActiveAnchor, setIsActiveAnchor] = useState(false);
 
     const { t } = useTranslation();
@@ -40,6 +47,8 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
     const { description, quantity, weight, weightUnit, id, dateTime } = task;
     const formattedDateTime = formatDateAndTime(dateTime);
 
+    const { ref } = useSortable({ id, index });
+
     useEffect(() => {
         if (cardTitle === description) {
             setIsActiveAnchor(true);
@@ -51,6 +60,7 @@ const TaskCard = ({ task, listId, isChecked = false }: TaskCardProps) => {
     return (
         <>
             <li
+                ref={!isChecked ? ref : null}
                 className={`${styles.listContainer} ${isChecked && styles.checked}`}
             >
                 <TaskCheckbox task={task} listId={listId} />
