@@ -23,7 +23,8 @@
 ### Built with
 
 ![React.js](https://img.shields.io/badge/react-23272F.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)\
+![Vite-PWA](https://img.shields.io/badge/vite%20pwa-1B1B1F?style=for-the-badge&logo=pwa)\
 ![React-Router](https://img.shields.io/badge/react_router-222?style=for-the-badge&logo=react-router)\
 ![CSS-Modules](https://img.shields.io/badge/-css%20modules-222?logo=cssmodules&logoColor=fff&style=for-the-badge)\
-![i18next](https://img.shields.io/badge/-i18next-fff?logo=i18next&logoColor=222&style=for-the-badge)
-
+![i18next](https://img.shields.io/badge/-i18next-fff?logo=i18next&logoColor=222&style=for-the-badge)\
+![dnd-kit](https://img.shields.io/badge/-dnd%20kit-fff?style=for-the-badge)

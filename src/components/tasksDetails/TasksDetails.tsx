@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,8 +7,8 @@ import Button from '@/components/button/Button.tsx';
 import Modal from '@/components/modal/Modal.tsx';
 import TaskForm from '@/components/taskForm/TaskForm.tsx';
 import Empty from '@/components/empty/Empty.tsx';
-import TaskCard from '@/components/taskCard/TaskCard.tsx';
 import CompletedTasks from '@/components/tasksDetails/partials/completedTask/CompletedTasks.tsx';
+import DragAndDropTasks from '@/components/tasksDetails/partials/dragAndDropTasks/DragAndDropTasks.tsx';
 
 import { useListContext } from '@/hooks/useListContext.ts';
 import type { List } from '@/types/types.ts';
@@ -24,6 +24,16 @@ const TasksDetails = () => {
     const { getList } = useListContext();
     const { tasks, getAllTasks, setError } = useTaskContext();
     const { modalRef, handleOpenModal, handleCloseModal } = useModal();
+
+    const uncheckedTasks = useMemo(
+        () => tasks.filter((task) => !task.isChecked),
+        [tasks]
+    );
+
+    const checkedTasks = useMemo(
+        () => tasks.filter((task) => task.isChecked),
+        [tasks]
+    );
 
     useEffect(() => {
         const listData = getList(id!);
@@ -56,21 +66,16 @@ const TasksDetails = () => {
 
                 {tasks.length > 0 && (
                     <>
-                        <ul>
-                            {tasks.map((task) => {
-                                return (
-                                    !task.isChecked && (
-                                        <TaskCard
-                                            task={task}
-                                            listId={id!}
-                                            key={task.id}
-                                        />
-                                    )
-                                );
-                            })}
-                        </ul>
-
-                        <CompletedTasks tasks={tasks} listId={id!} />
+                        <DragAndDropTasks
+                            listId={id!}
+                            checkedTasks={checkedTasks}
+                            uncheckedTasks={uncheckedTasks}
+                        />
+                        <CompletedTasks
+                            listId={id!}
+                            numTasks={tasks.length}
+                            checkedTasks={checkedTasks}
+                        />
                     </>
                 )}
             </section>
